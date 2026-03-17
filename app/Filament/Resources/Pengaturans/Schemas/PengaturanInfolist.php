@@ -31,6 +31,11 @@ class PengaturanInfolist
                 TextEntry::make('lokasi_kegiatan')
                     ->label('Lokasi Kegiatan')
                     ->columnSpanFull(),
+                TextEntry::make('peta_embed_url')
+                    ->label('URL Embed Peta')
+                    ->placeholder('-')
+                    ->columnSpanFull()
+                    ->formatStateUsing(fn (?string $state) => $state ? 'Diisi' : '-'),
                 TextEntry::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d/m/Y H:i'),

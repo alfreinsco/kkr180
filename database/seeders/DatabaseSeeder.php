@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             TentangSeeder::class,
             PerformerSeeder::class,
             ProgramDetailSeeder::class,
+            SponsorLogoSeeder::class,
         ]);
     }
 }

@@ -19,6 +19,7 @@ class Pengaturan extends Model
         'judul_kegiatan',
         'sub_judul_kegiatan',
         'lokasi_kegiatan',
+        'peta_embed_url',
     ];
 
     /**

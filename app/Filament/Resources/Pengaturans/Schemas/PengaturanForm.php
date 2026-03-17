@@ -53,6 +53,12 @@ class PengaturanForm
                     ->placeholder('Contoh: Aula Lantai 2 Universitas Pattimura')
                     ->rows(3)
                     ->columnSpanFull(),
+                Textarea::make('peta_embed_url')
+                    ->label('URL Embed Peta (Google Maps)')
+                    ->placeholder('Tempel URL embed dari Google Maps (Share → Embed a map)')
+                    ->rows(4)
+                    ->columnSpanFull()
+                    ->helperText('Kosongkan jika peta tidak ingin ditampilkan.'),
             ]);
     }
 }

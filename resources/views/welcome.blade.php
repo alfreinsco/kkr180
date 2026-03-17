@@ -363,32 +363,18 @@
     </div>
     @endif
 
+    @if($pengaturan && $pengaturan->peta_embed_url)
     <!-- map_area_start  -->
     <div id="contact_area_start" class="map_area">
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2286.8880530082747!2d128.19522359018464!3d-3.654800454752591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d6ce83ff583b5bd%3A0x858f6d233ae4bb72!2sUniversitas%20Pattimura!5e0!3m2!1sid!2sid!4v1773647006120!5m2!1sid!2sid"
+            src="{{ $pengaturan->peta_embed_url }}"
             width="600" height="450" style="border:0; width: 100%;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
-        <!-- <div class="location_information black_bg wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-            <h3>KKR 180&deg;</h3>
-            <div class="info_wrap">
-                <div class="single_info">
-                    <span>Vanue:</span>
-                    <p>Aula Lantai 2, Gedung Rektorat Universitas Pattimura</p>
-                </div>
-                <div class="single_info">
-                    <span>Phone:</span>
-                    <a href="https://wa.me/6281318812027" target="_blank"><p>081318812027</p></a>
-                </div>
-                <div class="single_info">
-                    <span>Email:</span>
-                    <p>alfreinsco@gmail.com</p>
-                </div>
-            </div>
-        </div> -->
     </div>
     <!-- map_area_end  -->
+    @endif
 
+    @if($sponsorLogos && $sponsorLogos->isNotEmpty())
     <!-- brand_area_start  -->
     <div class="brand_area black_bg">
         <div class="container">
@@ -403,18 +389,11 @@
                 <div class="col-lg-12">
                     <div class="brand_wrap">
                         <div class="brand_active owl-carousel">
+                            @foreach($sponsorLogos as $sl)
                             <div class="single_brand text-center">
-                                <img src="img/brand/logo-gmsambon.png" alt="">
+                                <img src="{{ $sl->logo ? (str_starts_with($sl->logo, 'img/') ? asset($sl->logo) : asset('storage/'.$sl->logo)) : asset('img/brand/logo-gmsambon.png') }}" alt="{{ $sl->nama ?? '' }}">
                             </div>
-                            <div class="single_brand text-center">
-                                <img src="img/brand/logo-aog.jpg" alt="">
-                            </div>
-                            <div class="single_brand text-center">
-                                <img src="img/brand/logo-unpatti.png" alt="">
-                            </div>
-                            <!-- <div class="single_brand text-center">
-                                <img src="img/brand/4.png" alt="">
-                            </div> -->
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -422,6 +401,7 @@
         </div>
     </div>
     <!-- brand_area_end  -->
+    @endif
     <!-- footer_start  -->
     <footer class="footer">
         <div class="footer_top">

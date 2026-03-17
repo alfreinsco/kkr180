@@ -24,6 +24,7 @@ class PengaturanResource extends JsonResource
             'judul_kegiatan' => $this->judul_kegiatan,
             'sub_judul_kegiatan' => $this->sub_judul_kegiatan,
             'lokasi_kegiatan' => $this->lokasi_kegiatan,
+            'peta_embed_url' => $this->peta_embed_url,
         ];
     }
 }
