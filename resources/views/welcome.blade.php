@@ -27,43 +27,66 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
     <style>
-        html { scroll-behavior: smooth; }
-        #performar_area_start, #about_area_start, #contact_area_start { scroll-margin-top: 100px; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        #performar_area_start,
+        #about_area_start,
+        #contact_area_start {
+            scroll-margin-top: 100px;
+        }
+
         /* Modal Ingatkan Saya - konsisten dengan tema */
-        #ingatkanModal.modal { z-index: 9999 !important; }
-        .modal-backdrop { z-index: 9998 !important; }
+        #ingatkanModal.modal {
+            z-index: 9999 !important;
+        }
+
+        .modal-backdrop {
+            z-index: 9998 !important;
+        }
+
         #ingatkanModal .modal-content {
             background: #000;
             border: 1px solid #333;
             border-radius: 0;
             font-family: "Muli", sans-serif;
         }
+
         #ingatkanModal .modal-header {
             border-bottom: 2px solid #FF4533;
             padding: 1.25rem 1.5rem;
         }
+
         #ingatkanModal .modal-title {
             font-family: "Anton", sans-serif;
             color: #fff;
             font-size: 24px;
             letter-spacing: 1px;
         }
+
         #ingatkanModal .close {
             color: #AAB1B7;
             opacity: 1;
             text-shadow: none;
             font-size: 28px;
         }
-        #ingatkanModal .close:hover { color: #FF4533; }
+
+        #ingatkanModal .close:hover {
+            color: #FF4533;
+        }
+
         #ingatkanModal .modal-body {
             padding: 1.5rem 1.5rem 2rem;
             color: #AAB1B7;
         }
+
         #ingatkanModal .form-group label {
             color: #fff;
             font-size: 14px;
             margin-bottom: 6px;
         }
+
         #ingatkanModal .form-control {
             background: #1a1a1a;
             border: 1px solid #333;
@@ -72,18 +95,24 @@
             padding: 12px 15px;
             font-family: "Muli", sans-serif;
         }
+
         #ingatkanModal .form-control:focus {
             background: #222;
             border-color: #FF4533;
             color: #fff;
             box-shadow: 0 0 0 0.2rem rgba(255, 69, 51, 0.25);
         }
-        #ingatkanModal .form-control::placeholder { color: #7e7e7e; }
+
+        #ingatkanModal .form-control::placeholder {
+            color: #7e7e7e;
+        }
+
         #ingatkanModal .ingatkan-radio-wrap {
             display: flex;
             gap: 24px;
             flex-wrap: wrap;
         }
+
         #ingatkanModal .ingatkan-radio-wrap label {
             color: #AAB1B7;
             font-weight: 400;
@@ -92,16 +121,26 @@
             align-items: center;
             gap: 8px;
         }
-        #ingatkanModal .ingatkan-radio-wrap input { margin: 0; cursor: pointer; }
+
+        #ingatkanModal .ingatkan-radio-wrap input {
+            margin: 0;
+            cursor: pointer;
+        }
+
         #ingatkanModal #cglWrap {
             display: none;
             margin-top: 0.5rem;
         }
-        #ingatkanModal #cglWrap.show { display: block; }
+
+        #ingatkanModal #cglWrap.show {
+            display: block;
+        }
+
         #ingatkanModal .modal-footer {
             border-top: 1px solid #333;
             padding: 1rem 1.5rem 1.5rem;
         }
+
         #ingatkanModal .btn-ingatkan-submit {
             background: #FF4533;
             color: #fff;
@@ -113,17 +152,20 @@
             border-radius: 0;
             transition: 0.3s;
         }
+
         #ingatkanModal .btn-ingatkan-submit:hover {
             background: transparent;
             color: #FF4533;
             border-color: #FF4533;
         }
+
         #ingatkanModal .modal-footer .btn-secondary {
             background: transparent;
             border: 1px solid #555;
             color: #AAB1B7;
             border-radius: 0;
         }
+
         #ingatkanModal .modal-footer .btn-secondary:hover {
             border-color: #FF4533;
             color: #FF4533;
@@ -147,7 +189,9 @@
                             <div class="col-xl-3 col-lg-3">
                                 <div class="logo">
                                     <a href="{{ url('/') }}">
-                                        <img src="{{ $pengaturan?->logo ? asset('storage/'.$pengaturan->logo) : asset('img/logo.png') }}" alt="" width="{{ $pengaturan?->lebar_logo ?? 150 }}" height="{{ $pengaturan?->tinggi_logo ?? 150 }}">
+                                        <img src="{{ $pengaturan?->logo ? asset('storage/' . $pengaturan->logo) : asset('img/logo.png') }}"
+                                            alt="" width="{{ $pengaturan?->lebar_logo ?? 150 }}"
+                                            height="{{ $pengaturan?->tinggi_logo ?? 150 }}">
                                     </a>
                                 </div>
                             </div>
@@ -166,7 +210,8 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="buy_tkt">
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="#" data-toggle="modal" data-target="#ingatkanModal">Ingatkan Saya</a>
+                                        <a href="#" data-toggle="modal" data-target="#ingatkanModal">Ingatkan
+                                            Saya</a>
                                     </div>
                                 </div>
                             </div>
@@ -195,9 +240,12 @@
                             <div class="shape_2 wow fadeInDown" data-wow-duration="1s" data-wow-delay=".2s">
                                 <img src="img/shape/shape_2.svg" alt="">
                             </div>
-                            <span class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F, Y') ?? '27 Maret, 2026' }}</span>
-                            <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">{{ $pengaturan?->judul_kegiatan ?? 'KKR 180°' }}</h3>
-                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">{{ $pengaturan?->sub_judul_kegiatan ?? 'FREEDOM' }}</p>
+                            <span class="wow fadeInLeft" data-wow-duration="1s"
+                                data-wow-delay=".3s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F, Y') ?? '27 Maret, 2026' }}</span>
+                            <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">
+                                {{ $pengaturan?->judul_kegiatan ?? 'KKR 180°' }}</h3>
+                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">
+                                {{ $pengaturan?->sub_judul_kegiatan ?? 'FREEDOM' }}</p>
                         </div>
                     </div>
                 </div>
@@ -219,50 +267,47 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div  class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-                                <div data-tilt class="thumb">
-                                    <img src="img/performer/hendra.jpg" alt="">
-                                </div>
-                                <div class="performer_heading">
-                                    <h4>PDT. Hendra Stefanus</h4>
-                                    <span>Pelayan Firman</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div  class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
-                                <div data-tilt class="thumb">
-                                    <img src="img/performer/rian.png" alt="">
-                                </div>
-                                <div class="performer_heading">
-                                    <h4>PDT. Fedrian Tjeleni</h4>
-                                    <span>Worship Leader</span>
+                        @foreach ($performers ?? [] as $index => $p)
+                            <div class="col-lg-6 col-md-6">
+                                <div class="single_performer wow fadeInUp" data-wow-duration="1s"
+                                    data-wow-delay="{{ number_format(0.3 + $index * 0.1, 1) }}s">
+                                    <div data-tilt class="thumb">
+                                        <img src="{{ $p->foto ? asset('storage/' . $p->foto) : asset('img/performer/hendra.jpg') }}"
+                                            alt="{{ $p->nama }}">
+                                    </div>
+                                    <div class="performer_heading">
+                                        <h4>{{ $p->nama }}</h4>
+                                        <span>{{ $p->peran }}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- <div class="col-lg-6 col-md-6">
-                            <div  class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
-                                <div data-tilt class="thumb">
-                                    <img src="img/performer/3.png" alt="">
-                                </div>
-                                <div class="performer_heading">
-                                    <h4>Salmon Vicky</h4>
-                                    <span>Acoustic drum</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div   class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">
-                                <div data-tilt class="thumb">
-                                    <img src="img/performer/4.png" alt="">
-                                </div>
-                                <div class="performer_heading">
-                                    <h4>Filaris Habol</h4>
-                                    <span>Acoustic drum</span>
+                        @endforeach
+                        @if (!$performers || $performers->isEmpty())
+                            <div class="col-lg-6 col-md-6">
+                                <div class="single_performer wow fadeInUp" data-wow-duration="1s"
+                                    data-wow-delay=".3s">
+                                    <div data-tilt class="thumb">
+                                        <img src="{{ asset('img/performer/hendra.jpg') }}" alt="">
+                                    </div>
+                                    <div class="performer_heading">
+                                        <h4>PDT. Hendra Stefanus</h4>
+                                        <span>Pelayan Firman</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div> -->
+                            <div class="col-lg-6 col-md-6">
+                                <div class="single_performer wow fadeInUp" data-wow-duration="1s"
+                                    data-wow-delay=".4s">
+                                    <div data-tilt class="thumb">
+                                        <img src="{{ asset('img/performer/rian.png') }}" alt="">
+                                    </div>
+                                    <div class="performer_heading">
+                                        <h4>PDT. Fedrian Tjeleni</h4>
+                                        <span>Worship Leader</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -276,8 +321,13 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section_title text-center mb-80">
-                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s" >Tentang KKR 180&deg;</h3>
-                        <p class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s" >Kebaktian Kebangunan Rohani 180&deg; adalah momen untuk mengalami perubahan hidup bersama Tuhan. Melalui pujian, firman Tuhan, dan doa, setiap orang diajak untuk berbalik dari kehidupan lama dan melangkah dalam hidup yang baru bersama Tuhan. Saatnya berubah. Saatnya berbalik 180° kepada Tuhan. ✨🙏</p>
+                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Tentang KKR 180&deg;
+                        </h3>
+                        <p class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">Kebaktian Kebangunan
+                            Rohani 180&deg; adalah momen untuk mengalami perubahan hidup bersama Tuhan. Melalui pujian,
+                            firman Tuhan, dan doa, setiap orang diajak untuk berbalik dari kehidupan lama dan melangkah
+                            dalam hidup yang baru bersama Tuhan. Saatnya berubah. Saatnya berbalik 180° kepada Tuhan.
+                            ✨🙏</p>
                     </div>
                 </div>
             </div>
@@ -294,9 +344,12 @@
                 </div>
                 <div class="col-lg-5 col-md-6">
                     <div class="about_info pl-68">
-                        <h4 class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">Saatnya berubah. Saatnya berbalik 180° kepada Tuhan.</h4>
-                        <p  class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">Mari alami perubahan hidup bersama Tuhan. Waktunya berbalik 180° dan memulai yang baru!</p>
-                        <a href="#" class="boxed-btn3  wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".7s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan Saya</a>
+                        <h4 class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">Saatnya berubah.
+                            Saatnya berbalik 180° kepada Tuhan.</h4>
+                        <p class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">Mari alami perubahan
+                            hidup bersama Tuhan. Waktunya berbalik 180° dan memulai yang baru!</p>
+                        <a href="#" class="boxed-btn3  wow fadeInLeft" data-wow-duration="1s"
+                            data-wow-delay=".7s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan Saya</a>
                     </div>
                 </div>
             </div>
@@ -308,7 +361,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="section_title text-center mb-80  wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">
+                    <div class="section_title text-center mb-80  wow fadeInRight" data-wow-duration="1s"
+                        data-wow-delay=".3s">
                         <h3>Program Details</h3>
                     </div>
                 </div>
@@ -320,21 +374,28 @@
                             <div class="inner_wrap">
                                 <div class="circle_img"></div>
                                 <div class="porgram_top">
-                                    <span class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">18:30-19:30 WIT</span>
-                                    <h4 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}</h4>
+                                    <span class=" wow fadeInLeft" data-wow-duration="1s"
+                                        data-wow-delay=".3s">18:30-19:30 WIT</span>
+                                    <h4 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
+                                        {{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}
+                                    </h4>
                                 </div>
                                 <div class="thumb wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
                                     <img src="img/program_details/worship.png" alt="">
                                 </div>
-                                <h4 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">Praise and Worship</h4>
+                                <h4 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">Praise and
+                                    Worship</h4>
                             </div>
                         </div>
                         <div class="single_propram">
                             <div class="inner_wrap">
                                 <div class="circle_img"></div>
                                 <div class="porgram_top">
-                                    <span class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">19:30-20:30 WIT</span>
-                                    <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}</h4>
+                                    <span class="wow fadeInRight" data-wow-duration="1s"
+                                        data-wow-delay=".3s">19:30-20:30 WIT</span>
+                                    <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">
+                                        {{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}
+                                    </h4>
                                 </div>
                                 <div class="thumb wow fadeInRight" data-wow-duration="1s" data-wow-delay=".5s">
                                     <img src="img/program_details/khotbah.png" alt="">
@@ -376,7 +437,10 @@
 
     <!-- map_area_start  -->
     <div id="contact_area_start" class="map_area">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2286.8880530082747!2d128.19522359018464!3d-3.654800454752591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d6ce83ff583b5bd%3A0x858f6d233ae4bb72!2sUniversitas%20Pattimura!5e0!3m2!1sid!2sid!4v1773647006120!5m2!1sid!2sid" width="600" height="450" style="border:0; width: 100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2286.8880530082747!2d128.19522359018464!3d-3.654800454752591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d6ce83ff583b5bd%3A0x858f6d233ae4bb72!2sUniversitas%20Pattimura!5e0!3m2!1sid!2sid!4v1773647006120!5m2!1sid!2sid"
+            width="600" height="450" style="border:0; width: 100%;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
         <!-- <div class="location_information black_bg wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
             <h3>KKR 180&deg;</h3>
             <div class="info_wrap">
@@ -438,10 +502,16 @@
                     <div class="col-lg-6 col-md-8">
                         <div class="footer_widget">
                             <div class="address_details text-center">
-                                <h4 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}</h4>
-                                <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">{{ $pengaturan?->lokasi_kegiatan ?? 'Aula Lantai 2 Universitas Pattimura' }}</h3>
-                                <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">Jangan sampai ketinggalan!</p>
-                                <a href="#" class="boxed-btn3 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan Saya</a>
+                                <h4 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                                    {{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}
+                                </h4>
+                                <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
+                                    {{ $pengaturan?->lokasi_kegiatan ?? 'Aula Lantai 2 Universitas Pattimura' }}</h3>
+                                <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">Jangan sampai
+                                    ketinggalan!</p>
+                                <a href="#" class="boxed-btn3 wow fadeInUp" data-wow-duration="1s"
+                                    data-wow-delay=".6s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan
+                                    Saya</a>
                             </div>
                         </div>
                     </div>
@@ -453,7 +523,12 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <p class="copy_right text-center wow fadeInDown" data-wow-duration="1s" data-wow-delay=".5s">
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> Semua hak dilindungi undang-undang | Aplikasi ini dibuat dengan <i class="fa fa-heart-o" aria-hidden="true"></i> oleh <a href="https://alfreinsco.vercel.app" target="_blank">Alfreinsco</a>
+                            Copyright &copy;
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script> Semua hak dilindungi undang-undang | Aplikasi ini dibuat dengan <i
+                                class="fa fa-heart-o" aria-hidden="true"></i> oleh <a
+                                href="https://alfreinsco.vercel.app" target="_blank">Alfreinsco</a>
                         </p>
                     </div>
                 </div>
@@ -463,7 +538,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Semua
     <!-- footer_end  -->
 
     <!-- Modal Ingatkan Saya -->
-    <div class="modal fade" id="ingatkanModal" tabindex="-1" role="dialog" aria-labelledby="ingatkanModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ingatkanModal" tabindex="-1" role="dialog" aria-labelledby="ingatkanModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -476,11 +552,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Semua
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="namaLengkap">Nama lengkap</label>
-                            <input type="text" class="form-control" id="namaLengkap" name="nama_lengkap" placeholder="Masukkan nama lengkap" required>
+                            <input type="text" class="form-control" id="namaLengkap" name="nama_lengkap"
+                                placeholder="Masukkan nama lengkap" required>
                         </div>
                         <div class="form-group">
                             <label for="noTelp">Nomor telepon / WhatsApp</label>
-                            <input type="tel" class="form-control" id="noTelp" name="no_telp" placeholder="Contoh: 08123456789" required>
+                            <input type="tel" class="form-control" id="noTelp" name="no_telp"
+                                placeholder="Contoh: 08123456789" required>
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat</label>
@@ -498,7 +576,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Semua
                             </div>
                             <div id="cglWrap">
                                 <label for="namaCGL">Siapa nama CGL (Connect Group Leader) Anda?</label>
-                                <input type="text" class="form-control mt-2" id="namaCGL" name="nama_cgl" placeholder="Nama CGL">
+                                <input type="text" class="form-control mt-2" id="namaCGL" name="nama_cgl"
+                                    placeholder="Nama CGL">
                             </div>
                         </div>
                     </div>
@@ -560,7 +639,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Semua
                         namaCGL.value = '';
                     }
                 }
-                radios.forEach(function(r) { r.addEventListener('change', toggleCGL); });
+                radios.forEach(function(r) {
+                    r.addEventListener('change', toggleCGL);
+                });
                 toggleCGL();
             }
             var form = document.getElementById('formIngatkanSaya');
@@ -575,42 +656,52 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Semua
                         nama_lengkap: document.getElementById('namaLengkap').value.trim(),
                         no_telp: document.getElementById('noTelp').value.trim(),
                         alamat: document.getElementById('alamat').value.trim(),
-                        pernah_ikut: (document.querySelector('input[name="pernah_ikut"]:checked') || {}).value || 'belum',
+                        pernah_ikut: (document.querySelector('input[name="pernah_ikut"]:checked') || {})
+                            .value || 'belum',
                         nama_cgl: document.getElementById('namaCGL').value.trim() || null
                     };
                     if (payload.pernah_ikut !== 'sudah') payload.nama_cgl = null;
-                    fetch('{{ url("/api/ingatkan-saya") }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: JSON.stringify(payload)
-                    })
-                    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; }); })
-                    .then(function(result) {
-                        if (result.ok) {
-                            alert(result.data.message || 'Terima kasih! Kami akan mengingatkan Anda untuk KKR 180°.');
-                            $('#ingatkanModal').modal('hide');
-                            form.reset();
-                            if (cglWrap) cglWrap.classList.remove('show');
-                        } else {
-                            var msg = result.data.message || 'Terjadi kesalahan. Silakan coba lagi.';
-                            if (result.data.errors) {
-                                var errList = Object.values(result.data.errors).flat().join('\n');
-                                if (errList) msg = msg + '\n\n' + errList;
+                    fetch('{{ url('/api/ingatkan-saya') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            body: JSON.stringify(payload)
+                        })
+                        .then(function(r) {
+                            return r.json().then(function(d) {
+                                return {
+                                    ok: r.ok,
+                                    status: r.status,
+                                    data: d
+                                };
+                            });
+                        })
+                        .then(function(result) {
+                            if (result.ok) {
+                                alert(result.data.message ||
+                                    'Terima kasih! Kami akan mengingatkan Anda untuk KKR 180°.');
+                                $('#ingatkanModal').modal('hide');
+                                form.reset();
+                                if (cglWrap) cglWrap.classList.remove('show');
+                            } else {
+                                var msg = result.data.message || 'Terjadi kesalahan. Silakan coba lagi.';
+                                if (result.data.errors) {
+                                    var errList = Object.values(result.data.errors).flat().join('\n');
+                                    if (errList) msg = msg + '\n\n' + errList;
+                                }
+                                alert(msg);
                             }
-                            alert(msg);
-                        }
-                    })
-                    .catch(function() {
-                        alert('Koneksi gagal. Periksa jaringan dan coba lagi.');
-                    })
-                    .finally(function() {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = originalText;
-                    });
+                        })
+                        .catch(function() {
+                            alert('Koneksi gagal. Periksa jaringan dan coba lagi.');
+                        })
+                        .finally(function() {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = originalText;
+                        });
                 });
             }
         })();
