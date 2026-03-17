@@ -567,10 +567,50 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> Semua
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    alert('Terima kasih! Kami akan mengingatkan Anda untuk KKR 180°. (Form ini dapat disambungkan ke backend.)');
-                    $('#ingatkanModal').modal('hide');
-                    form.reset();
-                    if (cglWrap) cglWrap.classList.remove('show');
+                    var submitBtn = form.querySelector('button[type="submit"]');
+                    var originalText = submitBtn.textContent;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Mengirim...';
+                    var payload = {
+                        nama_lengkap: document.getElementById('namaLengkap').value.trim(),
+                        no_telp: document.getElementById('noTelp').value.trim(),
+                        alamat: document.getElementById('alamat').value.trim(),
+                        pernah_ikut: (document.querySelector('input[name="pernah_ikut"]:checked') || {}).value || 'belum',
+                        nama_cgl: document.getElementById('namaCGL').value.trim() || null
+                    };
+                    if (payload.pernah_ikut !== 'sudah') payload.nama_cgl = null;
+                    fetch('{{ url("/api/ingatkan-saya") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; }); })
+                    .then(function(result) {
+                        if (result.ok) {
+                            alert(result.data.message || 'Terima kasih! Kami akan mengingatkan Anda untuk KKR 180°.');
+                            $('#ingatkanModal').modal('hide');
+                            form.reset();
+                            if (cglWrap) cglWrap.classList.remove('show');
+                        } else {
+                            var msg = result.data.message || 'Terjadi kesalahan. Silakan coba lagi.';
+                            if (result.data.errors) {
+                                var errList = Object.values(result.data.errors).flat().join('\n');
+                                if (errList) msg = msg + '\n\n' + errList;
+                            }
+                            alert(msg);
+                        }
+                    })
+                    .catch(function() {
+                        alert('Koneksi gagal. Periksa jaringan dan coba lagi.');
+                    })
+                    .finally(function() {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
+                    });
                 });
             }
         })();
