@@ -289,19 +289,15 @@
     <!-- performar_area_end  -->
     @endif
 
+    @if($tentang)
     <!-- about_area_start  -->
     <div id="about_area_start" class="about_area black_bg">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section_title text-center mb-80">
-                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Tentang KKR 180&deg;
-                        </h3>
-                        <p class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">Kebaktian Kebangunan
-                            Rohani 180&deg; adalah momen untuk mengalami perubahan hidup bersama Tuhan. Melalui pujian,
-                            firman Tuhan, dan doa, setiap orang diajak untuk berbalik dari kehidupan lama dan melangkah
-                            dalam hidup yang baru bersama Tuhan. Saatnya berubah. Saatnya berbalik 180° kepada Tuhan.
-                            ✨🙏</p>
+                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">{{ $tentang->judul ?? 'Tentang KKR 180°' }}</h3>
+                        <p class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">{{ $tentang->deskripsi }}</p>
                     </div>
                 </div>
             </div>
@@ -309,19 +305,17 @@
                 <div class="col-lg-7 col-md-6">
                     <div class="about_thumb">
                         <div class="shap_3  wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">
-                            <img src="img/shape/shape_3.svg" alt="">
+                            <img src="{{ asset('img/shape/shape_3.svg') }}" alt="">
                         </div>
                         <div class="thumb_inner  wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-                            <img src="img/kkr.png" alt="">
+                            <img src="{{ $tentang->gambar ? asset('storage/'.$tentang->gambar) : asset('img/kkr.png') }}" alt="{{ $tentang->judul ?? '' }}">
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-6">
                     <div class="about_info pl-68">
-                        <h4 class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">Saatnya berubah.
-                            Saatnya berbalik 180° kepada Tuhan.</h4>
-                        <p class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">Mari alami perubahan
-                            hidup bersama Tuhan. Waktunya berbalik 180° dan memulai yang baru!</p>
+                        <h4 class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">{{ $tentang->subjudul ?? 'Saatnya berubah. Saatnya berbalik 180° kepada Tuhan.' }}</h4>
+                        <p class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">{{ $tentang->deskripsi_singkat ?? 'Mari alami perubahan hidup bersama Tuhan. Waktunya berbalik 180° dan memulai yang baru!' }}</p>
                         <a href="#" class="boxed-btn3  wow fadeInLeft" data-wow-duration="1s"
                             data-wow-delay=".7s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan Saya</a>
                     </div>
@@ -330,6 +324,7 @@
         </div>
     </div>
     <!-- about_area_end  -->
+    @endif
 
     @if($programDetails && $programDetails->isNotEmpty())
     <div class="program_details_area detials_bg_1 overlay2">
