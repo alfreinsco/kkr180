@@ -171,6 +171,58 @@
             color: #FF4533;
             background: transparent;
         }
+
+        /* Mobile: sesuaikan ukuran logo & jarak header + sejajarkan logo dengan mobile_menu */
+        @media (max-width: 767px) {
+            .header-area .logo img {
+                max-width: 100px;
+                max-height: 100px;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+            }
+
+            #sticky-header.main-header-area {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            /* Row header punya tinggi jelas agar align-items-center bekerja */
+            .header_bottom_border>.row {
+                min-height: 70px;
+            }
+
+            /* Logo ikut tengah vertikal */
+            .header-area .logo,
+            .header-area .logo a {
+                display: flex;
+                align-items: center;
+            }
+
+            .header-area .logo img {
+                display: block;
+            }
+
+            /* SlickNav: batalkan position absolute agar ikut alur flex & sejajar dengan logo */
+            .header-area .mobile_menu {
+                position: relative !important;
+                right: auto !important;
+                width: auto !important;
+            }
+
+            .header-area .slicknav_btn {
+                position: relative !important;
+                top: auto !important;
+                margin: 0 !important;
+                float: none !important;
+            }
+
+            .header-area .slicknav_menu {
+                margin: 0;
+                padding: 0;
+                background: transparent;
+            }
+        }
     </style>
 </head>
 
@@ -185,8 +237,8 @@
             <div id="sticky-header" class="main-header-area">
                 <div class="container">
                     <div class="header_bottom_border">
-                        <div class="row align-items-center">
-                            <div class="col-xl-3 col-lg-3">
+                        <div class="row align-items-center h-100">
+                            <div class="col-8 col-sm-8 col-md-3 col-lg-3 d-flex align-items-center h-100">
                                 <div class="logo">
                                     <a href="{{ url('/') }}">
                                         <img src="{{ $pengaturan?->logo ? asset('storage/' . $pengaturan->logo) : asset('img/logo.png') }}"
@@ -195,7 +247,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-6">
+                            <div class="col-xl-6 col-lg-6 d-none d-lg-block">
                                 <div class="main-menu  d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
@@ -215,8 +267,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="mobile_menu d-block d-lg-none"></div>
+                            <div class="col-4 d-flex d-lg-none align-items-center justify-content-end">
+                                <div class="mobile_menu"></div>
                             </div>
                         </div>
                     </div>
