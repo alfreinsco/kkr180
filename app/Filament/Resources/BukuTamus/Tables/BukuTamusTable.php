@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\BukuTamus\Tables;
 
+use App\Filament\Exports\BukuTamuExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -14,6 +16,10 @@ class BukuTamusTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(BukuTamuExporter::class),
+            ])
             ->columns([
                 TextColumn::make('nama_lengkap')
                     ->label('Nama Lengkap')

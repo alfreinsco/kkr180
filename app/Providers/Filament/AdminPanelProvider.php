@@ -53,6 +53,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->spa()
+            ->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
             ]);
