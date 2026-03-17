@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="{{ asset('css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('css/flaticon.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/slicknav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <style>
@@ -28,6 +27,51 @@
             background: #000;
             color: #AAB1B7;
             overflow-x: hidden;
+        }
+
+        /* Header sticky saat scroll: fixed + background */
+        #sticky-header.main-header-area.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 990;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.2s ease;
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+
+        /* Saat sticky, baris header sedikit lebih tipis supaya logo & link lebih rapat ke atas */
+        #sticky-header.main-header-area.sticky .header_bottom_border>.row {
+            min-height: 56px;
+            margin-top: -80px;
+        }
+
+        /* Tulisan "Lihat selengkapnya" warna putih */
+        .header-area .book_btn a,
+        .header-area #navigation a {
+            color: #fff !important;
+        }
+
+        .header-area .book_btn a:hover,
+        .header-area #navigation a:hover {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+
+        .register-card .btn-outline-light,
+        .register-card a.btn-outline-light {
+            color: #fff !important;
+            border-color: #fff;
+        }
+
+        .register-card .btn-outline-light:hover,
+        .register-card a.btn-outline-light:hover {
+            color: #000 !important;
+            background-color: #fff;
+            border-color: #fff;
         }
 
         .register-hero {
@@ -289,7 +333,7 @@
             }
         }
 
-        /* Mobile: logo lebih kecil di header & beri jarak dari konten */
+        /* Mobile: sama konsep dengan welcome — logo & menu sejajar, ukuran & jarak */
         @media (max-width: 767px) {
             .register-hero .container {
                 padding-left: 15px;
@@ -302,6 +346,27 @@
                 width: auto;
                 height: auto;
                 object-fit: contain;
+            }
+
+            #sticky-header.main-header-area {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            /* Row header punya tinggi jelas agar align-items-center bekerja */
+            .header_bottom_border>.row {
+                min-height: 70px;
+            }
+
+            /* Logo ikut tengah vertikal */
+            .header-area .logo,
+            .header-area .logo a {
+                display: flex;
+                align-items: center;
+            }
+
+            .header-area .logo img {
+                display: block;
             }
 
             .register-hero {
@@ -337,8 +402,8 @@
             <div id="sticky-header" class="main-header-area">
                 <div class="container">
                     <div class="header_bottom_border">
-                        <div class="row align-items-center">
-                            <div class="col-xl-3 col-lg-3">
+                        <div class="row align-items-center h-100">
+                            <div class="col-8 col-sm-8 col-md-3 col-lg-3 d-flex align-items-center h-100">
                                 <div class="logo">
                                     <a href="{{ url('/') }}">
                                         <img src="{{ $pengaturan?->logo ? asset('storage/' . $pengaturan->logo) : asset('img/logo.png') }}"
@@ -347,7 +412,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-6">
+                            <div class="col-xl-6 col-lg-6 d-none d-lg-block">
                                 <div class="main-menu  d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
@@ -363,12 +428,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 d-block d-lg-none">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="mobile_menu"></div>
-                                    <div class="book_btn ml-2">
-                                        <a href="{{ url('/') }}">Lihat selengkapnya</a>
-                                    </div>
+                            <div class="col-4 d-flex d-lg-none align-items-center justify-content-end h-100">
+                                <div class="book_btn">
+                                    <a href="{{ url('/') }}">Lihat selengkapnya</a>
                                 </div>
                             </div>
                         </div>
@@ -461,6 +523,24 @@
 
     <script src="{{ asset('js/vendor/modernizr-3.5.0.min.js') }}"></script>
     <script src="{{ asset('js/vendor/jquery-1.12.4.min.js') }}"></script>
+    <script>
+        (function() {
+            var header = document.getElementById('sticky-header');
+            if (header) {
+                function onScroll() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('sticky');
+                    } else {
+                        header.classList.remove('sticky');
+                    }
+                }
+                window.addEventListener('scroll', onScroll, {
+                    passive: true
+                });
+                onScroll();
+            }
+        })();
+    </script>
     <script>
         (function() {
             var form = document.getElementById('formIngatkanSayaRegister');
