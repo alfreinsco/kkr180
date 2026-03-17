@@ -28,6 +28,10 @@ class IngatkanSayaResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Data Ingatkan Saya';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Data & Pendaftaran';
+
+    protected static ?int $navigationSort = 2;
+
     public static function form(Schema $schema): Schema
     {
         return IngatkanSayaForm::configure($schema);

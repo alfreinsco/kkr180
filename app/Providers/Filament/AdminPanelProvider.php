@@ -33,6 +33,11 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->navigationGroups([
+                'Data & Pendaftaran',
+                'Konten Acara',
+                'Pengaturan',
+            ])
             ->navigationItems([
                 NavigationItem::make('Situs Utama')
                     ->url('/')

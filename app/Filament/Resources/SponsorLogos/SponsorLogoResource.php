@@ -30,6 +30,10 @@ class SponsorLogoResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Sponsor Logos';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Konten Acara';
+
+    protected static ?int $navigationSort = 6;
+
     public static function form(Schema $schema): Schema
     {
         return SponsorLogoForm::configure($schema);

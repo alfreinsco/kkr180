@@ -10,6 +10,8 @@ class Dashboard extends BaseDashboard
 
     protected static ?string $navigationLabel = 'Dashboard';
 
+    protected static ?int $navigationSort = -2;
+
     /**
      * Grid 2 kolom: statistik & chart full width, tabel side-by-side.
      *

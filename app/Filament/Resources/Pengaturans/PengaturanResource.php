@@ -25,6 +25,10 @@ class PengaturanResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Data Pengaturan';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Pengaturan';
+
+    protected static ?int $navigationSort = 1;
+
     public static function form(Schema $schema): Schema
     {
         return PengaturanForm::configure($schema);

@@ -30,6 +30,10 @@ class ProgramDetailResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Program Details';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Konten Acara';
+
+    protected static ?int $navigationSort = 4;
+
     public static function form(Schema $schema): Schema
     {
         return ProgramDetailForm::configure($schema);

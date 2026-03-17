@@ -30,6 +30,10 @@ class PerformerResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Performer';
 
+    protected static string|\UnitEnum|null $navigationGroup = 'Konten Acara';
+
+    protected static ?int $navigationSort = 3;
+
     public static function form(Schema $schema): Schema
     {
         return PerformerForm::configure($schema);
