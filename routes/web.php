@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Pengaturan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $pengaturan = Pengaturan::aktif();
+
+    return view('welcome', compact('pengaturan'));
 });

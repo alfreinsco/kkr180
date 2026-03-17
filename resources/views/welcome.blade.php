@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>EventCon</title>
+    <title>{{ $pengaturan?->judul_kegiatan ?? 'EventCon' }}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -146,8 +146,8 @@
                         <div class="row align-items-center">
                             <div class="col-xl-3 col-lg-3">
                                 <div class="logo">
-                                    <a href="index.html">
-                                        <img src="img/logo.png" alt="" width="150" height="150">
+                                    <a href="{{ url('/') }}">
+                                        <img src="{{ $pengaturan?->logo ? asset('storage/'.$pengaturan->logo) : asset('img/logo.png') }}" alt="" width="{{ $pengaturan?->lebar_logo ?? 150 }}" height="{{ $pengaturan?->tinggi_logo ?? 150 }}">
                                     </a>
                                 </div>
                             </div>
@@ -195,9 +195,9 @@
                             <div class="shape_2 wow fadeInDown" data-wow-duration="1s" data-wow-delay=".2s">
                                 <img src="img/shape/shape_2.svg" alt="">
                             </div>
-                            <span class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">27 Maret, 2026</span>
-                            <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">KKR 180&deg;</h3>
-                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">FREEDOM</p>
+                            <span class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F, Y') ?? '27 Maret, 2026' }}</span>
+                            <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">{{ $pengaturan?->judul_kegiatan ?? 'KKR 180°' }}</h3>
+                            <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">{{ $pengaturan?->sub_judul_kegiatan ?? 'FREEDOM' }}</p>
                         </div>
                     </div>
                 </div>
@@ -321,7 +321,7 @@
                                 <div class="circle_img"></div>
                                 <div class="porgram_top">
                                     <span class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">18:30-19:30 WIT</span>
-                                    <h4 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">27 Maret 2026</h4>
+                                    <h4 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}</h4>
                                 </div>
                                 <div class="thumb wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
                                     <img src="img/program_details/worship.png" alt="">
@@ -334,7 +334,7 @@
                                 <div class="circle_img"></div>
                                 <div class="porgram_top">
                                     <span class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">19:30-20:30 WIT</span>
-                                    <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">27 Maret 2026</h4>
+                                    <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}</h4>
                                 </div>
                                 <div class="thumb wow fadeInRight" data-wow-duration="1s" data-wow-delay=".5s">
                                     <img src="img/program_details/khotbah.png" alt="">
@@ -438,8 +438,8 @@
                     <div class="col-lg-6 col-md-8">
                         <div class="footer_widget">
                             <div class="address_details text-center">
-                                <h4 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">27 Maret 2026</h4>
-                                <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Aula Lantai 2 Universitas Pattimura</h3>
+                                <h4 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}</h4>
+                                <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">{{ $pengaturan?->lokasi_kegiatan ?? 'Aula Lantai 2 Universitas Pattimura' }}</h3>
                                 <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">Jangan sampai ketinggalan!</p>
                                 <a href="#" class="boxed-btn3 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan Saya</a>
                             </div>
