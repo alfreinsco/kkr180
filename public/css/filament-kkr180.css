@@ -1,0 +1,110 @@
+/**
+ * Filament Admin - konsisten dengan tema welcome (KKR 180°)
+ * Warna aksen #FF4533, font Muli, dark, sudut tajam (border-radius: 0)
+ */
+
+/* Font body konsisten dengan welcome */
+.fi {
+    font-family: "Muli", sans-serif !important;
+}
+
+.fi h1, .fi h2, .fi h3, .fi .fi-page-heading, .fi .fi-section-header-heading {
+    font-family: "Anton", "Muli", sans-serif !important;
+}
+
+/* Sudut tajam seperti welcome (tanpa rounded) */
+.fi [class*="rounded-xl"],
+.fi [class*="rounded-lg"],
+.fi [class*="rounded-md"]:not(.fi-icon-button):not([class*="rounded-full"]) {
+    border-radius: 0 !important;
+}
+
+.fi .fi-ta-content,
+.fi .fi-section-content-ctn > div,
+.fi .fi-wi-stats-overview-widget section > div,
+.fi .fi-fo-component-ctn .ring-1 {
+    border-radius: 0 !important;
+}
+
+/* Warna primary aksen #FF4533 (override jika pakai Color::Red) */
+.fi.dark {
+    --primary-400: #ff6b5c;
+    --primary-500: #FF4533;
+    --primary-600: #e63e2e;
+}
+
+/* Background dark lebih dekat ke welcome (#000, #1a1a1a) */
+.fi.dark .fi-main-ctn {
+    background-color: #0a0a0a;
+}
+
+.fi.dark .fi-sidebar,
+.fi.dark .fi-sidebar-nav {
+    background-color: #000 !important;
+    border-color: #333 !important;
+}
+
+.fi.dark .fi-topbar {
+    background-color: #000 !important;
+    border-color: #333 !important;
+}
+
+/* Border aksen primary pada elemen aktif */
+.fi.dark .fi-sidebar-item-btn.fi-active,
+.fi.dark .fi-sidebar-group-button.fi-active {
+    border-left: 2px solid #FF4533;
+    color: #FF4533;
+}
+
+.fi.dark .fi-sidebar-item-btn:hover:not(.fi-active),
+.fi.dark .fi-sidebar-group-button:hover {
+    color: #FF4533;
+}
+
+/* Input & form konsisten welcome */
+.fi.dark input:not([type="checkbox"]):not([type="radio"]),
+.fi.dark select,
+.fi.dark textarea {
+    background-color: #1a1a1a !important;
+    border-color: #333 !important;
+    border-radius: 0 !important;
+}
+
+.fi.dark input:focus,
+.fi.dark select:focus,
+.fi.dark textarea:focus {
+    border-color: #FF4533 !important;
+    box-shadow: 0 0 0 1px #FF4533 !important;
+}
+
+/* Tombol primary seperti welcome */
+.fi .fi-btn-primary,
+.fi button[type="submit"].fi-btn {
+    background-color: #FF4533 !important;
+    border-radius: 0 !important;
+    border: 1px solid transparent !important;
+    font-family: "Anton", "Muli", sans-serif !important;
+}
+
+.fi .fi-btn-primary:hover,
+.fi button[type="submit"].fi-btn:hover {
+    background-color: transparent !important;
+    border-color: #FF4533 !important;
+    color: #FF4533 !important;
+}
+
+/* Card / container */
+.fi.dark .fi-section-content-ctn,
+.fi.dark .fi-ta-content,
+.fi.dark .fi-wi-stats-overview-widget section {
+    background-color: #0a0a0a !important;
+    border-color: #333 !important;
+}
+
+.fi.dark .fi-section-header-heading {
+    color: #fff;
+}
+
+.fi.dark .fi-section-description {
+    color: #AAB1B7;
+}
