@@ -22,7 +22,9 @@ class IngatkanSayaForm
                     ->label('Nomor Telepon / WhatsApp')
                     ->tel()
                     ->required()
-                    ->maxLength(20),
+                    ->maxLength(20)
+                    ->regex('/^[0-9+\s\-()]+$/')
+                    ->validationMessages(['regex' => 'Nomor telepon hanya boleh berisi angka dan format nomor (+, spasi, strip).']),
                 Textarea::make('alamat')
                     ->label('Alamat')
                     ->required()

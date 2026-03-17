@@ -17,13 +17,14 @@ class IngatkanSayaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required|string|max:255',
-            'no_telp' => 'required|string|max:20',
+            'no_telp' => 'required|string|regex:/^[0-9+\s\-()]+$/|max:20',
             'alamat' => 'required|string',
             'pernah_ikut' => 'required|in:sudah,belum',
             'nama_cgl' => 'nullable|required_if:pernah_ikut,sudah|string|max:255',
         ], [
             'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
             'no_telp.required' => 'Nomor telepon wajib diisi.',
+            'no_telp.regex' => 'Nomor telepon hanya boleh berisi angka dan format nomor (+, spasi, strip).',
             'alamat.required' => 'Alamat wajib diisi.',
             'pernah_ikut.required' => 'Pilih apakah sudah pernah mengikuti CG.',
             'pernah_ikut.in' => 'Pilihan tidak valid.',

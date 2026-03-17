@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{ $pengaturan?->judul_kegiatan ?? 'EventCon' }}</title>
+    <title>{{ $pengaturan?->judul_kegiatan ?? 'KKR 180°' }}</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/logo-gmsambon.jpeg') }}">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
@@ -254,153 +254,175 @@
     </div>
     <!-- slider_area_end -->
 
-    @if($performers && $performers->isNotEmpty())
-    <!-- performar_area_start  -->
-    <div id="performar_area_start" class="performar_area black_bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section_title mb-80">
-                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Performer</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="row">
-                        @foreach($performers as $index => $p)
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay="{{ number_format(0.3 + $index * 0.1, 1) }}s">
-                                <div data-tilt class="thumb">
-                                    <img src="{{ $p->foto ? asset('storage/'.$p->foto) : asset('img/performer/hendra.jpg') }}" alt="{{ $p->nama }}">
-                                </div>
-                                <div class="performer_heading">
-                                    <h4>{{ $p->nama }}</h4>
-                                    <span>{{ $p->peran }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- performar_area_end  -->
-    @endif
-
-    @if($tentang)
-    <!-- about_area_start  -->
-    <div id="about_area_start" class="about_area black_bg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="section_title text-center mb-80">
-                        <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">{{ $tentang->judul ?? 'Tentang KKR 180°' }}</h3>
-                        <p class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">{{ $tentang->deskripsi }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row align-items-center">
-                <div class="col-lg-7 col-md-6">
-                    <div class="about_thumb">
-                        <div class="shap_3  wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">
-                            <img src="{{ asset('img/shape/shape_3.svg') }}" alt="">
-                        </div>
-                        <div class="thumb_inner  wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-                            <img src="{{ $tentang->gambar ? asset('storage/'.$tentang->gambar) : asset('img/kkr.png') }}" alt="{{ $tentang->judul ?? '' }}">
+    @if ($performers && $performers->isNotEmpty())
+        <!-- performar_area_start  -->
+        <div id="performar_area_start" class="performar_area black_bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section_title mb-80">
+                            <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Performer</h3>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-md-6">
-                    <div class="about_info pl-68">
-                        <h4 class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">{{ $tentang->subjudul ?? 'Saatnya berubah. Saatnya berbalik 180° kepada Tuhan.' }}</h4>
-                        <p class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">{{ $tentang->deskripsi_singkat ?? 'Mari alami perubahan hidup bersama Tuhan. Waktunya berbalik 180° dan memulai yang baru!' }}</p>
-                        <a href="#" class="boxed-btn3  wow fadeInLeft" data-wow-duration="1s"
-                            data-wow-delay=".7s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan Saya</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- about_area_end  -->
-    @endif
-
-    @if($programDetails && $programDetails->isNotEmpty())
-    <div class="program_details_area detials_bg_1 overlay2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section_title text-center mb-80  wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">
-                        <h3>Program Details</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="program_detail_wrap">
-                        @foreach($programDetails as $index => $pd)
-                        <div class="single_propram">
-                            <div class="inner_wrap">
-                                <div class="circle_img"></div>
-                                <div class="porgram_top">
-                                    <span class="{{ $index % 2 === 0 ? 'wow fadeInLeft' : 'wow fadeInRight' }}" data-wow-duration="1s" data-wow-delay="{{ number_format(0.3 + $index * 0.1, 1) }}s">{{ $pd->waktu }}</span>
-                                    <h4 class="{{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}" data-wow-duration="1s" data-wow-delay="{{ number_format(0.4 + $index * 0.1, 1) }}s">
-                                        {{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}
-                                    </h4>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            @foreach ($performers as $index => $p)
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="single_performer wow fadeInUp" data-wow-duration="1s"
+                                        data-wow-delay="{{ number_format(0.3 + $index * 0.1, 1) }}s">
+                                        <div data-tilt class="thumb">
+                                            <img src="{{ $p->foto ? asset('storage/' . $p->foto) : asset('img/performer/hendra.jpg') }}"
+                                                alt="{{ $p->nama }}">
+                                        </div>
+                                        <div class="performer_heading">
+                                            <h4>{{ $p->nama }}</h4>
+                                            <span>{{ $p->peran }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="thumb {{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}" data-wow-duration="1s" data-wow-delay="{{ number_format(0.5 + $index * 0.1, 1) }}s">
-                                    <img src="{{ $pd->gambar ? asset('storage/'.$pd->gambar) : asset('img/program_details/worship.png') }}" alt="{{ $pd->judul }}">
-                                </div>
-                                <h4 class="{{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}" data-wow-duration="1s" data-wow-delay="{{ number_format(0.6 + $index * 0.1, 1) }}s">{{ $pd->judul }}</h4>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
-
-    @if($pengaturan && $pengaturan->peta_embed_url)
-    <!-- map_area_start  -->
-    <div id="contact_area_start" class="map_area">
-        <iframe
-            src="{{ $pengaturan->peta_embed_url }}"
-            width="600" height="450" style="border:0; width: 100%;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-    <!-- map_area_end  -->
-    @endif
-
-    @if($sponsorLogos && $sponsorLogos->isNotEmpty())
-    <!-- brand_area_start  -->
-    <div class="brand_area black_bg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section_title text-center mb-80">
-                        <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Sponsor Logos</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="brand_wrap">
-                        <div class="brand_active owl-carousel">
-                            @foreach($sponsorLogos as $sl)
-                            <div class="single_brand text-center">
-                                <img src="{{ $sl->logo ? (str_starts_with($sl->logo, 'img/') ? asset($sl->logo) : asset('storage/'.$sl->logo)) : asset('img/brand/logo-gmsambon.png') }}" alt="{{ $sl->nama ?? '' }}">
-                            </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- brand_area_end  -->
+        <!-- performar_area_end  -->
+    @endif
+
+    @if ($tentang)
+        <!-- about_area_start  -->
+        <div id="about_area_start" class="about_area black_bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="section_title text-center mb-80">
+                            <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">
+                                {{ $tentang->judul ?? 'Tentang KKR 180°' }}</h3>
+                            <p class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">
+                                {{ $tentang->deskripsi }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-7 col-md-6">
+                        <div class="about_thumb">
+                            <div class="shap_3  wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">
+                                <img src="{{ asset('img/shape/shape_3.svg') }}" alt="">
+                            </div>
+                            <div class="thumb_inner  wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                                <img src="{{ $tentang->gambar ? asset('storage/' . $tentang->gambar) : asset('img/kkr.png') }}"
+                                    alt="{{ $tentang->judul ?? '' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-6">
+                        <div class="about_info pl-68">
+                            <h4 class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">
+                                {{ $tentang->subjudul ?? 'Saatnya berubah. Saatnya berbalik 180° kepada Tuhan.' }}</h4>
+                            <p class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".6s">
+                                {{ $tentang->deskripsi_singkat ?? 'Mari alami perubahan hidup bersama Tuhan. Waktunya berbalik 180° dan memulai yang baru!' }}
+                            </p>
+                            <a href="#" class="boxed-btn3  wow fadeInLeft" data-wow-duration="1s"
+                                data-wow-delay=".7s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan
+                                Saya</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- about_area_end  -->
+    @endif
+
+    @if ($programDetails && $programDetails->isNotEmpty())
+        <div class="program_details_area detials_bg_1 overlay2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section_title text-center mb-80  wow fadeInRight" data-wow-duration="1s"
+                            data-wow-delay=".3s">
+                            <h3>Program Details</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="program_detail_wrap">
+                            @foreach ($programDetails as $index => $pd)
+                                <div class="single_propram">
+                                    <div class="inner_wrap">
+                                        <div class="circle_img"></div>
+                                        <div class="porgram_top">
+                                            <span
+                                                class="{{ $index % 2 === 0 ? 'wow fadeInLeft' : 'wow fadeInRight' }}"
+                                                data-wow-duration="1s"
+                                                data-wow-delay="{{ number_format(0.3 + $index * 0.1, 1) }}s">{{ $pd->waktu }}</span>
+                                            <h4 class="{{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}"
+                                                data-wow-duration="1s"
+                                                data-wow-delay="{{ number_format(0.4 + $index * 0.1, 1) }}s">
+                                                {{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}
+                                            </h4>
+                                        </div>
+                                        <div class="thumb {{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}"
+                                            data-wow-duration="1s"
+                                            data-wow-delay="{{ number_format(0.5 + $index * 0.1, 1) }}s">
+                                            <img src="{{ $pd->gambar ? asset('storage/' . $pd->gambar) : asset('img/program_details/worship.png') }}"
+                                                alt="{{ $pd->judul }}">
+                                        </div>
+                                        <h4 class="{{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}"
+                                            data-wow-duration="1s"
+                                            data-wow-delay="{{ number_format(0.6 + $index * 0.1, 1) }}s">
+                                            {{ $pd->judul }}</h4>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if ($pengaturan && $pengaturan->peta_embed_url)
+        <!-- map_area_start  -->
+        <div id="contact_area_start" class="map_area">
+            <iframe src="{{ $pengaturan->peta_embed_url }}" width="600" height="450"
+                style="border:0; width: 100%;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <!-- map_area_end  -->
+    @endif
+
+    @if ($sponsorLogos && $sponsorLogos->isNotEmpty())
+        <!-- brand_area_start  -->
+        <div class="brand_area black_bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section_title text-center mb-80">
+                            <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Sponsor Logos
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="brand_wrap">
+                            <div class="brand_active owl-carousel">
+                                @foreach ($sponsorLogos as $sl)
+                                    <div class="single_brand text-center">
+                                        <img src="{{ $sl->logo ? (str_starts_with($sl->logo, 'img/') ? asset($sl->logo) : asset('storage/' . $sl->logo)) : asset('img/brand/logo-gmsambon.png') }}"
+                                            alt="{{ $sl->nama ?? '' }}">
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- brand_area_end  -->
     @endif
     <!-- footer_start  -->
     <footer class="footer">
