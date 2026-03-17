@@ -16,3 +16,9 @@ Route::get('/', function () {
 
     return view('welcome', compact('pengaturan', 'tentang', 'performers', 'programDetails', 'sponsorLogos'));
 });
+
+Route::get('/register', function () {
+    $pengaturan = Pengaturan::aktif();
+
+    return view('register', compact('pengaturan'));
+});
