@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PengaturanSeeder::class,
             PerformerSeeder::class,
+            ProgramDetailSeeder::class,
         ]);
     }
 }

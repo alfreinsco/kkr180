@@ -254,6 +254,7 @@
     </div>
     <!-- slider_area_end -->
 
+    @if($performers && $performers->isNotEmpty())
     <!-- performar_area_start  -->
     <div id="performar_area_start" class="performar_area black_bg">
         <div class="container">
@@ -267,53 +268,26 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="row">
-                        @foreach ($performers ?? [] as $index => $p)
-                            <div class="col-lg-6 col-md-6">
-                                <div class="single_performer wow fadeInUp" data-wow-duration="1s"
-                                    data-wow-delay="{{ number_format(0.3 + $index * 0.1, 1) }}s">
-                                    <div data-tilt class="thumb">
-                                        <img src="{{ $p->foto ? asset('storage/' . $p->foto) : asset('img/performer/hendra.jpg') }}"
-                                            alt="{{ $p->nama }}">
-                                    </div>
-                                    <div class="performer_heading">
-                                        <h4>{{ $p->nama }}</h4>
-                                        <span>{{ $p->peran }}</span>
-                                    </div>
+                        @foreach($performers as $index => $p)
+                        <div class="col-lg-6 col-md-6">
+                            <div class="single_performer wow fadeInUp" data-wow-duration="1s" data-wow-delay="{{ number_format(0.3 + $index * 0.1, 1) }}s">
+                                <div data-tilt class="thumb">
+                                    <img src="{{ $p->foto ? asset('storage/'.$p->foto) : asset('img/performer/hendra.jpg') }}" alt="{{ $p->nama }}">
+                                </div>
+                                <div class="performer_heading">
+                                    <h4>{{ $p->nama }}</h4>
+                                    <span>{{ $p->peran }}</span>
                                 </div>
                             </div>
+                        </div>
                         @endforeach
-                        @if (!$performers || $performers->isEmpty())
-                            <div class="col-lg-6 col-md-6">
-                                <div class="single_performer wow fadeInUp" data-wow-duration="1s"
-                                    data-wow-delay=".3s">
-                                    <div data-tilt class="thumb">
-                                        <img src="{{ asset('img/performer/hendra.jpg') }}" alt="">
-                                    </div>
-                                    <div class="performer_heading">
-                                        <h4>PDT. Hendra Stefanus</h4>
-                                        <span>Pelayan Firman</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="single_performer wow fadeInUp" data-wow-duration="1s"
-                                    data-wow-delay=".4s">
-                                    <div data-tilt class="thumb">
-                                        <img src="{{ asset('img/performer/rian.png') }}" alt="">
-                                    </div>
-                                    <div class="performer_heading">
-                                        <h4>PDT. Fedrian Tjeleni</h4>
-                                        <span>Worship Leader</span>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- performar_area_end  -->
+    @endif
 
     <!-- about_area_start  -->
     <div id="about_area_start" class="about_area black_bg">
@@ -357,12 +331,12 @@
     </div>
     <!-- about_area_end  -->
 
+    @if($programDetails && $programDetails->isNotEmpty())
     <div class="program_details_area detials_bg_1 overlay2">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="section_title text-center mb-80  wow fadeInRight" data-wow-duration="1s"
-                        data-wow-delay=".3s">
+                    <div class="section_title text-center mb-80  wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">
                         <h3>Program Details</h3>
                     </div>
                 </div>
@@ -370,70 +344,29 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="program_detail_wrap">
+                        @foreach($programDetails as $index => $pd)
                         <div class="single_propram">
                             <div class="inner_wrap">
                                 <div class="circle_img"></div>
                                 <div class="porgram_top">
-                                    <span class=" wow fadeInLeft" data-wow-duration="1s"
-                                        data-wow-delay=".3s">18:30-19:30 WIT</span>
-                                    <h4 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
+                                    <span class="{{ $index % 2 === 0 ? 'wow fadeInLeft' : 'wow fadeInRight' }}" data-wow-duration="1s" data-wow-delay="{{ number_format(0.3 + $index * 0.1, 1) }}s">{{ $pd->waktu }}</span>
+                                    <h4 class="{{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}" data-wow-duration="1s" data-wow-delay="{{ number_format(0.4 + $index * 0.1, 1) }}s">
                                         {{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}
                                     </h4>
                                 </div>
-                                <div class="thumb wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
-                                    <img src="img/program_details/worship.png" alt="">
+                                <div class="thumb {{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}" data-wow-duration="1s" data-wow-delay="{{ number_format(0.5 + $index * 0.1, 1) }}s">
+                                    <img src="{{ $pd->gambar ? asset('storage/'.$pd->gambar) : asset('img/program_details/worship.png') }}" alt="{{ $pd->judul }}">
                                 </div>
-                                <h4 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">Praise and
-                                    Worship</h4>
+                                <h4 class="{{ $index % 2 === 0 ? 'wow fadeInUp' : 'wow fadeInRight' }}" data-wow-duration="1s" data-wow-delay="{{ number_format(0.6 + $index * 0.1, 1) }}s">{{ $pd->judul }}</h4>
                             </div>
                         </div>
-                        <div class="single_propram">
-                            <div class="inner_wrap">
-                                <div class="circle_img"></div>
-                                <div class="porgram_top">
-                                    <span class="wow fadeInRight" data-wow-duration="1s"
-                                        data-wow-delay=".3s">19:30-20:30 WIT</span>
-                                    <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">
-                                        {{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F Y') ?? '27 Maret 2026' }}
-                                    </h4>
-                                </div>
-                                <div class="thumb wow fadeInRight" data-wow-duration="1s" data-wow-delay=".5s">
-                                    <img src="img/program_details/khotbah.png" alt="">
-                                </div>
-                                <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".6s">Khotbah</h4>
-                            </div>
-                        </div>
-                        <!-- <div class="single_propram">
-                            <div class="inner_wrap">
-                                <div class="circle_img"></div>
-                                <div class="porgram_top">
-                                    <span class=" wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".3s">3.00-4.00pm</span>
-                                    <h4 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">12 Feb 2020</h4>
-                                </div>
-                                <div class="thumb  wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
-                                    <img src="img/program_details/3.png" alt="">
-                                </div>
-                                <h4 class=" wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">Mr. Zosoldos</h4>
-                            </div>
-                        </div>
-                        <div class="single_propram">
-                            <div class="inner_wrap">
-                                <div class="circle_img"></div>
-                                <div class="porgram_top">
-                                    <span class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">3.00-4.00pm</span>
-                                    <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".4s">12 Feb 2020</h4>
-                                </div>
-                                <div class="thumb wow fadeInRight" data-wow-duration="1s" data-wow-delay=".5s">
-                                    <img src="img/program_details/4.png" alt="">
-                                </div>
-                                <h4 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".6s">Mr. Zosoldos</h4>
-                            </div>
-                        </div> -->
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 
     <!-- map_area_start  -->
     <div id="contact_area_start" class="map_area">
