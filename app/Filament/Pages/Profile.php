@@ -17,6 +17,8 @@ class Profile extends Page implements HasForms
 {
     use InteractsWithForms;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static string|BackedEnum|null $navigationIcon = null;
 
     protected static ?string $navigationLabel = 'Profil Saya';
