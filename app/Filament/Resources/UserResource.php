@@ -18,6 +18,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class UserResource extends Resource
 {
@@ -110,7 +111,7 @@ class UserResource extends Resource
 
     public static function canAccess(): bool
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         return (bool) ($user?->is_admin);
     }
