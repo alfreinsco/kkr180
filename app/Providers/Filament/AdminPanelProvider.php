@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use App\Filament\Pages\Profile;
 use App\Filament\Widgets\AccountWidget as AppAccountWidget;
 use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
@@ -63,6 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,
+                Profile::class, // route /admin/profile, tidak di sidebar (isDiscovered = false)
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([

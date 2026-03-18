@@ -17,7 +17,15 @@ class Profile extends Page implements HasForms
 {
     use InteractsWithForms;
 
+    /** Tidak ikut auto-discover → tidak muncul di sidebar; akses lewat menu user saja */
+    protected static bool $isDiscovered = false;
+
     protected static bool $shouldRegisterNavigation = false;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     protected static string|BackedEnum|null $navigationIcon = null;
 
