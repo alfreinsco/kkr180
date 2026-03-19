@@ -15,6 +15,7 @@ class BukuTamu extends Model
         'nama_lengkap',
         'no_telp',
         'alamat',
+        'asal_kampus',
         'pernah_ikut',
         'nama_cgl',
     ];

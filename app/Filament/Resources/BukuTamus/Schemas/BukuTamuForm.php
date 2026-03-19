@@ -29,6 +29,9 @@ class BukuTamuForm
                     ->label('Alamat')
                     ->required()
                     ->columnSpanFull(),
+                TextInput::make('asal_kampus')
+                    ->label('Asal Kampus')
+                    ->maxLength(255),
                 Select::make('pernah_ikut')
                     ->label('Sudah pernah mengikuti CG (Connect Group) sebelumnya?')
                     ->options([

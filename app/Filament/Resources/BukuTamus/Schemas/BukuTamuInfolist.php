@@ -18,6 +18,9 @@ class BukuTamuInfolist
                 TextEntry::make('alamat')
                     ->label('Alamat')
                     ->columnSpanFull(),
+                TextEntry::make('asal_kampus')
+                    ->label('Asal Kampus')
+                    ->placeholder('-'),
                 TextEntry::make('pernah_ikut')
                     ->label('Pernah mengikuti CG')
                     ->formatStateUsing(fn (string $state): string => $state === 'sudah' ? 'Sudah' : 'Belum'),

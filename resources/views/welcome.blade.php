@@ -547,6 +547,11 @@
                             <textarea class="form-control" id="alamat" name="alamat" rows="3" placeholder="Masukkan alamat" required></textarea>
                         </div>
                         <div class="form-group">
+                            <label for="asalKampus">Asal kampus</label>
+                            <input type="text" class="form-control" id="asalKampus" name="asal_kampus"
+                                placeholder="Contoh: Universitas Pattimura">
+                        </div>
+                        <div class="form-group">
                             <label>Sudah pernah mengikuti CG(Connect Group) sebelumnya?</label>
                             <div class="ingatkan-radio-wrap">
                                 <label>
@@ -638,6 +643,7 @@
                         nama_lengkap: document.getElementById('namaLengkap').value.trim(),
                         no_telp: document.getElementById('noTelp').value.trim(),
                         alamat: document.getElementById('alamat').value.trim(),
+                        asal_kampus: document.getElementById('asalKampus').value.trim() || null,
                         pernah_ikut: (document.querySelector('input[name="pernah_ikut"]:checked') || {})
                             .value || 'belum',
                         nama_cgl: document.getElementById('namaCGL').value.trim() || null

@@ -23,6 +23,8 @@ class BukuTamuExporter extends Exporter
                 ->label('No. Telepon / WA'),
             ExportColumn::make('alamat')
                 ->label('Alamat'),
+            ExportColumn::make('asal_kampus')
+                ->label('Asal Kampus'),
             ExportColumn::make('pernah_ikut')
                 ->label('Pernah CG')
                 ->formatStateUsing(fn (string $state): string => $state === 'sudah' ? 'Sudah' : 'Belum'),

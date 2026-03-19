@@ -19,6 +19,7 @@ class IngatkanSayaController extends Controller
             'nama_lengkap' => 'required|string|max:255',
             'no_telp' => 'required|string|regex:/^[0-9+\s\-()]+$/|max:20',
             'alamat' => 'required|string',
+            'asal_kampus' => 'nullable|string|max:255',
             'pernah_ikut' => 'required|in:sudah,belum',
             'nama_cgl' => 'nullable|required_if:pernah_ikut,sudah|string|max:255',
         ], [

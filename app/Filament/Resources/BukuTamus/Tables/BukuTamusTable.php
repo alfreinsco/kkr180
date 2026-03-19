@@ -34,6 +34,11 @@ class BukuTamusTable
                     ->limit(40)
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('asal_kampus')
+                    ->label('Asal Kampus')
+                    ->placeholder('-')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('pernah_ikut')
                     ->label('Pernah CG')
                     ->formatStateUsing(fn (string $state): string => $state === 'sudah' ? 'Sudah' : 'Belum')

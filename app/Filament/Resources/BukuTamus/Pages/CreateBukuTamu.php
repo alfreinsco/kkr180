@@ -32,7 +32,7 @@ class CreateBukuTamu extends CreateRecord
                                 ->orWhere('no_telp', 'like', "%{$search}%")
                                 ->limit(50)
                                 ->get()
-                                ->mapWithKeys(fn (IngatkanSaya $r) => [$r->id => $r->nama_lengkap . ' — ' . $r->no_telp])
+                                ->mapWithKeys(fn (IngatkanSaya $r) => [$r->id => $r->nama_lengkap.' — '.$r->no_telp])
                                 ->all();
                         })
                         ->getOptionLabelUsing(fn ($value): ?string => IngatkanSaya::find($value)?->nama_lengkap)
@@ -45,12 +45,14 @@ class CreateBukuTamu extends CreateRecord
                             ->title('Data tidak ditemukan.')
                             ->danger()
                             ->send();
+
                         return;
                     }
                     $this->form->fill([
                         'nama_lengkap' => $ingatkan->nama_lengkap,
                         'no_telp' => $ingatkan->no_telp,
                         'alamat' => $ingatkan->alamat,
+                        'asal_kampus' => $ingatkan->asal_kampus,
                         'pernah_ikut' => $ingatkan->pernah_ikut,
                         'nama_cgl' => $ingatkan->nama_cgl,
                     ]);

@@ -488,6 +488,11 @@
                                         required></textarea>
                                 </div>
                                 <div class="form-group">
+                                    <label for="asalKampusRegister">Asal kampus</label>
+                                    <input type="text" class="form-control" id="asalKampusRegister"
+                                        name="asal_kampus" placeholder="Contoh: Universitas Pattimura">
+                                </div>
+                                <div class="form-group">
                                     <label>Sudah pernah mengikuti CG (Connect Group) sebelumnya?</label>
                                     <div class="ingatkan-radio-wrap">
                                         <label>
@@ -602,6 +607,7 @@
                     nama_lengkap: document.getElementById('namaLengkapRegister').value.trim(),
                     no_telp: document.getElementById('noTelpRegister').value.trim(),
                     alamat: document.getElementById('alamatRegister').value.trim(),
+                    asal_kampus: document.getElementById('asalKampusRegister').value.trim() || null,
                     pernah_ikut: (document.querySelector('input[name="pernah_ikut"]:checked') || {})
                         .value || 'belum',
                     nama_cgl: document.getElementById('namaCglRegister').value.trim() || null,
