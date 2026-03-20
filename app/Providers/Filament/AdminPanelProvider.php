@@ -32,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->favicon(asset('img/logo-gmsambon.jpeg'))
+            ->favicon(asset('img/logo-gmsambon.jpg'))
             ->id('admin')
             ->path('admin')
             ->login()
