@@ -552,6 +552,11 @@
                                 placeholder="Contoh: Universitas Pattimura">
                         </div>
                         <div class="form-group">
+                            <label for="umur">Umur</label>
+                            <input type="number" class="form-control" id="umur" name="umur" min="0" max="120"
+                                step="1" placeholder="Opsional">
+                        </div>
+                        <div class="form-group">
                             <label>Sudah pernah mengikuti CG(Connect Group) sebelumnya?</label>
                             <div class="ingatkan-radio-wrap">
                                 <label>
@@ -639,11 +644,14 @@
                     var originalText = submitBtn.textContent;
                     submitBtn.disabled = true;
                     submitBtn.textContent = 'Mengirim...';
+                    var umurRaw = document.getElementById('umur').value.trim();
+                    var umurParsed = umurRaw === '' ? null : parseInt(umurRaw, 10);
                     var payload = {
                         nama_lengkap: document.getElementById('namaLengkap').value.trim(),
                         no_telp: document.getElementById('noTelp').value.trim(),
                         alamat: document.getElementById('alamat').value.trim(),
                         asal_kampus: document.getElementById('asalKampus').value.trim() || null,
+                        umur: isNaN(umurParsed) ? null : umurParsed,
                         pernah_ikut: (document.querySelector('input[name="pernah_ikut"]:checked') || {})
                             .value || 'belum',
                         nama_cgl: document.getElementById('namaCGL').value.trim() || null

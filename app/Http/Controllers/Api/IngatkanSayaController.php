@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\IngatkanSayaResource;
 use App\Models\IngatkanSaya;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class IngatkanSayaController extends Controller
             'no_telp' => 'required|string|regex:/^[0-9+\s\-()]+$/|max:20',
             'alamat' => 'required|string',
             'asal_kampus' => 'nullable|string|max:255',
+            'umur' => 'nullable|integer|min:0|max:120',
             'pernah_ikut' => 'required|in:sudah,belum',
             'nama_cgl' => 'nullable|required_if:pernah_ikut,sudah|string|max:255',
         ], [
@@ -50,11 +52,7 @@ class IngatkanSayaController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Terima kasih! Kami akan mengingatkan Anda untuk KKR 180°.',
-            'data' => [
-                'id' => $ingatkan->id,
-                'nama_lengkap' => $ingatkan->nama_lengkap,
-                'no_telp' => $ingatkan->no_telp,
-            ],
+            'data' => new IngatkanSayaResource($ingatkan),
         ], 201);
     }
 }

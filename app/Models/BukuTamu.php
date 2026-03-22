@@ -16,6 +16,7 @@ class BukuTamu extends Model
         'no_telp',
         'alamat',
         'asal_kampus',
+        'umur',
         'pernah_ikut',
         'nama_cgl',
     ];
@@ -34,19 +35,21 @@ class BukuTamu extends Model
     {
         if ($value === null || $value === '') {
             $this->attributes['no_telp'] = $value;
+
             return;
         }
         $digits = preg_replace('/\D/', '', $value);
         if ($digits === '') {
             $this->attributes['no_telp'] = $value;
+
             return;
         }
         if (str_starts_with($digits, '6262')) {
-            $digits = '62' . substr($digits, 4);
+            $digits = '62'.substr($digits, 4);
         } elseif (str_starts_with($digits, '0')) {
-            $digits = '62' . substr($digits, 1);
+            $digits = '62'.substr($digits, 1);
         } elseif (! str_starts_with($digits, '62') && str_starts_with($digits, '8')) {
-            $digits = '62' . $digits;
+            $digits = '62'.$digits;
         }
         $this->attributes['no_telp'] = $digits;
     }

@@ -493,6 +493,11 @@
                                         name="asal_kampus" placeholder="Contoh: Universitas Pattimura">
                                 </div>
                                 <div class="form-group">
+                                    <label for="umurRegister">Umur</label>
+                                    <input type="number" class="form-control" id="umurRegister" name="umur" min="0"
+                                        max="120" step="1" placeholder="Opsional">
+                                </div>
+                                <div class="form-group">
                                     <label>Sudah pernah mengikuti CG (Connect Group) sebelumnya?</label>
                                     <div class="ingatkan-radio-wrap">
                                         <label>
@@ -603,11 +608,14 @@
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
 
+                var umurRaw = document.getElementById('umurRegister').value.trim();
+                var umurParsed = umurRaw === '' ? null : parseInt(umurRaw, 10);
                 var payload = {
                     nama_lengkap: document.getElementById('namaLengkapRegister').value.trim(),
                     no_telp: document.getElementById('noTelpRegister').value.trim(),
                     alamat: document.getElementById('alamatRegister').value.trim(),
                     asal_kampus: document.getElementById('asalKampusRegister').value.trim() || null,
+                    umur: isNaN(umurParsed) ? null : umurParsed,
                     pernah_ikut: (document.querySelector('input[name="pernah_ikut"]:checked') || {})
                         .value || 'belum',
                     nama_cgl: document.getElementById('namaCglRegister').value.trim() || null,

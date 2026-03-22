@@ -53,6 +53,7 @@ class CreateBukuTamu extends CreateRecord
                         'no_telp' => $ingatkan->no_telp,
                         'alamat' => $ingatkan->alamat,
                         'asal_kampus' => $ingatkan->asal_kampus,
+                        'umur' => $ingatkan->umur,
                         'pernah_ikut' => $ingatkan->pernah_ikut,
                         'nama_cgl' => $ingatkan->nama_cgl,
                     ]);

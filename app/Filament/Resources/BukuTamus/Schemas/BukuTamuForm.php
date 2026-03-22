@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\BukuTamus\Schemas;
 
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
@@ -32,6 +32,12 @@ class BukuTamuForm
                 TextInput::make('asal_kampus')
                     ->label('Asal Kampus')
                     ->maxLength(255),
+                TextInput::make('umur')
+                    ->label('Umur')
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(120)
+                    ->helperText('Opsional. Isi jika ingin dicatat.'),
                 Select::make('pernah_ikut')
                     ->label('Sudah pernah mengikuti CG (Connect Group) sebelumnya?')
                     ->options([

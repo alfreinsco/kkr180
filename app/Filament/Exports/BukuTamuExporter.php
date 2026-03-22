@@ -3,6 +3,7 @@
 namespace App\Filament\Exports;
 
 use App\Models\BukuTamu;
+use Carbon\Carbon;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
@@ -25,6 +26,8 @@ class BukuTamuExporter extends Exporter
                 ->label('Alamat'),
             ExportColumn::make('asal_kampus')
                 ->label('Asal Kampus'),
+            ExportColumn::make('umur')
+                ->label('Umur'),
             ExportColumn::make('pernah_ikut')
                 ->label('Pernah CG')
                 ->formatStateUsing(fn (string $state): string => $state === 'sudah' ? 'Sudah' : 'Belum'),
@@ -32,16 +35,16 @@ class BukuTamuExporter extends Exporter
                 ->label('Nama CGL'),
             ExportColumn::make('created_at')
                 ->label('Tanggal')
-                ->formatStateUsing(fn ($state) => $state ? \Carbon\Carbon::parse($state)->format('d/m/Y H:i') : ''),
+                ->formatStateUsing(fn ($state) => $state ? Carbon::parse($state)->format('d/m/Y H:i') : ''),
         ];
     }
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        $body = 'Export Buku Tamu selesai. ' . Number::format($export->successful_rows) . ' baris berhasil diekspor.';
+        $body = 'Export Buku Tamu selesai. '.Number::format($export->successful_rows).' baris berhasil diekspor.';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
-            $body .= ' ' . Number::format($failedRowsCount) . ' baris gagal.';
+            $body .= ' '.Number::format($failedRowsCount).' baris gagal.';
         }
 
         return $body;

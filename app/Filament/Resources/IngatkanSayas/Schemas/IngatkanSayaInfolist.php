@@ -21,6 +21,9 @@ class IngatkanSayaInfolist
                 TextEntry::make('asal_kampus')
                     ->label('Asal Kampus')
                     ->placeholder('-'),
+                TextEntry::make('umur')
+                    ->label('Umur')
+                    ->placeholder('-'),
                 TextEntry::make('pernah_ikut')
                     ->label('Pernah mengikuti CG')
                     ->formatStateUsing(fn (string $state): string => $state === 'sudah' ? 'Sudah' : 'Belum'),

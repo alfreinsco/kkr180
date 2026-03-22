@@ -39,6 +39,11 @@ class IngatkanSayasTable
                     ->placeholder('-')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('umur')
+                    ->label('Umur')
+                    ->placeholder('-')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('pernah_ikut')
                     ->label('Pernah CG')
                     ->formatStateUsing(fn (string $state): string => $state === 'sudah' ? 'Sudah' : 'Belum')

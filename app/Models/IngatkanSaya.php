@@ -18,6 +18,7 @@ class IngatkanSaya extends Model
         'no_telp',
         'alamat',
         'asal_kampus',
+        'umur',
         'pernah_ikut',
         'nama_cgl',
     ];
