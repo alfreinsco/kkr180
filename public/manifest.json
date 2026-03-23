@@ -1,7 +1,8 @@
 {
     "name": "KKR QR SCANNER",
     "short_name": "KKR QR Scanner",
-    "start_url": "/index.php",
+    "start_url": "/scan",
+    "scope": "/scan",
     "background_color": "#bbbbbb",
     "description": "Aplikasi Scanner QR untuk KKR 180°",
     "display": "fullscreen",
