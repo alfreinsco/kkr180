@@ -268,7 +268,7 @@
         /* Kontrol kamera mengambang di atas layar */
         .scan-camera-controls {
             position: fixed;
-            top: 12px;
+            bottom: 14px;
             left: 0;
             right: 0;
             z-index: 10050;
@@ -300,6 +300,75 @@
             background: rgba(0, 0, 0, 0.55);
             color: #FF4533;
             border-color: rgba(255, 69, 51, 0.8);
+        }
+
+        .scan-logo-center {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10045;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scan-logo-center img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+        }
+
+        .scan-logo-corner {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 10045;
+            pointer-events: none;
+            display: none;
+        }
+
+        .scan-logo-corner img {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+        }
+
+        /* Efek scan mondar-mandir (hanya saat kamera aktif) */
+        .scan-effect-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 3;
+            overflow: hidden;
+        }
+
+        .scan-effect-line {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255, 69, 51, 0.95), transparent);
+            box-shadow: 0 0 18px rgba(255, 69, 51, 0.65);
+            top: -10%;
+            animation: scan-move 1.2s ease-in-out infinite;
+        }
+
+        @keyframes scan-move {
+            0% {
+                transform: translateY(0);
+                opacity: 0.25;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(120vh);
+                opacity: 0.25;
+            }
         }
 
         .scan-overlay .frame {
@@ -483,6 +552,15 @@
                     <div class="scan-card">
                         <div class="scan-video-wrap">
                             <video id="videoScanner" playsinline muted></video>
+                            <div id="scanLogoCenter" class="scan-logo-center" aria-hidden="true">
+                                <img src="{{ asset('img/logo.png') }}" alt="">
+                            </div>
+                            <div id="scanLogoCorner" class="scan-logo-corner" aria-hidden="true">
+                                <img src="{{ asset('img/logo.png') }}" alt="">
+                            </div>
+                            <div id="scanEffectOverlay" class="scan-effect-overlay" aria-hidden="true" hidden>
+                                <div class="scan-effect-line"></div>
+                            </div>
                         </div>
 
                         <!-- Tombol mengambang (hanya mobile) -->
@@ -529,8 +607,11 @@
             var hasilEl = document.getElementById('hasilQrPopup');
             var popupEl = document.getElementById('scanResultPopup');
             var videoEl = document.getElementById('videoScanner');
+            var scanEffectOverlay = document.getElementById('scanEffectOverlay');
             var btnScanNow = document.getElementById('btnScanNow');
             var btnStopScanner = document.getElementById('btnStopScanner');
+            var logoCenterEl = document.getElementById('scanLogoCenter');
+            var logoCornerEl = document.getElementById('scanLogoCorner');
 
             var stream = null;
             var timerId = null;
@@ -540,6 +621,9 @@
             function updateControls() {
                 if (btnScanNow) btnScanNow.hidden = cameraActive;
                 if (btnStopScanner) btnStopScanner.hidden = !cameraActive;
+                if (scanEffectOverlay) scanEffectOverlay.hidden = !cameraActive;
+                if (logoCenterEl) logoCenterEl.hidden = cameraActive;
+                if (logoCornerEl) logoCornerEl.hidden = !cameraActive;
             }
 
             function setStatus(text) {
