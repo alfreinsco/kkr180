@@ -213,8 +213,7 @@
             width: 100%;
             height: auto;
             background: #000;
-            transform: scaleX(-1);
-            /* terasa lebih natural untuk user */
+            transform: none;
         }
 
         .scan-overlay {
@@ -397,7 +396,8 @@
                         <div class="row align-items-center h-100">
                             <div class="col-8 col-sm-8 col-md-3 col-lg-3 d-flex align-items-center h-100">
                                 <div class="logo">
-                                    <img src="{{ asset('img/logo.png') }}" alt="KKR 180°" width="150" height="150">
+                                    <img src="{{ asset('img/logo.png') }}" alt="KKR 180°" width="150"
+                                        height="150">
                                 </div>
                             </div>
                             <div class="col-xl-9 col-lg-9"></div>
@@ -509,6 +509,33 @@
                 window.__zxingReader = null;
             }
 
+            async function getBackCameraStream() {
+                // Fokus: kamera belakang (lebih ketat via `exact` jika didukung).
+                var baseConstraints = {
+                    video: {
+                        facingMode: {
+                            ideal: 'environment'
+                        }
+                    },
+                    audio: false
+                };
+
+                var exactConstraints = {
+                    video: {
+                        facingMode: {
+                            exact: 'environment'
+                        }
+                    },
+                    audio: false
+                };
+
+                try {
+                    return await navigator.mediaDevices.getUserMedia(exactConstraints);
+                } catch (e) {
+                    return await navigator.mediaDevices.getUserMedia(baseConstraints);
+                }
+            }
+
             async function startWithBarcodeDetector() {
                 if (!('BarcodeDetector' in window)) {
                     return false;
@@ -520,14 +547,7 @@
 
                 setStatus('Meminta izin kamera...');
 
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: {
-                        facingMode: {
-                            ideal: 'environment'
-                        }
-                    },
-                    audio: false
-                });
+                stream = await getBackCameraStream();
 
                 videoEl.srcObject = stream;
                 await videoEl.play();
@@ -580,7 +600,7 @@
                 return true;
             }
 
-            function startWithZXing() {
+            async function startWithZXing() {
                 if (!window.ZXing || !window.ZXing.BrowserMultiFormatReader) {
                     return false;
                 }
@@ -591,14 +611,31 @@
                 stopStream();
                 stopZXing();
 
-                var video = videoEl;
-                window.__zxingReader = new ZXing.BrowserMultiFormatReader();
+                try {
+                    // Minta kamera belakang dulu supaya kita bisa ambil deviceId-nya.
+                    stream = await getBackCameraStream();
 
-                // Decoder berjalan di kamera tanpa mengirim data ke backend.
-                window.__zxingReader.decodeFromVideoDevice(
-                    undefined,
-                    video,
-                    function(result, err) {
+                    var deviceId = null;
+                    try {
+                        var tracks = stream && stream.getVideoTracks ? stream.getVideoTracks() : [];
+                        var track = tracks && tracks.length ? tracks[0] : null;
+                        if (track && track.getSettings) {
+                            var settings = track.getSettings();
+                            deviceId = settings && settings.deviceId ? settings.deviceId : null;
+                        }
+                    } catch (e) {}
+
+                    // ZXing akan mengatur capture video sendiri dari deviceId.
+                    stopStream();
+
+                    if (!deviceId) {
+                        setStatus('Tidak bisa memastikan kamera belakang di browser ini.');
+                        return false;
+                    }
+
+                    window.__zxingReader = new ZXing.BrowserMultiFormatReader();
+
+                    var callback = function(result, err) {
                         if (result && !hasResult) {
                             hasResult = true;
                             hasilEl.textContent = result.getText ? result.getText() : (result.text || '');
@@ -612,16 +649,26 @@
                             showPopup();
                         }
                         if (err) {
-                            var isNotFound = err.name === 'NotFoundException' || (window.ZXing.NotFoundException &&
+                            var isNotFound = err.name === 'NotFoundException' || (window.ZXing
+                                .NotFoundException &&
                                 err instanceof window.ZXing.NotFoundException);
                             if (!isNotFound) {
                                 // Tidak tampilkan error detail agar UI tetap bersih
                             }
                         }
+                    };
+
+                    // Decoder berjalan di kamera tanpa mengirim data ke backend.
+                    var p = window.__zxingReader.decodeFromVideoDevice(deviceId, videoEl, callback);
+                    if (p && p.catch) {
+                        p.catch(function() {
+                            setStatus('Gagal memulai scanner. Silakan cek izin kamera/perangkat.');
+                        });
                     }
-                ).catch(function() {
-                    setStatus('Gagal memulai scanner. Silakan cek izin kamera/perangkat.');
-                });
+                } catch (e) {
+                    setStatus('Gagal memulai scanner: ' + (e && e.message ? e.message : 'tidak diketahui'));
+                    return false;
+                }
 
                 return true;
             }
@@ -637,7 +684,7 @@
 
                     var ok = await startWithBarcodeDetector();
                     if (!ok) {
-                        ok = startWithZXing();
+                        ok = await startWithZXing();
                     }
 
                     if (!ok) {
