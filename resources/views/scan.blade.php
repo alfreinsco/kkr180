@@ -14,6 +14,35 @@
     @pwaHead
     @pwaHead(asset('img/logo-gmsambon.jpg'), '#ff0000')
 
+    <!-- Force PWA scope hanya untuk /scan -->
+    <script>
+        (function() {
+            if (!('serviceWorker' in navigator)) return;
+
+            // Batasi kontrol service worker agar hanya berlaku untuk /scan.
+            var scanScope = location.origin + '/scan';
+            var scanScopeSlash = scanScope.endsWith('/') ? scanScope : (scanScope + '/');
+
+            // (Opsional) Unregister scope lain yang sudah terpasang sebelumnya.
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                registrations.forEach(function(reg) {
+                    var s = String(reg.scope || '');
+                    if (s !== scanScope && s !== scanScopeSlash && s.indexOf(scanScopeSlash) !== 0) {
+                        try {
+                            reg.unregister();
+                        } catch (e) {}
+                    }
+                });
+            }).catch(function() {});
+
+            navigator.serviceWorker.register('{{ asset('sw.js') }}', {
+                scope: '/scan'
+            }).catch(function(e) {
+                console.warn('Service worker register failed:', e);
+            });
+        })();
+    </script>
+
     <!-- CSS utama event -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
