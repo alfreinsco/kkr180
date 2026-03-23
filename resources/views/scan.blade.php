@@ -265,6 +265,43 @@
             color: #fff;
         }
 
+        /* Kontrol kamera mengambang di atas layar */
+        .scan-camera-controls {
+            position: fixed;
+            top: 12px;
+            left: 0;
+            right: 0;
+            z-index: 10050;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 0 14px;
+            pointer-events: none; /* tombol saja yang aktif */
+        }
+
+        .scan-camera-controls .scan-camera-btn {
+            pointer-events: auto;
+            border-radius: 0;
+            font-family: "Anton", sans-serif;
+            letter-spacing: 1px;
+            font-size: 14px;
+            padding: 10px 16px;
+            border: 1px solid transparent;
+            min-height: 44px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .scan-camera-controls .scan-camera-btn--primary {
+            background: #FF4533;
+            color: #fff;
+        }
+
+        .scan-camera-controls .scan-camera-btn--secondary {
+            background: rgba(0, 0, 0, 0.55);
+            color: #FF4533;
+            border-color: rgba(255, 69, 51, 0.8);
+        }
+
         .scan-overlay .frame {
             position: absolute;
             left: 50%;
@@ -448,6 +485,12 @@
                             <video id="videoScanner" playsinline muted></video>
                         </div>
 
+                        <!-- Tombol mengambang (hanya mobile) -->
+                        <div class="scan-camera-controls" aria-hidden="false">
+                            <button id="btnScanNow" class="scan-camera-btn scan-camera-btn--primary" type="button">Scan Sekarang</button>
+                            <button id="btnStopScanner" class="scan-camera-btn scan-camera-btn--secondary" type="button" hidden>Matikan Scanner</button>
+                        </div>
+
                         <div class="scan-alert" id="scannerStatus" role="status" aria-live="polite"></div>
 
                         <!-- Popup hanya muncul saat ada QR terbaca -->
@@ -486,10 +529,18 @@
             var hasilEl = document.getElementById('hasilQrPopup');
             var popupEl = document.getElementById('scanResultPopup');
             var videoEl = document.getElementById('videoScanner');
+            var btnScanNow = document.getElementById('btnScanNow');
+            var btnStopScanner = document.getElementById('btnStopScanner');
 
             var stream = null;
             var timerId = null;
             var hasResult = false;
+            var cameraActive = false;
+
+            function updateControls() {
+                if (btnScanNow) btnScanNow.hidden = cameraActive;
+                if (btnStopScanner) btnStopScanner.hidden = !cameraActive;
+            }
 
             function setStatus(text) {
                 statusEl.textContent = text || '';
@@ -598,13 +649,17 @@
                         ctx.drawImage(videoEl, 0, 0, vw, vh);
                         detector.detect(canvas)
                             .then(function(codes) {
+                                if (!cameraActive) return;
                                 if (!codes || !codes.length) return;
                                 var raw = codes[0].rawValue || '';
                                 if (!raw) return;
+                                if (!cameraActive) return;
                                 hasResult = true;
                                 hasilEl.textContent = raw;
                                 setStatus('QR berhasil dibaca. Scanner berhenti.');
                                 stopStream();
+                                cameraActive = false;
+                                updateControls();
                                 showPopup();
                             })
                             .catch(function() {
@@ -657,6 +712,7 @@
                     window.__zxingReader = new ZXing.BrowserMultiFormatReader();
 
                     var callback = function(result, err) {
+                        if (!cameraActive) return;
                         if (result && !hasResult) {
                             hasResult = true;
                             hasilEl.textContent = result.getText ? result.getText() : (result.text || '');
@@ -667,6 +723,8 @@
                             try {
                                 stopStream();
                             } catch (e) {}
+                            cameraActive = false;
+                            updateControls();
                             showPopup();
                         }
                         if (err) {
@@ -684,6 +742,9 @@
                     if (p && p.catch) {
                         p.catch(function() {
                             setStatus('Gagal memulai scanner. Silakan cek izin kamera/perangkat.');
+                            cameraActive = false;
+                            updateControls();
+                            hidePopup();
                         });
                     }
                 } catch (e) {
@@ -695,7 +756,13 @@
             }
 
             async function startScanner() {
+                if (cameraActive) return;
+
+                cameraActive = true;
+                updateControls();
+
                 hidePopup();
+                hasResult = false;
                 if (hasilEl) hasilEl.textContent = '';
                 setStatus('');
 
@@ -710,17 +777,47 @@
 
                     if (!ok) {
                         setStatus('Scanner tidak didukung pada browser ini.');
+                        cameraActive = false;
+                        updateControls();
                     }
                 } catch (e) {
                     setStatus('Gagal memulai scanner: ' + (e && e.message ? e.message : 'tidak diketahui'));
+                    cameraActive = false;
+                    updateControls();
                 }
             }
 
+            function stopScannerNow() {
+                hasResult = false;
+                hidePopup();
+                setStatus('');
+                try {
+                    stopZXing();
+                } catch (e) {}
+                try {
+                    stopStream();
+                } catch (e) {}
+
+                cameraActive = false;
+                updateControls();
+            }
+
+            if (btnScanNow) {
+                btnScanNow.addEventListener('click', function() {
+                    startScanner();
+                });
+            }
+
+            if (btnStopScanner) {
+                btnStopScanner.addEventListener('click', function() {
+                    stopScannerNow();
+                });
+            }
+
             if (popupEl) {
-                popupEl.addEventListener('click', function(e) {
+                popupEl.addEventListener('click', function() {
                     hidePopup();
                     hasResult = false;
-                    startScanner();
                 });
             }
 
@@ -729,16 +826,21 @@
                 if (e.key === 'Escape') {
                     hidePopup();
                     hasResult = false;
-                    startScanner();
                 }
             });
 
-            // Autostart agar tidak ada tombol apapun.
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', startScanner);
-            } else {
-                startScanner();
-            }
+            // Inisialisasi: kamera mati sampai user menekan tombol.
+            cameraActive = false;
+            hidePopup();
+            hasResult = false;
+            try {
+                stopZXing();
+            } catch (e) {}
+            try {
+                stopStream();
+            } catch (e) {}
+            if (hasilEl) hasilEl.textContent = '';
+            updateControls();
         })();
     </script>
 </body>
