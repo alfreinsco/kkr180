@@ -1,57 +1,57 @@
 {
-    "name": "Laravel Package Tutorial",
-    "short_name": "LPT",
+    "name": "KKR QR SCANNER",
+    "short_name": "KKR QR Scanner",
     "start_url": "/scan",
     "scope": "/scan",
-    "background_color": "#6777ef",
-    "description": "Tutorial of Laravel Package",
+    "background_color": "#bbbbbb",
+    "description": "Aplikasi Scanner QR untuk KKR 180°",
     "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "theme_color": "#bbbbbb",
     "icons": [
         {
-            "src": "icon-72x72.png?v=1774268282",
+            "src": "/img/logo-gmsambon.jpg",
             "sizes": "72x72",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icon-96x96.png?v=1774268282",
+            "src": "/img/logo-gmsambon.jpg",
             "sizes": "96x96",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icon-128x128.png?v=1774268282",
+            "src": "/img/logo-gmsambon.jpg",
             "sizes": "128x128",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icon-144x144.png?v=1774268282",
+            "src": "/img/logo-gmsambon.jpg",
             "sizes": "144x144",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icon-152x152.png?v=1774268282",
+            "src": "/img/logo-gmsambon.jpg",
             "sizes": "152x152",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icon-192x192.png?v=1774268282",
+            "src": "/img/logo-gmsambon.jpg",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icon-384x384.png?v=1774268282",
+            "src": "/img/logo-gmsambon.jpg",
             "sizes": "384x384",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "icon-512x512.png?v=1774268282",
+            "src": "/img/logo-gmsambon.jpg",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
