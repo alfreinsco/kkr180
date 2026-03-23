@@ -50,7 +50,10 @@
             function updateButton() {
                 var btn = document.getElementById('pwa-install-btn');
                 if (!btn) return;
-                btn.disabled = !deferredPrompt;
+                // Jangan hard-disable agar user tetap bisa klik.
+                // Prompt install baru akan muncul kalau event `beforeinstallprompt` sudah ada.
+                btn.disabled = false;
+                btn.textContent = 'Install KKR QR Scanner';
             }
 
             window.addEventListener('beforeinstallprompt', function(e) {
@@ -71,7 +74,13 @@
                 updateButton();
 
                 btn.addEventListener('click', async function() {
-                    if (!deferredPrompt) return;
+                    if (!deferredPrompt) {
+                        btn.textContent = 'Tunggu sebentar...';
+                        setTimeout(function() {
+                            updateButton();
+                        }, 1500);
+                        return;
+                    }
 
                     try {
                         btn.disabled = true;
@@ -658,7 +667,7 @@
 <body>
     <div id="pwa-install-screen" class="pwa-install-screen" aria-live="polite">
         <img class="pwa-install-screen__logo" src="{{ asset('img/logo-gmsambon.jpg') }}" alt="KKR QR Scanner">
-        <button id="pwa-install-btn" class="pwa-install-screen__btn" type="button" disabled>Install KKR QR Scanner</button>
+        <button id="pwa-install-btn" class="pwa-install-screen__btn" type="button">Install KKR QR Scanner</button>
     </div>
     <div id="scanGateContent">
         <header class="mb-5">
