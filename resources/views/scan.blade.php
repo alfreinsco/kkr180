@@ -12,7 +12,6 @@
 
     <!-- PWA  -->
     @pwaHead
-    @pwaHead(asset('img/logo-gmsambon.jpg'), '#ff0000')
 
     <!-- Force PWA scope hanya untuk /scan -->
     <script>
@@ -43,6 +42,50 @@
         })();
     </script>
 
+    <!-- PWA install prompt untuk tombol buatan sendiri -->
+    <script>
+        (function() {
+            var deferredPrompt = null;
+
+            function updateButton() {
+                var btn = document.getElementById('pwa-install-btn');
+                if (!btn) return;
+                btn.disabled = !deferredPrompt;
+            }
+
+            window.addEventListener('beforeinstallprompt', function(e) {
+                e.preventDefault();
+                deferredPrompt = e;
+                updateButton();
+            });
+
+            window.addEventListener('appinstalled', function() {
+                deferredPrompt = null;
+                updateButton();
+                document.documentElement.classList.add('pwa-installed');
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var btn = document.getElementById('pwa-install-btn');
+                if (!btn) return;
+                updateButton();
+
+                btn.addEventListener('click', async function() {
+                    if (!deferredPrompt) return;
+
+                    try {
+                        btn.disabled = true;
+                        deferredPrompt.prompt();
+                        await deferredPrompt.userChoice;
+                    } catch (e) {}
+
+                    deferredPrompt = null;
+                    updateButton();
+                });
+            });
+        })();
+    </script>
+
     <!-- CSS utama event -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
@@ -56,11 +99,75 @@
     <link rel="stylesheet" href="{{ asset('css/slicknav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
+    <!-- Gate: hanya tampilkan install button jika belum terpasang sebagai aplikasi -->
+    <script>
+        (function() {
+            try {
+                var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator
+                    .standalone === true;
+                if (isStandalone) document.documentElement.classList.add('pwa-standalone');
+            } catch (e) {}
+        })();
+    </script>
+
     <style>
         body {
             background: #000;
             color: #AAB1B7;
             overflow-x: hidden;
+        }
+
+        #scanGateContent {
+            display: none;
+        }
+
+        html.pwa-standalone #scanGateContent {
+            display: block;
+        }
+
+        /* Layar install (hanya ketika belum terpasang) */
+        .pwa-install-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 18px;
+        }
+
+        html.pwa-standalone .pwa-install-screen,
+        html.pwa-installed .pwa-install-screen {
+            display: none;
+        }
+
+        .pwa-install-screen__logo {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+        }
+
+        .pwa-install-screen__btn {
+            width: 100%;
+            max-width: 320px;
+            background: #FF4533;
+            color: #fff;
+            border: 1px solid transparent;
+            padding: 14px 18px;
+            font-family: "Anton", sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            border-radius: 0;
+            transition: 0.2s;
+            min-height: 50px;
+        }
+
+        .pwa-install-screen__btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
         }
 
         html,
@@ -549,77 +656,85 @@
 </head>
 
 <body>
-    <header class="mb-5">
-        <div class="header-area ">
-            <div id="sticky-header" class="main-header-area">
-                <div class="container">
-                    <div class="header_bottom_border">
-                        <div class="row align-items-center h-100">
-                            <div class="col-8 col-sm-8 col-md-3 col-lg-3 d-flex align-items-center h-100">
-                                <div class="logo">
-                                    <img src="{{ asset('img/logo.png') }}" alt="KKR 180°" width="150"
-                                        height="150">
+    <div id="pwa-install-screen" class="pwa-install-screen" aria-live="polite">
+        <img class="pwa-install-screen__logo" src="{{ asset('img/logo-gmsambon.jpg') }}" alt="KKR QR Scanner">
+        <button id="pwa-install-btn" class="pwa-install-screen__btn" type="button" disabled>Install KKR QR Scanner</button>
+    </div>
+    <div id="scanGateContent">
+        <header class="mb-5">
+            <div class="header-area ">
+                <div id="sticky-header" class="main-header-area">
+                    <div class="container">
+                        <div class="header_bottom_border">
+                            <div class="row align-items-center h-100">
+                                <div class="col-8 col-sm-8 col-md-3 col-lg-3 d-flex align-items-center h-100">
+                                    <div class="logo">
+                                        <img src="{{ asset('img/logo.png') }}" alt="KKR 180°" width="150"
+                                            height="150">
+                                    </div>
+                                </div>
+                                <div class="col-xl-9 col-lg-9"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="scan-desktop-warning">
+            <div>
+                <h3 style="font-family: Anton, sans-serif; letter-spacing: 1px; color: #fff; margin-bottom: 0.75rem;">
+                    Scanner QR hanya untuk perangkat mobile
+                </h3>
+                <p style="margin: 0; color: #AAB1B7;">Gunakan ponsel untuk mengaktifkan kamera.</p>
+            </div>
+        </section>
+
+        <section class="scan-hero mobile-only">
+            <div class="container scan-hero-inner">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10 col-lg-8">
+                        <div class="scan-card">
+                            <div class="scan-video-wrap">
+                                <video id="videoScanner" playsinline muted></video>
+                                <div id="scanLogoCenter" class="scan-logo-center" aria-hidden="true">
+                                    <img src="{{ asset('img/logo.png') }}" alt="">
+                                </div>
+                                <div id="scanLogoCorner" class="scan-logo-corner" aria-hidden="true">
+                                    <img src="{{ asset('img/logo.png') }}" alt="">
+                                </div>
+                                <div id="scanEffectOverlay" class="scan-effect-overlay" aria-hidden="true" hidden>
+                                    <div class="scan-effect-line"></div>
                                 </div>
                             </div>
-                            <div class="col-xl-9 col-lg-9"></div>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <section class="scan-desktop-warning">
-        <div>
-            <h3 style="font-family: Anton, sans-serif; letter-spacing: 1px; color: #fff; margin-bottom: 0.75rem;">
-                Scanner QR hanya untuk perangkat mobile
-            </h3>
-            <p style="margin: 0; color: #AAB1B7;">Gunakan ponsel untuk mengaktifkan kamera.</p>
-        </div>
-    </section>
-
-    <section class="scan-hero mobile-only">
-        <div class="container scan-hero-inner">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-10 col-lg-8">
-                    <div class="scan-card">
-                        <div class="scan-video-wrap">
-                            <video id="videoScanner" playsinline muted></video>
-                            <div id="scanLogoCenter" class="scan-logo-center" aria-hidden="true">
-                                <img src="{{ asset('img/logo.png') }}" alt="">
+                            <!-- Tombol mengambang (hanya mobile) -->
+                            <div class="scan-camera-controls" aria-hidden="false">
+                                <button id="btnScanNow" class="scan-camera-btn scan-camera-btn--primary"
+                                    type="button">Scan
+                                    Sekarang</button>
+                                <button id="btnStopScanner" class="scan-camera-btn scan-camera-btn--secondary"
+                                    type="button" hidden>Matikan Scanner</button>
                             </div>
-                            <div id="scanLogoCorner" class="scan-logo-corner" aria-hidden="true">
-                                <img src="{{ asset('img/logo.png') }}" alt="">
-                            </div>
-                            <div id="scanEffectOverlay" class="scan-effect-overlay" aria-hidden="true" hidden>
-                                <div class="scan-effect-line"></div>
-                            </div>
-                        </div>
 
-                        <!-- Tombol mengambang (hanya mobile) -->
-                        <div class="scan-camera-controls" aria-hidden="false">
-                            <button id="btnScanNow" class="scan-camera-btn scan-camera-btn--primary" type="button">Scan
-                                Sekarang</button>
-                            <button id="btnStopScanner" class="scan-camera-btn scan-camera-btn--secondary"
-                                type="button" hidden>Matikan Scanner</button>
-                        </div>
+                            <div class="scan-alert" id="scannerStatus" role="status" aria-live="polite"></div>
 
-                        <div class="scan-alert" id="scannerStatus" role="status" aria-live="polite"></div>
-
-                        <!-- Popup hanya muncul saat ada QR terbaca -->
-                        <div id="scanResultPopup" class="scan-popup" role="dialog" aria-modal="true" aria-live="polite"
-                            hidden>
-                            <div class="scan-popup__content">
-                                <div class="scan-popup__title">Hasil QR</div>
-                                <div class="scan-popup__body" id="hasilQrPopup">Menunggu scan...</div>
+                            <!-- Popup hanya muncul saat ada QR terbaca -->
+                            <div id="scanResultPopup" class="scan-popup" role="dialog" aria-modal="true"
+                                aria-live="polite" hidden>
+                                <div class="scan-popup__content">
+                                    <div class="scan-popup__title">Hasil QR</div>
+                                    <div class="scan-popup__body" id="hasilQrPopup">Menunggu scan...</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+    </div>
 
     <script src="{{ asset('js/vendor/modernizr-3.5.0.min.js') }}"></script>
     <script src="{{ asset('js/vendor/jquery-1.12.4.min.js') }}"></script>
