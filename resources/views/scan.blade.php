@@ -111,11 +111,33 @@
     <!-- Gate: hanya tampilkan install button jika belum terpasang sebagai aplikasi -->
     <script>
         (function() {
-            try {
-                var isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator
-                    .standalone === true;
-                if (isStandalone) document.documentElement.classList.add('pwa-standalone');
-            } catch (e) {}
+            function detectStandalone() {
+                try {
+                    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+                        window.navigator.standalone === true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function applyView() {
+                var isStandalone = detectStandalone() || document.documentElement.classList.contains('pwa-installed');
+                var gate = document.getElementById('scanGateContent');
+                var installScreen = document.getElementById('pwa-install-screen');
+
+                if (isStandalone) {
+                    document.documentElement.classList.add('pwa-standalone');
+                    if (gate) gate.style.display = 'block';
+                    if (installScreen) installScreen.style.display = 'none';
+                } else {
+                    document.documentElement.classList.remove('pwa-standalone');
+                    if (gate) gate.style.display = 'none';
+                    if (installScreen) installScreen.style.display = 'flex';
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', applyView);
+            window.addEventListener('appinstalled', applyView);
         })();
     </script>
 
