@@ -384,6 +384,27 @@
             word-break: break-word;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
+
+        /* Override terakhir (penting): pastikan mobile selalu full-screen */
+        @media (max-width: 767px) {
+            .scan-video-wrap {
+                position: fixed !important;
+                inset: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                border: none !important;
+                z-index: 1 !important;
+            }
+
+            video#videoScanner {
+                position: fixed !important;
+                inset: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                object-fit: cover !important;
+                background: #000 !important;
+            }
+        }
     </style>
 </head>
 
