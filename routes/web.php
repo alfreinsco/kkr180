@@ -5,6 +5,7 @@ use App\Models\Performer;
 use App\Models\ProgramDetail;
 use App\Models\SponsorLogo;
 use App\Models\Tentang;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,13 @@ Route::get('/register', function () {
     return view('register', compact('pengaturan'));
 });
 
-Route::get('/scan', function () {
+Route::get('/scan', function (Request $request) {
+    $ua = strtolower((string) $request->userAgent());
+    $isMobile = preg_match('/iphone|ipod|android.*mobile|android.*(?!tablet)|windows phone|blackberry|bb10|mobile/i', $ua) === 1;
+
+    if (! $isMobile) {
+        abort(404);
+    }
+
     return view('scan');
 });

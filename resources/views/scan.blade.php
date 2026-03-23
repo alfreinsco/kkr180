@@ -10,6 +10,10 @@
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/logo-gmsambon.jpg') }}">
 
+    <!-- PWA  -->
+    @pwaHead
+    @pwaHead(asset('img/logo-gmsambon.jpg'), '#ff0000')
+
     <!-- CSS utama event -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
@@ -276,7 +280,8 @@
             justify-content: center;
             gap: 10px;
             padding: 0 14px;
-            pointer-events: none; /* tombol saja yang aktif */
+            pointer-events: none;
+            /* tombol saja yang aktif */
         }
 
         .scan-camera-controls .scan-camera-btn {
@@ -565,8 +570,10 @@
 
                         <!-- Tombol mengambang (hanya mobile) -->
                         <div class="scan-camera-controls" aria-hidden="false">
-                            <button id="btnScanNow" class="scan-camera-btn scan-camera-btn--primary" type="button">Scan Sekarang</button>
-                            <button id="btnStopScanner" class="scan-camera-btn scan-camera-btn--secondary" type="button" hidden>Matikan Scanner</button>
+                            <button id="btnScanNow" class="scan-camera-btn scan-camera-btn--primary" type="button">Scan
+                                Sekarang</button>
+                            <button id="btnStopScanner" class="scan-camera-btn scan-camera-btn--secondary"
+                                type="button" hidden>Matikan Scanner</button>
                         </div>
 
                         <div class="scan-alert" id="scannerStatus" role="status" aria-live="polite"></div>
