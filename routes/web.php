@@ -22,3 +22,7 @@ Route::get('/register', function () {
 
     return view('register', compact('pengaturan'));
 });
+
+Route::get('/scan', function () {
+    return view('scan');
+});
