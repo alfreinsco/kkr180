@@ -400,13 +400,14 @@
 
         .scan-popup__content {
             width: min(92vw, 560px);
-            background: rgba(0, 0, 0, 0.68);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(16, 30, 54, 0.15);
             border-radius: 12px;
-            padding: 10px 14px;
-            color: #fff;
-            transform: translateY(-120px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            padding: 16px 16px 12px;
+            color: #111827;
+            transform: none;
+            box-shadow: 0 18px 45px rgba(2, 6, 23, 0.25);
+            pointer-events: auto;
         }
 
         .scan-popup__title {
@@ -414,6 +415,7 @@
             letter-spacing: 1px;
             font-size: 1rem;
             margin: 0 0 6px 0;
+            color: #111827;
         }
 
         .scan-popup__body {
@@ -423,17 +425,78 @@
             white-space: pre-wrap;
             word-break: break-word;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            max-height: 22vh;
+            max-height: 50vh;
             overflow: auto;
-            color: #fff;
-            font-size: 0.92rem;
+            color: #111827;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .scan-modal-message {
+            font-family: "Anton", sans-serif;
+            letter-spacing: 0.6px;
+            margin-bottom: 12px;
+            font-size: 1.0rem;
+        }
+
+        .scan-modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 12px;
+        }
+
+        .scan-modal-field {
+            border: 1px solid rgba(16, 30, 54, 0.12);
+            border-radius: 10px;
+            padding: 10px 10px;
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .scan-modal-field--full {
+            grid-column: 1 / -1;
+        }
+
+        .scan-modal-label {
+            font-family: "Anton", sans-serif;
+            letter-spacing: 0.4px;
+            font-size: 0.75rem;
+            color: #4b5563;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .scan-modal-value {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.95rem;
+            color: #111827;
+            word-break: break-word;
             line-height: 1.35;
         }
 
-        @media (max-width: 768px) {
-            .scan-popup__content {
-                transform: translateY(-105px);
-                width: min(92vw, 460px);
+        .scan-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .scan-modal-btn {
+            border-radius: 10px;
+            border: 1px solid rgba(16, 30, 54, 0.15);
+            background: #f3f4f6;
+            color: #111827;
+            padding: 10px 14px;
+            font-family: "Anton", sans-serif;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 540px) {
+            .scan-modal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scan-modal-field--full {
+                grid-column: auto;
             }
         }
 
@@ -773,8 +836,47 @@
                                         <div id="scanResultPopup" class="scan-popup" role="dialog" aria-modal="true"
                                             aria-live="polite" hidden>
                                             <div class="scan-popup__content">
-                                                <div class="scan-popup__title">Hasil QR</div>
-                                                <div class="scan-popup__body" id="hasilQrPopup">Menunggu scan...</div>
+                                                <div class="scan-popup__title" id="scanPopupTitle">Hasil Scan</div>
+                                                <div class="scan-popup__body">
+                                                    <div class="scan-modal-message" id="hasilQrPopup">Menunggu scan...</div>
+
+                                                    <div class="scan-modal-grid" id="scanModalGrid">
+                                                        <div class="scan-modal-field">
+                                                            <div class="scan-modal-label">Nama</div>
+                                                            <div class="scan-modal-value" id="scanModalNama">-</div>
+                                                        </div>
+                                                        <div class="scan-modal-field">
+                                                            <div class="scan-modal-label">No. Telepon / WA</div>
+                                                            <div class="scan-modal-value" id="scanModalNoTelp">-</div>
+                                                        </div>
+                                                        <div class="scan-modal-field scan-modal-field--full">
+                                                            <div class="scan-modal-label">Alamat</div>
+                                                            <div class="scan-modal-value" id="scanModalAlamat">-</div>
+                                                        </div>
+                                                        <div class="scan-modal-field">
+                                                            <div class="scan-modal-label">Asal Kampus</div>
+                                                            <div class="scan-modal-value" id="scanModalAsalKampus">-</div>
+                                                        </div>
+                                                        <div class="scan-modal-field">
+                                                            <div class="scan-modal-label">Umur</div>
+                                                            <div class="scan-modal-value" id="scanModalUmur">-</div>
+                                                        </div>
+                                                        <div class="scan-modal-field">
+                                                            <div class="scan-modal-label">Pernah CG</div>
+                                                            <div class="scan-modal-value" id="scanModalPernahIkut">-</div>
+                                                        </div>
+                                                        <div class="scan-modal-field scan-modal-field--full">
+                                                            <div class="scan-modal-label">Nama CGL</div>
+                                                            <div class="scan-modal-value" id="scanModalNamaCgl">-</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="scan-modal-actions">
+                                                    <button type="button" id="btnCloseScanModal" class="scan-modal-btn">
+                                                        Tutup
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -817,6 +919,15 @@
             var logoCenterEl = document.getElementById('scanLogoCenter');
             var logoCornerEl = document.getElementById('scanLogoCorner');
             var scanStartStackEl = document.getElementById('scanStartStack');
+            var titleEl = document.getElementById('scanPopupTitle');
+            var modalNamaEl = document.getElementById('scanModalNama');
+            var modalNoTelpEl = document.getElementById('scanModalNoTelp');
+            var modalAlamatEl = document.getElementById('scanModalAlamat');
+            var modalAsalKampusEl = document.getElementById('scanModalAsalKampus');
+            var modalUmurEl = document.getElementById('scanModalUmur');
+            var modalPernahIkutEl = document.getElementById('scanModalPernahIkut');
+            var modalNamaCglEl = document.getElementById('scanModalNamaCgl');
+            var btnCloseModal = document.getElementById('btnCloseScanModal');
 
             var stream = null;
             var timerId = null;
@@ -891,15 +1002,48 @@
                 popupEl.hidden = true;
             }
 
+            function clearModalFields() {
+                var v = '-';
+                if (modalNamaEl) modalNamaEl.textContent = v;
+                if (modalNoTelpEl) modalNoTelpEl.textContent = v;
+                if (modalAlamatEl) modalAlamatEl.textContent = v;
+                if (modalAsalKampusEl) modalAsalKampusEl.textContent = v;
+                if (modalUmurEl) modalUmurEl.textContent = v;
+                if (modalPernahIkutEl) modalPernahIkutEl.textContent = v;
+                if (modalNamaCglEl) modalNamaCglEl.textContent = v;
+            }
+
+            function setModalFields(person) {
+                if (!person) return clearModalFields();
+                var pernahIkut = person.pernah_ikut === 'sudah' ? 'Sudah' : (person.pernah_ikut === 'belum' ? 'Belum' : '-');
+
+                if (modalNamaEl) modalNamaEl.textContent = person.nama_lengkap || '-';
+                if (modalNoTelpEl) modalNoTelpEl.textContent = person.no_telp || '-';
+                if (modalAlamatEl) modalAlamatEl.textContent = person.alamat || '-';
+                if (modalAsalKampusEl) modalAsalKampusEl.textContent = person.asal_kampus || '-';
+                if (modalUmurEl) modalUmurEl.textContent = (person.umur !== null && person.umur !== undefined && person.umur !== '') ? String(person.umur) : '-';
+                if (modalPernahIkutEl) modalPernahIkutEl.textContent = pernahIkut;
+                if (modalNamaCglEl) modalNamaCglEl.textContent = person.nama_cgl || '-';
+            }
+
+            if (btnCloseModal) {
+                btnCloseModal.addEventListener('click', function() {
+                    hidePopup();
+                });
+            }
+
             async function processScannedPayload(payload) {
                 if (!payload) {
                     if (hasilEl) hasilEl.textContent = 'QR kosong / tidak valid.';
+                    if (titleEl) titleEl.textContent = 'Gagal';
+                    clearModalFields();
                     setStatus('QR tidak valid.');
                     showPopup();
                     return;
                 }
 
                 if (hasilEl) hasilEl.textContent = 'Memproses data undangan...';
+                if (titleEl) titleEl.textContent = 'Validasi';
                 setStatus('Memvalidasi data undangan...');
                 showPopup();
 
@@ -926,15 +1070,21 @@
                     if (!response.ok || !data.success) {
                         var errorMessage = data && data.message ? data.message : 'Gagal memproses QR.';
                         if (hasilEl) hasilEl.textContent = errorMessage;
+                        if (titleEl) titleEl.textContent = 'Gagal';
+                        clearModalFields();
                         setStatus('Gagal menambahkan ke buku tamu.');
                         return;
                     }
 
                     var successMessage = data.message || 'Berhasil ditambahkan ke buku tamu.';
                     if (hasilEl) hasilEl.textContent = successMessage;
+                    if (titleEl) titleEl.textContent = 'Berhasil';
+                    setModalFields(data.data || null);
                     setStatus('Check-in berhasil.');
                 } catch (e) {
                     if (hasilEl) hasilEl.textContent = 'Terjadi kesalahan jaringan saat memproses QR.';
+                    if (titleEl) titleEl.textContent = 'Gagal';
+                    clearModalFields();
                     setStatus('Gagal terhubung ke server.');
                 }
             }

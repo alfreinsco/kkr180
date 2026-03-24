@@ -72,8 +72,14 @@ class ScanCheckInController extends Controller
             'success' => true,
             'message' => $bukuTamu->nama_lengkap.' berhasil ditambahkan ke buku tamu.',
             'data' => [
-                'id' => $bukuTamu->id,
-                'nama_lengkap' => $bukuTamu->nama_lengkap,
+                'buku_tamu_id' => $bukuTamu->id,
+                'nama_lengkap' => $ingatkan->nama_lengkap,
+                'no_telp' => $ingatkan->no_telp,
+                'alamat' => $ingatkan->alamat,
+                'asal_kampus' => $ingatkan->asal_kampus,
+                'umur' => $ingatkan->umur,
+                'pernah_ikut' => $ingatkan->pernah_ikut,
+                'nama_cgl' => $ingatkan->pernah_ikut === 'sudah' ? $ingatkan->nama_cgl : null,
             ],
         ]);
     }
