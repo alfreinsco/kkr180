@@ -413,6 +413,21 @@
             flex-direction: column;
         }
 
+        .scan-popup__content.scan-popup--error {
+            background: #fff1f2;
+        }
+
+        .scan-popup__content.scan-popup--error .scan-popup__title,
+        .scan-popup__content.scan-popup--error .scan-modal-message {
+            color: #b91c1c;
+        }
+
+        .scan-popup__content.scan-popup--error .scan-modal-btn {
+            border-color: rgba(185, 28, 28, 0.25);
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
         .scan-popup__title {
             font-family: "Anton", sans-serif;
             letter-spacing: 1px;
@@ -965,6 +980,7 @@
             var modalUmurEl = document.getElementById('scanModalUmur');
             var modalNamaCglEl = document.getElementById('scanModalNamaCgl');
             var modalNamaCglFieldEl = document.getElementById('scanModalNamaCglField');
+            var modalGridEl = document.getElementById('scanModalGrid');
             var btnCloseModal = document.getElementById('btnCloseScanModal');
 
             var stream = null;
@@ -1040,6 +1056,14 @@
                 popupEl.hidden = true;
             }
 
+            function setPopupVariant(isError) {
+                if (!popupEl) return;
+                var content = popupEl.querySelector('.scan-popup__content');
+                if (!content) return;
+                content.classList.toggle('scan-popup--error', !!isError);
+                if (modalGridEl) modalGridEl.hidden = !!isError;
+            }
+
             function clearModalFields() {
                 var v = '-';
                 if (modalNamaEl) modalNamaEl.textContent = v;
@@ -1074,6 +1098,7 @@
                 if (!payload) {
                     if (hasilEl) hasilEl.textContent = 'QR kosong / tidak valid.';
                     if (titleEl) titleEl.textContent = 'Gagal';
+                    setPopupVariant(true);
                     clearModalFields();
                     setStatus('QR tidak valid.');
                     showPopup();
@@ -1082,6 +1107,7 @@
 
                 if (hasilEl) hasilEl.textContent = 'Memproses data undangan...';
                 if (titleEl) titleEl.textContent = 'Validasi';
+                setPopupVariant(false);
                 setStatus('Memvalidasi data undangan...');
                 showPopup();
 
@@ -1109,6 +1135,7 @@
                         var errorMessage = data && data.message ? data.message : 'Gagal memproses QR.';
                         if (hasilEl) hasilEl.textContent = errorMessage;
                         if (titleEl) titleEl.textContent = 'Gagal';
+                        setPopupVariant(true);
                         clearModalFields();
                         setStatus('Gagal menambahkan ke buku tamu.');
                         return;
@@ -1117,11 +1144,13 @@
                     var successMessage = data.message || 'Berhasil ditambahkan ke buku tamu.';
                     if (hasilEl) hasilEl.textContent = successMessage;
                     if (titleEl) titleEl.textContent = 'Berhasil';
+                    setPopupVariant(false);
                     setModalFields(data.data || null);
                     setStatus('Check-in berhasil.');
                 } catch (e) {
                     if (hasilEl) hasilEl.textContent = 'Terjadi kesalahan jaringan saat memproses QR.';
                     if (titleEl) titleEl.textContent = 'Gagal';
+                    setPopupVariant(true);
                     clearModalFields();
                     setStatus('Gagal terhubung ke server.');
                 }
