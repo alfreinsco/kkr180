@@ -395,21 +395,25 @@
             align-items: center;
             justify-content: center;
             padding: 0;
+            pointer-events: none;
         }
 
         .scan-popup__content {
             width: min(92vw, 560px);
-            background: transparent;
-            border: none;
-            padding: 0;
+            background: rgba(0, 0, 0, 0.68);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 10px 14px;
             color: #fff;
+            transform: translateY(-120px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
         }
 
         .scan-popup__title {
             font-family: "Anton", sans-serif;
             letter-spacing: 1px;
-            font-size: 1.25rem;
-            margin: 0 0 10px 0;
+            font-size: 1rem;
+            margin: 0 0 6px 0;
         }
 
         .scan-popup__body {
@@ -419,9 +423,18 @@
             white-space: pre-wrap;
             word-break: break-word;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            max-height: 45vh;
+            max-height: 22vh;
             overflow: auto;
             color: #fff;
+            font-size: 0.92rem;
+            line-height: 1.35;
+        }
+
+        @media (max-width: 768px) {
+            .scan-popup__content {
+                transform: translateY(-105px);
+                width: min(92vw, 460px);
+            }
         }
 
         /* Logo + tombol Scan Sekarang ditumpuk vertikal di tengah area video */
