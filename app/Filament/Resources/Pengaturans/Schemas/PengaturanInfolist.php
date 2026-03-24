@@ -36,6 +36,14 @@ class PengaturanInfolist
                     ->placeholder('-')
                     ->columnSpanFull()
                     ->formatStateUsing(fn (?string $state) => $state ? 'Diisi' : '-'),
+                TextEntry::make('whatsapp_session_id')
+                    ->label('WhatsApp Session ID')
+                    ->placeholder('-'),
+                TextEntry::make('whatsapp_api_url')
+                    ->label('WhatsApp API URL')
+                    ->placeholder('-')
+                    ->url(fn (?string $state): ?string => filled($state) ? $state : null)
+                    ->openUrlInNewTab(),
                 TextEntry::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d/m/Y H:i'),

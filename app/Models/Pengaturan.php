@@ -20,6 +20,8 @@ class Pengaturan extends Model
         'sub_judul_kegiatan',
         'lokasi_kegiatan',
         'peta_embed_url',
+        'whatsapp_session_id',
+        'whatsapp_api_url',
     ];
 
     /**

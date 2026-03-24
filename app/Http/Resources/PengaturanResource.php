@@ -25,6 +25,8 @@ class PengaturanResource extends JsonResource
             'sub_judul_kegiatan' => $this->sub_judul_kegiatan,
             'lokasi_kegiatan' => $this->lokasi_kegiatan,
             'peta_embed_url' => $this->peta_embed_url,
+            'whatsapp_session_id' => $this->whatsapp_session_id,
+            'whatsapp_api_url' => $this->whatsapp_api_url,
         ];
     }
 }

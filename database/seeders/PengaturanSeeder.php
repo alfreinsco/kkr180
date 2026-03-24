@@ -28,6 +28,8 @@ class PengaturanSeeder extends Seeder
             'sub_judul_kegiatan' => 'FREEDOM',
             'lokasi_kegiatan' => 'Aula Lantai 2 Universitas Pattimura',
             'peta_embed_url' => $defaultEmbedUrl,
+            'whatsapp_session_id' => null,
+            'whatsapp_api_url' => null,
         ]);
     }
 }

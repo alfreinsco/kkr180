@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Pengaturans\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
 class PengaturanForm
@@ -59,6 +59,15 @@ class PengaturanForm
                     ->rows(4)
                     ->columnSpanFull()
                     ->helperText('Kosongkan jika peta tidak ingin ditampilkan.'),
+                TextInput::make('whatsapp_session_id')
+                    ->label('WhatsApp Session ID')
+                    ->placeholder('Contoh: kkr-session-01')
+                    ->maxLength(255),
+                Textarea::make('whatsapp_api_url')
+                    ->label('WhatsApp API URL')
+                    ->placeholder('Contoh: https://api.whatsapp.example.com/send-message')
+                    ->rows(3)
+                    ->helperText('URL endpoint API WhatsApp yang digunakan sistem.'),
             ]);
     }
 }
