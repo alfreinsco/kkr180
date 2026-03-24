@@ -491,12 +491,80 @@
         }
 
         @media (max-width: 540px) {
+            .scan-popup {
+                align-items: flex-end;
+                padding: 0;
+            }
+
+            .scan-popup__content {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 16px 16px 0 0;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+                padding: 14px 12px calc(12px + env(safe-area-inset-bottom, 0px));
+                box-shadow: 0 -10px 30px rgba(2, 6, 23, 0.22);
+            }
+
+            .scan-popup__title {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+            }
+
+            .scan-popup__body {
+                max-height: min(58vh, 430px);
+                font-size: 0.9rem;
+            }
+
+            .scan-modal-message {
+                font-size: 0.95rem;
+                margin-bottom: 10px;
+            }
+
             .scan-modal-grid {
                 grid-template-columns: 1fr;
+                gap: 8px;
             }
 
             .scan-modal-field--full {
                 grid-column: auto;
+            }
+
+            .scan-modal-field {
+                padding: 9px 9px;
+                border-radius: 9px;
+            }
+
+            .scan-modal-label {
+                font-size: 0.7rem;
+                margin-bottom: 3px;
+            }
+
+            .scan-modal-value {
+                font-size: 0.88rem;
+                line-height: 1.3;
+            }
+
+            .scan-modal-actions {
+                margin-top: 10px;
+            }
+
+            .scan-modal-btn {
+                width: 100%;
+                min-height: 44px;
+                font-size: 0.9rem;
+                justify-content: center;
+            }
+        }
+
+        @media (min-width: 541px) and (max-width: 768px) {
+            .scan-popup__content {
+                width: min(92vw, 520px);
+            }
+
+            .scan-popup__body {
+                max-height: 56vh;
             }
         }
 
