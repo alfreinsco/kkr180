@@ -148,8 +148,7 @@
             align-items: center;
         }
 
-        #qrcode canvas,
-        #qrcode img {
+        #qrcodeImage {
             width: 100% !important;
             height: auto !important;
             display: block;
@@ -254,7 +253,9 @@
 
                 <aside class="invite-aside">
                     <div class="qr-box">
-                        <div id="qrcode" aria-label="QR Code Undangan"></div>
+                        <img id="qrcodeImage"
+                            src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data={{ urlencode($qrPayload) }}"
+                            alt="QR Code Undangan" width="220" height="220" loading="eager" decoding="sync">
                     </div>
                     <p class="qr-note">Scan QR ini pada pintu masuk acara.</p>
                 </aside>
@@ -268,38 +269,12 @@
             <a href="{{ url('/') }}" class="invite-btn invite-btn--ghost">Kembali ke Beranda</a>
         </div>
 
-        <p class="invite-foot">ID terenkripsi: {{ $encryptedId }}</p>
+        {{-- <p class="invite-foot">ID terenkripsi: {{ $encryptedId }}</p> --}}
     </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         (function() {
-            var qrTarget = document.getElementById('qrcode');
-            var payload = @json($qrPayload);
-
-            if (qrTarget && payload) {
-                if (typeof window.QRCode !== 'undefined') {
-                    new QRCode(qrTarget, {
-                        text: payload,
-                        width: 220,
-                        height: 220,
-                        colorDark: '#000000',
-                        colorLight: '#ffffff',
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                } else {
-                    // Fallback jika library QRCode CDN gagal termuat.
-                    var img = document.createElement('img');
-                    img.alt = 'QR Code Undangan';
-                    img.width = 220;
-                    img.height = 220;
-                    img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(payload);
-                    qrTarget.innerHTML = '';
-                    qrTarget.appendChild(img);
-                }
-            }
-
             var btnDownload = document.getElementById('btnDownloadInvite');
             var inviteCard = document.getElementById('inviteCard');
             if (!btnDownload || !inviteCard) return;
