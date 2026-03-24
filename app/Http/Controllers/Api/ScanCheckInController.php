@@ -52,7 +52,7 @@ class ScanCheckInController extends Controller
         if (! $ingatkan) {
             return response()->json([
                 'success' => false,
-                'message' => 'Data undangan tidak ditemukan pada Ingatkan Saya.',
+                'message' => 'Data undangan tidak ditemukan.',
             ], 404);
         }
 
