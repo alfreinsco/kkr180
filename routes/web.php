@@ -25,12 +25,15 @@ Route::get('/register', function () {
 });
 
 Route::get('/scan', function (Request $request) {
-    $ua = strtolower((string) $request->userAgent());
-    $isMobile = preg_match('/iphone|ipod|android.*mobile|android.*(?!tablet)|windows phone|blackberry|bb10|mobile/i', $ua) === 1;
+    // $ua = strtolower((string) $request->userAgent());
+    // $isMobile = preg_match('/iphone|ipod|android.*mobile|android.*(?!tablet)|windows phone|blackberry|bb10|mobile/i', $ua) === 1;
 
-    if (! $isMobile) {
-        abort(404);
-    }
+    // if (! $isMobile) {
+    //     abort(404);
+    // }
 
     return view('scan');
+});
+Route::get('/test', function (Request $request) {
+    return view('test');
 });

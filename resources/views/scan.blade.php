@@ -148,6 +148,113 @@
             overflow-x: hidden;
         }
 
+        /* Desktop: bingkai HP seperti resources/views/test.blade.php */
+        .scan-desktop-shell {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        .device-container {
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 769px) {
+            body {
+                background: #f0f0f0 !important;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+
+            .scan-desktop-shell {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+            }
+
+            /* Ukuran device desktop: potret 720 × 1612 px (diskalakan jika viewport sempit/pendek) */
+            .device-container {
+                width: min(
+                    720px,
+                    calc(100vw - 40px),
+                    calc((100vh - 40px) * 720 / 1612)
+                );
+                aspect-ratio: 720 / 1612;
+                height: auto;
+                min-height: 0;
+                background: #333;
+                border: 16px solid #222;
+                border-radius: 48px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            }
+
+            .device-container::before {
+                content: "";
+                position: absolute;
+                top: 14px;
+                bottom: 14px;
+                left: 14px;
+                right: 14px;
+                background: #fff;
+                border-radius: 36px;
+                z-index: 0;
+            }
+
+            .device-inner {
+                position: relative;
+                z-index: 1;
+                width: calc(100% - 28px);
+                height: calc(100% - 28px);
+                margin: 14px;
+                border-radius: 36px;
+                overflow: hidden;
+                background: #000;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Layar install & scanner mengikuti area dalam HP */
+            .pwa-install-screen {
+                position: absolute !important;
+                inset: 0;
+                border-radius: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                display: block;
+                padding: 0;
+                background: #000 !important;
+            }
+
+            .device-container {
+                background: none;
+                border: none;
+                box-shadow: none;
+                width: auto;
+                height: auto;
+                min-height: 100vh;
+                min-height: 100dvh;
+            }
+
+            .device-inner {
+                width: 100%;
+                min-height: 100vh;
+                min-height: 100dvh;
+                margin: 0;
+                border-radius: 0;
+                overflow: visible;
+            }
+        }
+
         #scanGateContent {
             display: none;
         }
@@ -687,11 +794,16 @@
 </head>
 
 <body>
-    <div id="pwa-install-screen" class="pwa-install-screen" aria-live="polite">
-        <img class="pwa-install-screen__logo" src="{{ asset('img/logo-gmsambon.jpg') }}" alt="KKR QR Scanner">
-        <button id="pwa-install-btn" class="pwa-install-screen__btn" type="button">Install KKR QR Scanner</button>
-    </div>
-    <div id="scanGateContent">
+    <div class="scan-desktop-shell">
+        <div class="device-container">
+            <div class="device-inner">
+                <div id="pwa-install-screen" class="pwa-install-screen" aria-live="polite">
+                    <img class="pwa-install-screen__logo" src="{{ asset('img/logo-gmsambon.jpg') }}"
+                        alt="KKR QR Scanner">
+                    <button id="pwa-install-btn" class="pwa-install-screen__btn" type="button">Install KKR QR
+                        Scanner</button>
+                </div>
+                <div id="scanGateContent">
         <header class="mb-5">
             <div class="header-area ">
                 <div id="sticky-header" class="main-header-area">
@@ -765,6 +877,9 @@
             </div>
         </section>
 
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="{{ asset('js/vendor/modernizr-3.5.0.min.js') }}"></script>
