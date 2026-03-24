@@ -6,7 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Scanner QR - KKR 180°</title>
     <meta name="description" content="Scanner QR KKR 180°">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/logo-gmsambon.jpg') }}">
 
@@ -42,59 +42,6 @@
         })();
     </script>
 
-    <!-- PWA install prompt untuk tombol buatan sendiri -->
-    <script>
-        (function() {
-            var deferredPrompt = null;
-
-            function updateButton() {
-                var btn = document.getElementById('pwa-install-btn');
-                if (!btn) return;
-                // Jangan hard-disable agar user tetap bisa klik.
-                // Prompt install baru akan muncul kalau event `beforeinstallprompt` sudah ada.
-                btn.disabled = false;
-                btn.textContent = 'Install KKR QR Scanner';
-            }
-
-            window.addEventListener('beforeinstallprompt', function(e) {
-                e.preventDefault();
-                deferredPrompt = e;
-                updateButton();
-            });
-
-            window.addEventListener('appinstalled', function() {
-                deferredPrompt = null;
-                updateButton();
-                document.documentElement.classList.add('pwa-installed');
-            });
-
-            document.addEventListener('DOMContentLoaded', function() {
-                var btn = document.getElementById('pwa-install-btn');
-                if (!btn) return;
-                updateButton();
-
-                btn.addEventListener('click', async function() {
-                    if (!deferredPrompt) {
-                        btn.textContent = 'Tunggu sebentar...';
-                        setTimeout(function() {
-                            updateButton();
-                        }, 1500);
-                        return;
-                    }
-
-                    try {
-                        btn.disabled = true;
-                        deferredPrompt.prompt();
-                        await deferredPrompt.userChoice;
-                    } catch (e) {}
-
-                    deferredPrompt = null;
-                    updateButton();
-                });
-            });
-        })();
-    </script>
-
     <!-- CSS utama event -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
@@ -107,39 +54,6 @@
     <link rel="stylesheet" href="{{ asset('css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('css/slicknav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-    <!-- Gate: hanya tampilkan install button jika belum terpasang sebagai aplikasi -->
-    <script>
-        (function() {
-            function detectStandalone() {
-                try {
-                    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
-                        window.navigator.standalone === true;
-                } catch (e) {
-                    return false;
-                }
-            }
-
-            function applyView() {
-                var isStandalone = detectStandalone() || document.documentElement.classList.contains('pwa-installed');
-                var gate = document.getElementById('scanGateContent');
-                var installScreen = document.getElementById('pwa-install-screen');
-
-                if (isStandalone) {
-                    document.documentElement.classList.add('pwa-standalone');
-                    if (gate) gate.style.display = 'block';
-                    if (installScreen) installScreen.style.display = 'none';
-                } else {
-                    document.documentElement.classList.remove('pwa-standalone');
-                    if (gate) gate.style.display = 'none';
-                    if (installScreen) installScreen.style.display = 'flex';
-                }
-            }
-
-            document.addEventListener('DOMContentLoaded', applyView);
-            window.addEventListener('appinstalled', applyView);
-        })();
-    </script>
 
     <style>
         body {
@@ -177,11 +91,9 @@
 
             /* Ukuran device desktop: potret 720 × 1612 px (diskalakan jika viewport sempit/pendek) */
             .device-container {
-                width: min(
-                    720px,
-                    calc(100vw - 40px),
-                    calc((100vh - 40px) * 720 / 1612)
-                );
+                width: min(720px,
+                        calc(100vw - 40px),
+                        calc((100vh - 40px) * 720 / 1612));
                 aspect-ratio: 720 / 1612;
                 height: auto;
                 min-height: 0;
@@ -219,13 +131,6 @@
                 display: flex;
                 flex-direction: column;
             }
-
-            /* Layar install & scanner mengikuti area dalam HP */
-            .pwa-install-screen {
-                position: absolute !important;
-                inset: 0;
-                border-radius: 36px;
-            }
         }
 
         @media (max-width: 768px) {
@@ -233,6 +138,15 @@
                 display: block;
                 padding: 0;
                 background: #000 !important;
+                min-height: 100vh;
+                min-height: 100dvh;
+                min-height: -webkit-fill-available;
+            }
+
+            .scan-desktop-shell {
+                min-height: 100vh;
+                min-height: 100dvh;
+                min-height: -webkit-fill-available;
             }
 
             .device-container {
@@ -243,96 +157,42 @@
                 height: auto;
                 min-height: 100vh;
                 min-height: 100dvh;
+                min-height: -webkit-fill-available;
             }
 
             .device-inner {
                 width: 100%;
                 min-height: 100vh;
                 min-height: 100dvh;
+                min-height: -webkit-fill-available;
                 margin: 0;
                 border-radius: 0;
                 overflow: visible;
             }
         }
 
-        #scanGateContent {
-            display: none;
-        }
-
-        html.pwa-standalone #scanGateContent {
-            display: block;
-        }
-
-        /* Layar install (hanya ketika belum terpasang) */
-        .pwa-install-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            padding: 18px;
-        }
-
-        html.pwa-standalone .pwa-install-screen,
-        html.pwa-installed .pwa-install-screen {
-            display: none;
-        }
-
-        .pwa-install-screen__logo {
-            width: 160px;
-            height: 160px;
-            object-fit: contain;
-        }
-
-        .pwa-install-screen__btn {
-            width: 100%;
-            max-width: 320px;
-            background: #FF4533;
-            color: #fff;
-            border: 1px solid transparent;
-            padding: 14px 18px;
-            font-family: "Anton", sans-serif;
-            font-size: 16px;
-            letter-spacing: 2px;
-            border-radius: 0;
-            transition: 0.2s;
-            min-height: 50px;
-        }
-
-        .pwa-install-screen__btn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
+        html {
+            height: 100%;
+            min-height: 100dvh;
+            min-height: -webkit-fill-available;
         }
 
         html,
         body {
-            height: 100%;
             margin: 0;
             padding: 0;
         }
 
-        /* Hanya tampil untuk mobile */
-        .mobile-only {
-            display: none;
+        body {
+            min-height: 100%;
         }
 
-        .scan-desktop-warning {
-            display: none;
-            min-height: 100vh;
-            min-height: 100dvh;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        @media (max-width: 767px) {
-            .mobile-only {
-                display: block;
+        /* Sampai 768px: sama dengan layout mobile device-inner (hindari gap di tepi 768px) */
+        @media (max-width: 768px) {
+            html,
+            body {
+                height: 100%;
+                overflow: hidden;
             }
 
             header.mb-5 {
@@ -340,10 +200,12 @@
             }
 
             /* Fokus: kamera full layar */
-            .scan-hero.mobile-only {
+            .scan-hero {
                 padding: 0;
+                margin: 0;
                 min-height: 100vh;
                 min-height: 100dvh;
+                min-height: -webkit-fill-available;
                 background: #000;
             }
 
@@ -355,28 +217,69 @@
                 background: transparent;
                 border: none;
                 padding: 0;
+                margin: 0;
+                min-height: 0;
             }
 
             .scan-hero-inner {
                 padding: 0;
+                max-width: 100% !important;
             }
 
+            .scan-hero-inner .container {
+                max-width: 100% !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            .scan-hero-inner .row {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            .scan-hero-inner [class*="col-"] {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            /* Wrapper fullscreen; video absolute mengisi penuh (lebih stabil dari double-fixed di iOS) */
             .scan-video-wrap {
-                position: fixed;
-                inset: 0;
-                width: 100vw;
-                height: 100vh;
-                border: none;
-                background: #000;
-                z-index: 1;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                max-width: none !important;
+                max-height: none !important;
+                min-height: 100vh !important;
+                min-height: 100dvh !important;
+                min-height: -webkit-fill-available !important;
+                border: none !important;
+                background: #000 !important;
+                z-index: 100 !important;
+                overflow: hidden !important;
+                margin: 0 !important;
             }
 
             video#videoScanner {
-                position: fixed;
-                inset: 0;
-                width: 100vw;
-                height: 100vh;
-                object-fit: cover;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                max-width: none !important;
+                max-height: none !important;
+                min-height: 100% !important;
+                object-fit: cover !important;
+                object-position: center center !important;
+                background: #000 !important;
+                transform: none !important;
             }
 
             #scannerStatus {
@@ -384,16 +287,7 @@
             }
         }
 
-        @media (min-width: 768px) {
-            .scan-desktop-warning {
-                display: flex;
-            }
-
-            /* Hindari tampilan pemindai di desktop */
-            .scan-hero {
-                display: none;
-            }
-
+        @media (min-width: 769px) {
             header.mb-5 {
                 display: none;
             }
@@ -414,7 +308,7 @@
             padding-bottom: 4px;
         }
 
-        @media (max-width: 767px) {
+        @media (max-width: 768px) {
             #sticky-header.main-header-area {
                 padding-top: 10px;
                 padding-bottom: 10px;
@@ -456,13 +350,6 @@
             width: 100%;
         }
 
-        .scan-card {
-            background: #000;
-            border: 1px solid #333;
-            border-radius: 0;
-            padding: 1.25rem 1rem;
-        }
-
         .scan-card .section_title h3 {
             font-family: "Anton", sans-serif;
             color: #fff;
@@ -477,21 +364,15 @@
             margin-bottom: 1.25rem;
         }
 
-        .scan-video-wrap {
-            position: relative;
-            width: 100%;
-            background: #060606;
-            border: 1px solid #333;
-            border-radius: 0;
-            overflow: hidden;
-        }
-
-        video#videoScanner {
-            display: block;
-            width: 100%;
-            height: auto;
-            background: #000;
-            transform: none;
+        /* height: auto hanya di desktop (bingkai); di mobile fullscreen diatur di @media (max-width: 768px) */
+        @media (min-width: 769px) {
+            video#videoScanner {
+                display: block;
+                width: 100%;
+                height: auto;
+                background: #000;
+                transform: none;
+            }
         }
 
         .scan-overlay {
@@ -543,24 +424,43 @@
             color: #fff;
         }
 
-        /* Kontrol kamera mengambang di atas layar */
-        .scan-camera-controls {
-            position: fixed;
-            bottom: 14px;
-            left: 0;
-            right: 0;
+        /* Logo + tombol Scan Sekarang ditumpuk vertikal di tengah area video */
+        .scan-start-stack {
+            position: absolute;
+            inset: 0;
             z-index: 10050;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 0 14px;
+            gap: 18px;
+            padding: 14px;
             pointer-events: none;
-            /* tombol saja yang aktif */
+        }
+
+        .scan-start-stack.scan-start-stack--scanning {
+            justify-content: flex-end;
+            padding-bottom: max(14px, env(safe-area-inset-bottom, 0px));
+        }
+
+        .scan-start-stack .scan-camera-controls {
+            position: static;
+            bottom: auto;
+            left: auto;
+            right: auto;
+            z-index: auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            pointer-events: none;
         }
 
         .scan-camera-controls .scan-camera-btn {
+            margin-top: -40px;
             pointer-events: auto;
-            border-radius: 0;
+            border-radius: 10px;
             font-family: "Anton", sans-serif;
             letter-spacing: 1px;
             font-size: 14px;
@@ -582,11 +482,8 @@
         }
 
         .scan-logo-center {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10045;
+            position: relative;
+            z-index: 1;
             pointer-events: none;
             display: flex;
             align-items: center;
@@ -770,26 +667,33 @@
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
 
-        /* Override terakhir (penting): pastikan mobile selalu full-screen */
-        @media (max-width: 767px) {
+        /* Paling akhir: timpa bootstrap/theme + pastikan viewport penuh (svh/dvh) */
+        @media (max-width: 768px) {
             .scan-video-wrap {
-                position: fixed !important;
-                inset: 0 !important;
                 width: 100vw !important;
-                height: 100vh !important;
-                border: none !important;
-                z-index: 1 !important;
+                max-width: 100vw !important;
+                height: 100svh !important;
+                height: 100dvh !important;
+                min-height: -webkit-fill-available !important;
             }
 
             video#videoScanner {
-                position: fixed !important;
-                inset: 0 !important;
-                width: 100vw !important;
-                height: 100vh !important;
+                display: block !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                min-width: 100% !important;
+                min-height: 100% !important;
+                max-width: none !important;
+                max-height: none !important;
                 object-fit: cover !important;
-                background: #000 !important;
             }
         }
+
     </style>
 </head>
 
@@ -797,85 +701,74 @@
     <div class="scan-desktop-shell">
         <div class="device-container">
             <div class="device-inner">
-                <div id="pwa-install-screen" class="pwa-install-screen" aria-live="polite">
-                    <img class="pwa-install-screen__logo" src="{{ asset('img/logo-gmsambon.jpg') }}"
-                        alt="KKR QR Scanner">
-                    <button id="pwa-install-btn" class="pwa-install-screen__btn" type="button">Install KKR QR
-                        Scanner</button>
-                </div>
                 <div id="scanGateContent">
-        <header class="mb-5">
-            <div class="header-area ">
-                <div id="sticky-header" class="main-header-area">
-                    <div class="container">
-                        <div class="header_bottom_border">
-                            <div class="row align-items-center h-100">
-                                <div class="col-8 col-sm-8 col-md-3 col-lg-3 d-flex align-items-center h-100">
-                                    <div class="logo">
-                                        <img src="{{ asset('img/logo.png') }}" alt="KKR 180°" width="150"
-                                            height="150">
+                    <header class="mb-5">
+                        <div class="header-area ">
+                            <div id="sticky-header" class="main-header-area">
+                                <div class="container">
+                                    <div class="header_bottom_border">
+                                        <div class="row align-items-center h-100">
+                                            <div
+                                                class="col-8 col-sm-8 col-md-3 col-lg-3 d-flex align-items-center h-100">
+                                                <div class="logo">
+                                                    <img src="{{ asset('img/logo.png') }}" alt="KKR 180°"
+                                                        width="150" height="150">
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-9 col-lg-9"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    <section class="scan-hero">
+                        <div class="container scan-hero-inner">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-10 col-lg-8">
+                                    <div class="scan-card">
+                                        <div class="scan-video-wrap">
+                                            <video id="videoScanner" playsinline muted></video>
+                                            <div id="scanStartStack" class="scan-start-stack">
+                                                <div id="scanLogoCenter" class="scan-logo-center" aria-hidden="true">
+                                                    <img src="{{ asset('img/logo.png') }}" alt="">
+                                                </div>
+                                                <div class="scan-camera-controls" aria-hidden="false">
+                                                    <button id="btnScanNow"
+                                                        class="scan-camera-btn scan-camera-btn--primary"
+                                                        type="button">Scan Sekarang</button>
+                                                    <button id="btnStopScanner"
+                                                        class="scan-camera-btn scan-camera-btn--secondary"
+                                                        type="button" hidden>Matikan Scanner</button>
+                                                </div>
+                                            </div>
+                                            <div id="scanLogoCorner" class="scan-logo-corner" aria-hidden="true">
+                                                <img src="{{ asset('img/logo.png') }}" alt="">
+                                            </div>
+                                            <div id="scanEffectOverlay" class="scan-effect-overlay" aria-hidden="true"
+                                                hidden>
+                                                <div class="scan-effect-line"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="scan-alert" id="scannerStatus" role="status" aria-live="polite">
+                                        </div>
+
+                                        <!-- Popup hanya muncul saat ada QR terbaca -->
+                                        <div id="scanResultPopup" class="scan-popup" role="dialog" aria-modal="true"
+                                            aria-live="polite" hidden>
+                                            <div class="scan-popup__content">
+                                                <div class="scan-popup__title">Hasil QR</div>
+                                                <div class="scan-popup__body" id="hasilQrPopup">Menunggu scan...</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-9 col-lg-9"></div>
                             </div>
                         </div>
-
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <section class="scan-desktop-warning">
-            <div>
-                <h3 style="font-family: Anton, sans-serif; letter-spacing: 1px; color: #fff; margin-bottom: 0.75rem;">
-                    Scanner QR hanya untuk perangkat mobile
-                </h3>
-                <p style="margin: 0; color: #AAB1B7;">Gunakan ponsel untuk mengaktifkan kamera.</p>
-            </div>
-        </section>
-
-        <section class="scan-hero mobile-only">
-            <div class="container scan-hero-inner">
-                <div class="row justify-content-center">
-                    <div class="col-12 col-md-10 col-lg-8">
-                        <div class="scan-card">
-                            <div class="scan-video-wrap">
-                                <video id="videoScanner" playsinline muted></video>
-                                <div id="scanLogoCenter" class="scan-logo-center" aria-hidden="true">
-                                    <img src="{{ asset('img/logo.png') }}" alt="">
-                                </div>
-                                <div id="scanLogoCorner" class="scan-logo-corner" aria-hidden="true">
-                                    <img src="{{ asset('img/logo.png') }}" alt="">
-                                </div>
-                                <div id="scanEffectOverlay" class="scan-effect-overlay" aria-hidden="true" hidden>
-                                    <div class="scan-effect-line"></div>
-                                </div>
-                            </div>
-
-                            <!-- Tombol mengambang (hanya mobile) -->
-                            <div class="scan-camera-controls" aria-hidden="false">
-                                <button id="btnScanNow" class="scan-camera-btn scan-camera-btn--primary"
-                                    type="button">Scan
-                                    Sekarang</button>
-                                <button id="btnStopScanner" class="scan-camera-btn scan-camera-btn--secondary"
-                                    type="button" hidden>Matikan Scanner</button>
-                            </div>
-
-                            <div class="scan-alert" id="scannerStatus" role="status" aria-live="polite"></div>
-
-                            <!-- Popup hanya muncul saat ada QR terbaca -->
-                            <div id="scanResultPopup" class="scan-popup" role="dialog" aria-modal="true"
-                                aria-live="polite" hidden>
-                                <div class="scan-popup__content">
-                                    <div class="scan-popup__title">Hasil QR</div>
-                                    <div class="scan-popup__body" id="hasilQrPopup">Menunggu scan...</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </section>
 
                 </div>
             </div>
@@ -904,16 +797,63 @@
             var hasilEl = document.getElementById('hasilQrPopup');
             var popupEl = document.getElementById('scanResultPopup');
             var videoEl = document.getElementById('videoScanner');
+            var wrapEl = document.querySelector('.scan-video-wrap');
             var scanEffectOverlay = document.getElementById('scanEffectOverlay');
             var btnScanNow = document.getElementById('btnScanNow');
             var btnStopScanner = document.getElementById('btnStopScanner');
             var logoCenterEl = document.getElementById('scanLogoCenter');
             var logoCornerEl = document.getElementById('scanLogoCorner');
+            var scanStartStackEl = document.getElementById('scanStartStack');
 
             var stream = null;
             var timerId = null;
             var hasResult = false;
             var cameraActive = false;
+
+            /** Memaksa area kamera memenuhi layar di mobile (ZXing/theme kadang mengatur ulang ukuran video). */
+            function applyMobileVideoFullscreen() {
+                if (!videoEl || !wrapEl) return;
+                var mobile = window.matchMedia('(max-width: 768px)').matches;
+                if (!mobile) {
+                    ['position', 'top', 'left', 'right', 'bottom', 'width', 'height', 'min-width', 'min-height',
+                        'max-width', 'max-height', 'object-fit', 'object-position'
+                    ].forEach(function(p) {
+                        videoEl.style.removeProperty(p);
+                    });
+                    ['position', 'top', 'left', 'right', 'bottom', 'width', 'height', 'min-height', 'max-width',
+                        'max-height', 'z-index', 'overflow', 'margin'
+                    ].forEach(function(p) {
+                        wrapEl.style.removeProperty(p);
+                    });
+                    return;
+                }
+                wrapEl.style.setProperty('position', 'fixed', 'important');
+                wrapEl.style.setProperty('top', '0', 'important');
+                wrapEl.style.setProperty('left', '0', 'important');
+                wrapEl.style.setProperty('right', '0', 'important');
+                wrapEl.style.setProperty('bottom', '0', 'important');
+                wrapEl.style.setProperty('width', '100vw', 'important');
+                wrapEl.style.setProperty('max-width', '100vw', 'important');
+                wrapEl.style.setProperty('height', '100dvh', 'important');
+                wrapEl.style.setProperty('min-height', 'max(100svh, 100dvh)', 'important');
+                wrapEl.style.setProperty('z-index', '100', 'important');
+                wrapEl.style.setProperty('overflow', 'hidden', 'important');
+                wrapEl.style.setProperty('margin', '0', 'important');
+
+                videoEl.style.setProperty('position', 'absolute', 'important');
+                videoEl.style.setProperty('top', '0', 'important');
+                videoEl.style.setProperty('left', '0', 'important');
+                videoEl.style.setProperty('right', '0', 'important');
+                videoEl.style.setProperty('bottom', '0', 'important');
+                videoEl.style.setProperty('width', '100%', 'important');
+                videoEl.style.setProperty('height', '100%', 'important');
+                videoEl.style.setProperty('min-width', '100%', 'important');
+                videoEl.style.setProperty('min-height', '100%', 'important');
+                videoEl.style.setProperty('max-width', 'none', 'important');
+                videoEl.style.setProperty('max-height', 'none', 'important');
+                videoEl.style.setProperty('object-fit', 'cover', 'important');
+                videoEl.style.setProperty('object-position', 'center center', 'important');
+            }
 
             function updateControls() {
                 if (btnScanNow) btnScanNow.hidden = cameraActive;
@@ -921,6 +861,7 @@
                 if (scanEffectOverlay) scanEffectOverlay.hidden = !cameraActive;
                 if (logoCenterEl) logoCenterEl.hidden = cameraActive;
                 if (logoCornerEl) logoCornerEl.hidden = !cameraActive;
+                if (scanStartStackEl) scanStartStackEl.classList.toggle('scan-start-stack--scanning', cameraActive);
             }
 
             function setStatus(text) {
@@ -1004,6 +945,7 @@
 
                 videoEl.srcObject = stream;
                 await videoEl.play();
+                applyMobileVideoFullscreen();
 
                 var detector = new BarcodeDetector({
                     formats: ['qr_code']
@@ -1128,6 +1070,8 @@
                             hidePopup();
                         });
                     }
+                    setTimeout(applyMobileVideoFullscreen, 0);
+                    setTimeout(applyMobileVideoFullscreen, 300);
                 } catch (e) {
                     setStatus('Gagal memulai scanner: ' + (e && e.message ? e.message : 'tidak diketahui'));
                     return false;
@@ -1160,6 +1104,8 @@
                         setStatus('Scanner tidak didukung pada browser ini.');
                         cameraActive = false;
                         updateControls();
+                    } else {
+                        applyMobileVideoFullscreen();
                     }
                 } catch (e) {
                     setStatus('Gagal memulai scanner: ' + (e && e.message ? e.message : 'tidak diketahui'));
@@ -1222,6 +1168,15 @@
             } catch (e) {}
             if (hasilEl) hasilEl.textContent = '';
             updateControls();
+
+            applyMobileVideoFullscreen();
+            window.addEventListener('resize', applyMobileVideoFullscreen);
+            window.addEventListener('orientationchange', function() {
+                setTimeout(applyMobileVideoFullscreen, 200);
+            });
+            if (videoEl) {
+                videoEl.addEventListener('loadedmetadata', applyMobileVideoFullscreen);
+            }
         })();
     </script>
 </body>
