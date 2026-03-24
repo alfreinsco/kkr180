@@ -390,24 +390,27 @@
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: transparent;
+            background: rgba(255, 255, 255, 0.92);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
-            pointer-events: none;
+            pointer-events: auto;
         }
 
         .scan-popup__content {
-            width: min(92vw, 560px);
-            background: rgba(255, 255, 255, 0.98);
-            border: 1px solid rgba(16, 30, 54, 0.15);
-            border-radius: 12px;
-            padding: 16px 16px 12px;
+            width: 100vw;
+            height: 100dvh;
+            background: #f8fafc;
+            border: none;
+            border-radius: 0;
+            padding: 12px;
             color: #111827;
             transform: none;
-            box-shadow: 0 18px 45px rgba(2, 6, 23, 0.25);
+            box-shadow: none;
             pointer-events: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .scan-popup__title {
@@ -425,31 +428,32 @@
             white-space: pre-wrap;
             word-break: break-word;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            max-height: 50vh;
+            max-height: none;
+            flex: 1;
             overflow: auto;
             color: #111827;
-            font-size: 0.95rem;
-            line-height: 1.4;
+            font-size: 0.88rem;
+            line-height: 1.3;
         }
 
         .scan-modal-message {
             font-family: "Anton", sans-serif;
-            letter-spacing: 0.6px;
-            margin-bottom: 12px;
-            font-size: 1.0rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
         }
 
         .scan-modal-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px 12px;
+            gap: 7px;
         }
 
         .scan-modal-field {
             border: 1px solid rgba(16, 30, 54, 0.12);
-            border-radius: 10px;
-            padding: 10px 10px;
-            background: rgba(255, 255, 255, 0.85);
+            border-radius: 8px;
+            padding: 7px 8px;
+            background: #fff;
         }
 
         .scan-modal-field--full {
@@ -458,25 +462,25 @@
 
         .scan-modal-label {
             font-family: "Anton", sans-serif;
-            letter-spacing: 0.4px;
-            font-size: 0.75rem;
+            letter-spacing: 0.35px;
+            font-size: 0.66rem;
             color: #4b5563;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             text-transform: uppercase;
         }
 
         .scan-modal-value {
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             color: #111827;
             word-break: break-word;
-            line-height: 1.35;
+            line-height: 1.25;
         }
 
         .scan-modal-actions {
             display: flex;
             justify-content: flex-end;
-            margin-top: 12px;
+            margin-top: 8px;
         }
 
         .scan-modal-btn {
@@ -484,47 +488,26 @@
             border: 1px solid rgba(16, 30, 54, 0.15);
             background: #f3f4f6;
             color: #111827;
-            padding: 10px 14px;
+            padding: 8px 12px;
             font-family: "Anton", sans-serif;
             letter-spacing: 0.4px;
             cursor: pointer;
+            min-height: 38px;
         }
 
-        @media (max-width: 540px) {
-            .scan-popup {
-                align-items: flex-end;
-                padding: 0;
-            }
-
+        @media (max-width: 768px) {
             .scan-popup__content {
-                width: 100%;
-                max-width: 100%;
-                border-radius: 16px 16px 0 0;
-                border-left: none;
-                border-right: none;
-                border-bottom: none;
-                padding: 14px 12px calc(12px + env(safe-area-inset-bottom, 0px));
-                box-shadow: 0 -10px 30px rgba(2, 6, 23, 0.22);
+                padding: 10px 10px calc(10px + env(safe-area-inset-bottom, 0px));
             }
 
             .scan-popup__title {
-                font-size: 0.95rem;
-                margin-bottom: 8px;
-            }
-
-            .scan-popup__body {
-                max-height: min(58vh, 430px);
                 font-size: 0.9rem;
-            }
-
-            .scan-modal-message {
-                font-size: 0.95rem;
-                margin-bottom: 10px;
+                margin-bottom: 6px;
             }
 
             .scan-modal-grid {
                 grid-template-columns: 1fr;
-                gap: 8px;
+                gap: 6px;
             }
 
             .scan-modal-field--full {
@@ -532,39 +515,29 @@
             }
 
             .scan-modal-field {
-                padding: 9px 9px;
-                border-radius: 9px;
+                padding: 6px 7px;
+                border-radius: 7px;
             }
 
             .scan-modal-label {
-                font-size: 0.7rem;
-                margin-bottom: 3px;
+                font-size: 0.62rem;
+                margin-bottom: 2px;
             }
 
             .scan-modal-value {
-                font-size: 0.88rem;
-                line-height: 1.3;
+                font-size: 0.76rem;
+                line-height: 1.2;
             }
 
             .scan-modal-actions {
-                margin-top: 10px;
+                margin-top: 6px;
             }
 
             .scan-modal-btn {
                 width: 100%;
-                min-height: 44px;
-                font-size: 0.9rem;
+                min-height: 36px;
+                font-size: 0.8rem;
                 justify-content: center;
-            }
-        }
-
-        @media (min-width: 541px) and (max-width: 768px) {
-            .scan-popup__content {
-                width: min(92vw, 520px);
-            }
-
-            .scan-popup__body {
-                max-height: 56vh;
             }
         }
 
@@ -929,11 +902,8 @@
                                                             <div class="scan-modal-label">Umur</div>
                                                             <div class="scan-modal-value" id="scanModalUmur">-</div>
                                                         </div>
-                                                        <div class="scan-modal-field">
-                                                            <div class="scan-modal-label">Pernah CG</div>
-                                                            <div class="scan-modal-value" id="scanModalPernahIkut">-</div>
-                                                        </div>
-                                                        <div class="scan-modal-field scan-modal-field--full">
+                                                        <div class="scan-modal-field scan-modal-field--full"
+                                                            id="scanModalNamaCglField">
                                                             <div class="scan-modal-label">Nama CGL</div>
                                                             <div class="scan-modal-value" id="scanModalNamaCgl">-</div>
                                                         </div>
@@ -993,8 +963,8 @@
             var modalAlamatEl = document.getElementById('scanModalAlamat');
             var modalAsalKampusEl = document.getElementById('scanModalAsalKampus');
             var modalUmurEl = document.getElementById('scanModalUmur');
-            var modalPernahIkutEl = document.getElementById('scanModalPernahIkut');
             var modalNamaCglEl = document.getElementById('scanModalNamaCgl');
+            var modalNamaCglFieldEl = document.getElementById('scanModalNamaCglField');
             var btnCloseModal = document.getElementById('btnCloseScanModal');
 
             var stream = null;
@@ -1077,21 +1047,21 @@
                 if (modalAlamatEl) modalAlamatEl.textContent = v;
                 if (modalAsalKampusEl) modalAsalKampusEl.textContent = v;
                 if (modalUmurEl) modalUmurEl.textContent = v;
-                if (modalPernahIkutEl) modalPernahIkutEl.textContent = v;
                 if (modalNamaCglEl) modalNamaCglEl.textContent = v;
+                if (modalNamaCglFieldEl) modalNamaCglFieldEl.style.display = 'none';
             }
 
             function setModalFields(person) {
                 if (!person) return clearModalFields();
-                var pernahIkut = person.pernah_ikut === 'sudah' ? 'Sudah' : (person.pernah_ikut === 'belum' ? 'Belum' : '-');
+                var showNamaCgl = person.pernah_ikut === 'sudah' && !!person.nama_cgl;
 
                 if (modalNamaEl) modalNamaEl.textContent = person.nama_lengkap || '-';
                 if (modalNoTelpEl) modalNoTelpEl.textContent = person.no_telp || '-';
                 if (modalAlamatEl) modalAlamatEl.textContent = person.alamat || '-';
                 if (modalAsalKampusEl) modalAsalKampusEl.textContent = person.asal_kampus || '-';
                 if (modalUmurEl) modalUmurEl.textContent = (person.umur !== null && person.umur !== undefined && person.umur !== '') ? String(person.umur) : '-';
-                if (modalPernahIkutEl) modalPernahIkutEl.textContent = pernahIkut;
                 if (modalNamaCglEl) modalNamaCglEl.textContent = person.nama_cgl || '-';
+                if (modalNamaCglFieldEl) modalNamaCglFieldEl.style.display = showNamaCgl ? 'block' : 'none';
             }
 
             if (btnCloseModal) {
