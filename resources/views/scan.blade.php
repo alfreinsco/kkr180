@@ -878,6 +878,54 @@
                 popupEl.hidden = true;
             }
 
+            async function processScannedPayload(payload) {
+                if (!payload) {
+                    if (hasilEl) hasilEl.textContent = 'QR kosong / tidak valid.';
+                    setStatus('QR tidak valid.');
+                    showPopup();
+                    return;
+                }
+
+                if (hasilEl) hasilEl.textContent = 'Memproses data undangan...';
+                setStatus('Memvalidasi data undangan...');
+                showPopup();
+
+                try {
+                    var response = await fetch('{{ url('/api/scan/check-in') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({
+                            qr_payload: payload
+                        })
+                    });
+
+                    var data = {};
+                    try {
+                        data = await response.json();
+                    } catch (e) {
+                        data = {};
+                    }
+
+                    if (!response.ok || !data.success) {
+                        var errorMessage = data && data.message ? data.message : 'Gagal memproses QR.';
+                        if (hasilEl) hasilEl.textContent = errorMessage;
+                        setStatus('Gagal menambahkan ke buku tamu.');
+                        return;
+                    }
+
+                    var successMessage = data.message || 'Berhasil ditambahkan ke buku tamu.';
+                    if (hasilEl) hasilEl.textContent = successMessage;
+                    setStatus('Check-in berhasil.');
+                } catch (e) {
+                    if (hasilEl) hasilEl.textContent = 'Terjadi kesalahan jaringan saat memproses QR.';
+                    setStatus('Gagal terhubung ke server.');
+                }
+            }
+
             function stopStream() {
                 try {
                     if (timerId) {
@@ -978,12 +1026,11 @@
                                 if (!raw) return;
                                 if (!cameraActive) return;
                                 hasResult = true;
-                                hasilEl.textContent = raw;
-                                setStatus('QR berhasil dibaca. Scanner berhenti.');
+                                setStatus('QR terbaca. Memproses...');
                                 stopStream();
                                 cameraActive = false;
                                 updateControls();
-                                showPopup();
+                                processScannedPayload(raw);
                             })
                             .catch(function() {
                                 // Abaikan error deteksi sporadis
@@ -1038,8 +1085,8 @@
                         if (!cameraActive) return;
                         if (result && !hasResult) {
                             hasResult = true;
-                            hasilEl.textContent = result.getText ? result.getText() : (result.text || '');
-                            setStatus('QR berhasil dibaca. Scanner berhenti.');
+                            var raw = result.getText ? result.getText() : (result.text || '');
+                            setStatus('QR terbaca. Memproses...');
                             try {
                                 stopZXing();
                             } catch (e) {}
@@ -1048,7 +1095,7 @@
                             } catch (e) {}
                             cameraActive = false;
                             updateControls();
-                            showPopup();
+                            processScannedPayload(raw);
                         }
                         if (err) {
                             var isNotFound = err.name === 'NotFoundException' || (window.ZXing
