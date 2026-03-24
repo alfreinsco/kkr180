@@ -494,8 +494,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="umurRegister">Umur</label>
-                                    <input type="number" class="form-control" id="umurRegister" name="umur" min="0"
-                                        max="120" step="1" placeholder="Opsional">
+                                    <input type="number" class="form-control" id="umurRegister" name="umur"
+                                        min="0" max="120" step="1" placeholder="Opsional">
                                 </div>
                                 <div class="form-group">
                                     <label>Sudah pernah mengikuti CG (Connect Group) sebelumnya?</label>
@@ -583,6 +583,21 @@
                 if (cglWrap) cglWrap.classList.remove('show');
             }
 
+            function openPendingTab() {
+                return window.open('about:blank', '_blank');
+            }
+
+            function redirectPendingTab(pendingTab, undanganUrl) {
+                if (!undanganUrl) return;
+                if (pendingTab && !pendingTab.closed) {
+                    pendingTab.location.href = undanganUrl;
+                    return;
+                }
+                var fallbackTab = window.open(undanganUrl, '_blank');
+                if (fallbackTab) return;
+                alert('Pop-up diblokir browser. Silakan buka link undangan secara manual.');
+            }
+
             if (btnKirimLagi) {
                 btnKirimLagi.addEventListener('click', showForm);
             }
@@ -607,6 +622,7 @@
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
+                var pendingTab = openPendingTab();
 
                 var umurRaw = document.getElementById('umurRegister').value.trim();
                 var umurParsed = umurRaw === '' ? null : parseInt(umurRaw, 10);
@@ -646,7 +662,9 @@
                     .then(function(result) {
                         if (result.ok) {
                             showSuccess();
+                            redirectPendingTab(pendingTab, result.data.undanganUrl);
                         } else {
+                            if (pendingTab && !pendingTab.closed) pendingTab.close();
                             var msg = result.data.message || 'Terjadi kesalahan. Silakan coba lagi.';
                             if (result.data.errors) {
                                 var errList = Object.values(result.data.errors).flat().join('\n');
@@ -656,6 +674,7 @@
                         }
                     })
                     .catch(function() {
+                        if (pendingTab && !pendingTab.closed) pendingTab.close();
                         alert('Terjadi kesalahan jaringan. Silakan coba lagi.');
                     });
             });

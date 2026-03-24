@@ -638,8 +638,24 @@
             }
             var form = document.getElementById('formIngatkanSaya');
             if (form) {
+                function openPendingTab() {
+                    return window.open('about:blank', '_blank');
+                }
+
+                function redirectPendingTab(pendingTab, undanganUrl) {
+                    if (!undanganUrl) return;
+                    if (pendingTab && !pendingTab.closed) {
+                        pendingTab.location.href = undanganUrl;
+                        return;
+                    }
+                    var fallbackTab = window.open(undanganUrl, '_blank');
+                    if (fallbackTab) return;
+                    alert('Pop-up diblokir browser. Silakan buka link undangan secara manual.');
+                }
+
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
+                    var pendingTab = openPendingTab();
                     var submitBtn = form.querySelector('button[type="submit"]');
                     var originalText = submitBtn.textContent;
                     submitBtn.disabled = true;
@@ -677,12 +693,14 @@
                         })
                         .then(function(result) {
                             if (result.ok) {
+                                redirectPendingTab(pendingTab, result.data.undanganUrl);
                                 alert(result.data.message ||
                                     'Terima kasih! Kami akan mengingatkan Anda untuk KKR 180°.');
                                 $('#ingatkanModal').modal('hide');
                                 form.reset();
                                 if (cglWrap) cglWrap.classList.remove('show');
                             } else {
+                                if (pendingTab && !pendingTab.closed) pendingTab.close();
                                 var msg = result.data.message || 'Terjadi kesalahan. Silakan coba lagi.';
                                 if (result.data.errors) {
                                     var errList = Object.values(result.data.errors).flat().join('\n');
@@ -692,6 +710,7 @@
                             }
                         })
                         .catch(function() {
+                            if (pendingTab && !pendingTab.closed) pendingTab.close();
                             alert('Koneksi gagal. Periksa jaringan dan coba lagi.');
                         })
                         .finally(function() {

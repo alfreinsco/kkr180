@@ -7,6 +7,7 @@ use App\Http\Resources\IngatkanSayaResource;
 use App\Models\IngatkanSaya;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class IngatkanSayaController extends Controller
@@ -48,11 +49,14 @@ class IngatkanSayaController extends Controller
         }
 
         $ingatkan = IngatkanSaya::create($data);
+        $encryptedId = Crypt::encryptString((string) $ingatkan->id);
+        $undanganUrl = route('undangan.show', ['encryptedId' => $encryptedId]);
 
         return response()->json([
             'success' => true,
             'message' => 'Terima kasih! Kami akan mengingatkan Anda untuk KKR 180°.',
             'data' => new IngatkanSayaResource($ingatkan),
+            'undanganUrl' => $undanganUrl,
         ], 201);
     }
 }
