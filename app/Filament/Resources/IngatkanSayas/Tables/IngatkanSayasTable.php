@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\IngatkanSayas\Tables;
 
 use App\Filament\Exports\IngatkanSayaExporter;
+use App\Models\IngatkanSaya;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -10,6 +12,7 @@ use Filament\Actions\ExportAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Crypt;
 
 class IngatkanSayasTable
 {
@@ -68,6 +71,13 @@ class IngatkanSayasTable
                 //
             ])
             ->recordActions([
+                Action::make('undangan')
+                    ->label('Undangan')
+                    ->icon('heroicon-o-qr-code')
+                    ->url(fn (IngatkanSaya $record): string => route('undangan.show', [
+                        'encryptedId' => Crypt::encryptString((string) $record->id),
+                    ]))
+                    ->openUrlInNewTab(),
                 ViewAction::make(),
                 EditAction::make(),
             ])

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\UndanganController;
 use App\Models\Pengaturan;
 use App\Models\Performer;
 use App\Models\ProgramDetail;
 use App\Models\SponsorLogo;
 use App\Models\Tentang;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,3 +39,13 @@ Route::get('/scan', function (Request $request) {
 Route::get('/test', function (Request $request) {
     return view('test');
 });
+
+Route::get('/undangan/{encryptedId}', [UndanganController::class, 'show'])
+    ->name('undangan.show');
+
+// Opsional helper untuk generate URL undangan terenkripsi dari ID.
+Route::get('/undangan-link/{id}', function (int $id) {
+    return redirect()->route('undangan.show', [
+        'encryptedId' => Crypt::encryptString((string) $id),
+    ]);
+})->whereNumber('id');
