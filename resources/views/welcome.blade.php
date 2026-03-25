@@ -181,7 +181,7 @@
             }
         }
 
-        /* Modal Ingatkan Saya - konsisten dengan tema */
+        /* Modal Daftar Sekarang - konsisten dengan tema */
         #ingatkanModal.modal {
             z-index: 9999 !important;
         }
@@ -424,8 +424,8 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="buy_tkt">
                                     <div class="book_btn d-none d-lg-block">
-                                        <a href="#" data-toggle="modal" data-target="#ingatkanModal">Ingatkan
-                                            Saya</a>
+                                        <a href="#" data-toggle="modal" data-target="#ingatkanModal">Daftar
+                                            Sekarang</a>
                                     </div>
                                 </div>
                             </div>
@@ -608,86 +608,6 @@
         <!-- map_area_end  -->
     @endif
 
-    <!-- cg_intro_area_start — ringkasan dari https://gms.church/id/cg (setelah peta) -->
-    <div id="cg_area_start" class="cg-intro-area black_bg">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <p class="cg-intro-kicker wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">Connect Group
-                        GMS</p>
-                    <div class="section_title mb-50">
-                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".25s">Rumah rohani untuk
-                            bertumbuh bersama</h3>
-                        <p class="cg-intro-sub wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-                            <strong>Connect Group (CG)</strong> adalah komunitas kecil tempat Anda dimuridkan,
-                            saling menguatkan, dan bertumbuh semakin serupa dengan Kristus — dengan visi GMS untuk
-                            membangun gereja lokal yang kuat lewat penginjilan, pemuridan, dan multiplikasi.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center mb-50">
-                <div class="col-lg-8 text-center">
-                    <p class="cg-intro-body wow fadeInUp" data-wow-duration="1s" data-wow-delay=".35s">
-                        Biasanya terdiri dari <strong>6–15 orang</strong> yang rutin berkumpul: pujian &amp;
-                        penyembahan,
-                        diskusi Firman, doa bersama, persekutuan hangat, hingga aktivitas seru dan pelayanan sosial.
-                        <strong>Hidup iman lebih bermakna saat dijalani bersama.</strong>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
-                        <div class="cg-num">01</div>
-                        <h5>Panggilan Tuhan</h5>
-                        <p>Dimuridkan secara sengaja dan dilatih untuk memuridkan orang lain.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-                        <div class="cg-num">02</div>
-                        <h5>Pertumbuhan iman</h5>
-                        <p>Iman yang matang lewat pemuridan yang konsisten dan relevan.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
-                        <div class="cg-num">03</div>
-                        <h5>Komunitas kasih</h5>
-                        <p>Lingkungan yang saling mengasihi dan selalu ada untuk satu sama lain.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
-                        <div class="cg-num">04</div>
-                        <h5>Dukungan rohani</h5>
-                        <p>Saling mendukung lewat doa, Firman, dan kebersamaan yang tulus.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="cg-quote wow fadeInUp" data-wow-duration="1s" data-wow-delay=".35s">
-                        <p>Dan marilah kita saling memperhatikan supaya kita saling mendorong dalam kasih dan dalam
-                            pekerjaan baik. Janganlah kita menjauhkan diri dari pertemuan-pertemuan ibadah kita &hellip;
-                            marilah kita saling menasihati, dan semakin giat melakukannya menjelang hari Tuhan yang
-                            mendekat.</p>
-                        <cite>— Ibrani 10:24–25</cite>
-                    </div>
-                    <div class="text-center cg-cta-wrap wow fadeInUp" data-wow-duration="1s" data-wow-delay=".45s">
-                        <a href="https://gms.church/id/cg" class="boxed-btn3" target="_blank"
-                            rel="noopener noreferrer">Pelajari CG &amp; cara bergabung</a>
-                        <p class="cg-cta-note mb-0">Informasi lengkap, kategori usia, dan formulir <strong>Connect
-                                Me</strong> ada di situs resmi GMS Church — <a href="https://gms.church/id/cg"
-                                target="_blank" rel="noopener noreferrer">gms.church/id/cg</a>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- cg_intro_area_end -->
-
     @if ($sponsorLogos && $sponsorLogos->isNotEmpty())
         <!-- brand_area_start  -->
         <div class="brand_area black_bg">
@@ -734,14 +654,98 @@
                                 <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">Jangan sampai
                                     ketinggalan!</p>
                                 <a href="#" class="boxed-btn3 wow fadeInUp" data-wow-duration="1s"
-                                    data-wow-delay=".6s" data-toggle="modal" data-target="#ingatkanModal">Ingatkan
-                                    Saya</a>
+                                    data-wow-delay=".6s" data-toggle="modal" data-target="#ingatkanModal">Daftar
+                                    Sekarang</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- cg_intro_area_start — ringkasan dari https://gms.church/id/cg (sebelum baris copyright) -->
+        <div id="cg_area_start" class="cg-intro-area black_bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 text-center">
+                        <p class="cg-intro-kicker wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">Connect
+                            Group
+                            GMS</p>
+                        <div class="section_title mb-50">
+                            <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".25s">Rumah rohani untuk
+                                bertumbuh bersama</h3>
+                            <p class="cg-intro-sub wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                                <strong>Connect Group (CG)</strong> adalah komunitas kecil tempat Anda dimuridkan,
+                                saling menguatkan, dan bertumbuh semakin serupa dengan Kristus — dengan visi GMS untuk
+                                membangun gereja lokal yang kuat lewat penginjilan, pemuridan, dan multiplikasi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-50">
+                    <div class="col-lg-8 text-center">
+                        <p class="cg-intro-body wow fadeInUp" data-wow-duration="1s" data-wow-delay=".35s">
+                            Biasanya terdiri dari <strong>6–15 orang</strong> yang rutin berkumpul: pujian &amp;
+                            penyembahan,
+                            diskusi Firman, doa bersama, persekutuan hangat, hingga aktivitas seru dan pelayanan sosial.
+                            <strong>Hidup iman lebih bermakna saat dijalani bersama.</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                            <div class="cg-num">01</div>
+                            <h5>Panggilan Tuhan</h5>
+                            <p>Dimuridkan secara sengaja dan dilatih untuk memuridkan orang lain.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                            <div class="cg-num">02</div>
+                            <h5>Pertumbuhan iman</h5>
+                            <p>Iman yang matang lewat pemuridan yang konsisten dan relevan.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
+                            <div class="cg-num">03</div>
+                            <h5>Komunitas kasih</h5>
+                            <p>Lingkungan yang saling mengasihi dan selalu ada untuk satu sama lain.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                            <div class="cg-num">04</div>
+                            <h5>Dukungan rohani</h5>
+                            <p>Saling mendukung lewat doa, Firman, dan kebersamaan yang tulus.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="cg-quote wow fadeInUp" data-wow-duration="1s" data-wow-delay=".35s">
+                            <p>Dan marilah kita saling memperhatikan supaya kita saling mendorong dalam kasih dan dalam
+                                pekerjaan baik. Janganlah kita menjauhkan diri dari pertemuan-pertemuan ibadah kita
+                                &hellip;
+                                marilah kita saling menasihati, dan semakin giat melakukannya menjelang hari Tuhan yang
+                                mendekat.</p>
+                            <cite>— Ibrani 10:24–25</cite>
+                        </div>
+                        <div class="text-center cg-cta-wrap wow fadeInUp" data-wow-duration="1s"
+                            data-wow-delay=".45s">
+                            <a href="https://gms.church/id/cg" class="boxed-btn3" target="_blank"
+                                rel="noopener noreferrer">Pelajari CG &amp; cara bergabung</a>
+                            <p class="cg-cta-note mb-0">Informasi lengkap, kategori usia, dan formulir <strong>Connect
+                                    Me</strong> ada di situs resmi GMS Church — <a href="https://gms.church/id/cg"
+                                    target="_blank" rel="noopener noreferrer">gms.church/id/cg</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cg_intro_area_end -->
+
         <div class="copy-right_text">
             <div class="container">
                 <div class="row">
@@ -761,13 +765,13 @@
     </footer>
     <!-- footer_end  -->
 
-    <!-- Modal Ingatkan Saya -->
+    <!-- Modal Daftar Sekarang -->
     <div class="modal fade" id="ingatkanModal" tabindex="-1" role="dialog" aria-labelledby="ingatkanModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ingatkanModalLabel">Ingatkan Saya — KKR 180°</h5>
+                    <h5 class="modal-title" id="ingatkanModalLabel">Daftar Sekarang — KKR 180°</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
                         <span aria-hidden="true">&times;</span>
                     </button>
