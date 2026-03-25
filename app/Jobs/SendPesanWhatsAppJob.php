@@ -5,10 +5,10 @@ namespace App\Jobs;
 use App\Models\BukuTamu;
 use App\Models\IngatkanSaya;
 use App\Models\Pengaturan;
+use App\Support\UndanganUrl;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -100,9 +100,7 @@ class SendPesanWhatsAppJob implements ShouldQueue
             return url('/');
         }
 
-        return route('undangan.show', [
-            'encryptedId' => Crypt::encryptString((string) $this->recordId),
-        ]);
+        return UndanganUrl::forPendaftarId($this->recordId);
     }
 
     private function resolveSendTextEndpoint(string $apiUrl): string

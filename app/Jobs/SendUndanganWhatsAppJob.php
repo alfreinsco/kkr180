@@ -4,9 +4,9 @@ namespace App\Jobs;
 
 use App\Models\IngatkanSaya;
 use App\Models\Pengaturan;
+use App\Support\UndanganUrl;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -32,8 +32,7 @@ class SendUndanganWhatsAppJob implements ShouldQueue
             return;
         }
 
-        $encryptedId = Crypt::encryptString((string) $penerima->id);
-        $undanganUrl = route('undangan.show', ['encryptedId' => $encryptedId]);
+        $undanganUrl = UndanganUrl::forPendaftarId($penerima->id);
 
         $message = $this->composeMessage($penerima->nama_lengkap, $undanganUrl);
 
