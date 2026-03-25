@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Auth;
 
 class ListIngatkanSayas extends ListRecords
 {
@@ -16,7 +17,7 @@ class ListIngatkanSayas extends ListRecords
     {
         $actions = [];
 
-        if (auth()->user()?->is_admin) {
+        if (Auth::user()?->is_admin) {
             $actions[] = Action::make('data_terhapus')
                 ->label('Data terhapus')
                 ->icon(Heroicon::OutlinedTrash)
@@ -24,7 +25,7 @@ class ListIngatkanSayas extends ListRecords
         }
 
         $actions[] = CreateAction::make()
-            ->label('Tambah Daftar Pengingat');
+            ->label('Tambah Pendaftar');
 
         return $actions;
     }

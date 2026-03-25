@@ -22,13 +22,13 @@ class IngatkanSayaResource extends Resource
 {
     protected static ?string $model = IngatkanSaya::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBellAlert;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::ClipboardDocumentList;
 
-    protected static ?string $navigationLabel = 'Ingatkan Saya';
+    protected static ?string $navigationLabel = 'Data Pendaftar';
 
-    protected static ?string $modelLabel = 'Ingatkan Saya';
+    protected static ?string $modelLabel = 'Pendaftar';
 
-    protected static ?string $pluralModelLabel = 'Data Ingatkan Saya';
+    protected static ?string $pluralModelLabel = 'Data Pendaftar';
 
     protected static string|\UnitEnum|null $navigationGroup = 'Data & Pendaftaran';
 

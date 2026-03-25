@@ -37,11 +37,11 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Red,
+                'primary' => Color::Blue,
             ])
             // ->font('Muli', url: 'https://fonts.googleapis.com/css2?family=Anton&family=Muli:wght@400;500;600;700&display=swap')
-            ->defaultThemeMode(ThemeMode::Dark)
-            ->darkMode(true, true)
+            ->defaultThemeMode(ThemeMode::Light)
+            ->darkMode(false)
             ->renderHook(PanelsRenderHook::STYLES_AFTER, function (): HtmlString {
                 $path = public_path('css/filament-kkr180.css');
                 $v = file_exists($path) ? filemtime($path) : '';
@@ -68,8 +68,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AppAccountWidget::class,
-                FilamentInfoWidget::class,
+                // AppAccountWidget::class,
+                // FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

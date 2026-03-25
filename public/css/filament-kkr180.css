@@ -1,9 +1,9 @@
 /**
- * Filament Admin - konsisten dengan tema welcome (KKR 180°)
- * Warna aksen #FF4533, font Muli, dark, sudut tajam (border-radius: 0)
+ * Filament Admin — tema light, sidebar putih, aksen biru (primary)
+ * Font Muli / Anton, sudut tajam (border-radius: 0)
  */
 
-/* Font body konsisten dengan welcome */
+/* Font body */
 .fi {
     font-family: "Muli", sans-serif !important;
 }
@@ -26,61 +26,63 @@
     border-radius: 0 !important;
 }
 
-/* Warna primary aksen #FF4533 (override jika pakai Color::Red) */
-.fi.dark {
-    --primary-400: #ff6b5c;
-    --primary-500: #FF4533;
-    --primary-600: #e63e2e;
+/* Primary biru (selaras Color::Blue; override jika perlu) */
+.fi {
+    --primary-400: #60a5fa;
+    --primary-500: #3b82f6;
+    --primary-600: #2563eb;
 }
 
-/* Background dark lebih dekat ke welcome (#000, #1a1a1a) */
-.fi.dark .fi-main-ctn {
-    background-color: #0a0a0a;
+/* Area utama — light */
+.fi .fi-main-ctn {
+    background-color: #f8fafc;
 }
 
-.fi.dark .fi-sidebar,
-.fi.dark .fi-sidebar-nav {
-    background-color: #000 !important;
-    border-color: #333 !important;
+/* Sidebar putih */
+.fi .fi-sidebar,
+.fi .fi-sidebar-nav {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
 }
 
-.fi.dark .fi-topbar {
-    background-color: #000 !important;
-    border-color: #333 !important;
+/* Topbar selaras sidebar */
+.fi .fi-topbar {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
 }
 
-/* Border aksen primary pada elemen aktif */
-.fi.dark .fi-sidebar-item-btn.fi-active,
-.fi.dark .fi-sidebar-group-button.fi-active {
-    border-left: 2px solid #FF4533;
-    color: #FF4533;
+/* Item navigasi aktif / hover — biru */
+.fi .fi-sidebar-item-btn.fi-active,
+.fi .fi-sidebar-group-button.fi-active {
+    border-left: 2px solid var(--primary-600);
+    color: var(--primary-600);
 }
 
-.fi.dark .fi-sidebar-item-btn:hover:not(.fi-active),
-.fi.dark .fi-sidebar-group-button:hover {
-    color: #FF4533;
+.fi .fi-sidebar-item-btn:hover:not(.fi-active),
+.fi .fi-sidebar-group-button:hover {
+    color: var(--primary-600);
 }
 
-/* Input & form konsisten welcome */
-.fi.dark input:not([type="checkbox"]):not([type="radio"]),
-.fi.dark select,
-.fi.dark textarea {
-    background-color: #1a1a1a !important;
-    border-color: #333 !important;
+/* Input & form — light */
+.fi input:not([type="checkbox"]):not([type="radio"]),
+.fi select,
+.fi textarea {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
     border-radius: 0 !important;
 }
 
-.fi.dark input:focus,
-.fi.dark select:focus,
-.fi.dark textarea:focus {
-    border-color: #FF4533 !important;
-    box-shadow: 0 0 0 1px #FF4533 !important;
+.fi input:focus,
+.fi select:focus,
+.fi textarea:focus {
+    border-color: var(--primary-500) !important;
+    box-shadow: 0 0 0 1px var(--primary-500) !important;
 }
 
-/* Tombol primary seperti welcome */
+/* Tombol primary */
 .fi .fi-btn-primary,
 .fi button[type="submit"].fi-btn {
-    background-color: #FF4533 !important;
+    background-color: var(--primary-600) !important;
     border-radius: 0 !important;
     border: 1px solid transparent !important;
     font-family: "Anton", "Muli", sans-serif !important;
@@ -88,23 +90,23 @@
 
 .fi .fi-btn-primary:hover,
 .fi button[type="submit"].fi-btn:hover {
-    background-color: transparent !important;
-    border-color: #FF4533 !important;
-    color: #FF4533 !important;
+    background-color: #ffffff !important;
+    border-color: var(--primary-600) !important;
+    color: var(--primary-600) !important;
 }
 
-/* Card / container */
-.fi.dark .fi-section-content-ctn,
-.fi.dark .fi-ta-content,
-.fi.dark .fi-wi-stats-overview-widget section {
-    background-color: #0a0a0a !important;
-    border-color: #333 !important;
+/* Card / section */
+.fi .fi-section-content-ctn,
+.fi .fi-ta-content,
+.fi .fi-wi-stats-overview-widget section {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
 }
 
-.fi.dark .fi-section-header-heading {
-    color: #fff;
+.fi .fi-section-header-heading {
+    color: #0f172a;
 }
 
-.fi.dark .fi-section-description {
-    color: #AAB1B7;
+.fi .fi-section-description {
+    color: #64748b;
 }

@@ -10,6 +10,8 @@ class ViewIngatkanSaya extends ViewRecord
 {
     protected static string $resource = IngatkanSayaResource::class;
 
+    protected static ?string $title = 'Detail Pendaftar';
+
     protected function getHeaderActions(): array
     {
         return [

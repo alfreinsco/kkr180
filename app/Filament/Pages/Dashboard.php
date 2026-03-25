@@ -17,7 +17,7 @@ class Dashboard extends BaseDashboard
      *
      * @return int|array<string, int|null>
      */
-    public function getColumns(): int | array
+    public function getColumns(): int|array
     {
         return 2;
     }
