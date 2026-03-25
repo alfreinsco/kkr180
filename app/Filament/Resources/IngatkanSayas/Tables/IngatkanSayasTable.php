@@ -13,9 +13,16 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ViewAction;
+use Filament\Forms\Components\DatePicker;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Indicator;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Crypt;
 
@@ -51,7 +58,7 @@ class IngatkanSayasTable
                     ->label('Umur')
                     ->placeholder('-')
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('pernah_ikut')
                     ->label('Pernah CG')
                     ->formatStateUsing(fn (string $state): string => $state === 'sudah' ? 'Sudah' : 'Belum')
@@ -61,7 +68,7 @@ class IngatkanSayasTable
                     ->label('Nama CGL')
                     ->placeholder('-')
                     ->searchable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->label('Didaftarkan')
                     ->dateTime('d/m/Y H:i')
@@ -73,8 +80,54 @@ class IngatkanSayasTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
-            ])
+                TrashedFilter::make(),
+                SelectFilter::make('pernah_ikut')
+                    ->label('Pernah CG')
+                    ->options([
+                        'sudah' => 'Sudah',
+                        'belum' => 'Belum',
+                    ]),
+                SelectFilter::make('asal_kampus')
+                    ->label('Asal Kampus')
+                    ->options(fn (): array => IngatkanSaya::query()
+                        ->whereNotNull('asal_kampus')
+                        ->where('asal_kampus', '!=', '')
+                        ->distinct()
+                        ->orderBy('asal_kampus')
+                        ->pluck('asal_kampus', 'asal_kampus')
+                        ->all())
+                    ->searchable()
+                    ->preload(),
+                // Filter::make('tanggal_daftar')
+                //     ->label('Tanggal daftar')
+                //     ->columns(2)
+                //     ->columnSpan(2)
+                //     ->schema([
+                //         DatePicker::make('dari')->label('Dari tanggal')->native(false),
+                //         DatePicker::make('sampai')->label('Sampai tanggal')->native(false),
+                //     ])
+                //     ->query(function (Builder $query, array $data): Builder {
+                //         if (! empty($data['dari'])) {
+                //             $query->whereDate('created_at', '>=', $data['dari']);
+                //         }
+                //         if (! empty($data['sampai'])) {
+                //             $query->whereDate('created_at', '<=', $data['sampai']);
+                //         }
+
+                //         return $query;
+                //     })
+                //     ->indicateUsing(function (array $data): array {
+                //         $indicators = [];
+                //         if (! empty($data['dari'])) {
+                //             $indicators[] = Indicator::make('Dari: '.$data['dari']);
+                //         }
+                //         if (! empty($data['sampai'])) {
+                //             $indicators[] = Indicator::make('Sampai: '.$data['sampai']);
+                //         }
+
+                //         return $indicators;
+                //     }),
+            ], layout: FiltersLayout::AboveContent)
             ->recordActions([
                 Action::make('undangan')
                     ->label('Undangan')
