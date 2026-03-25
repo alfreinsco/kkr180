@@ -33,8 +33,152 @@
 
         #performar_area_start,
         #about_area_start,
+        #cg_area_start,
         #contact_area_start {
             scroll-margin-top: 100px;
+        }
+
+        /* Connect Group — pengenalan singkat, konsisten tema */
+        .cg-intro-area {
+            position: relative;
+            padding-top: 85px;
+            padding-bottom: 95px;
+            overflow: hidden;
+        }
+
+        .cg-intro-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent 0%, #FF4533 20%, #ff7a6a 50%, #FF4533 80%, transparent 100%);
+        }
+
+        .cg-intro-area .cg-intro-kicker {
+            font-family: "Anton", sans-serif;
+            color: #FF4533;
+            letter-spacing: 0.22em;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            margin-bottom: 0.65rem;
+        }
+
+        .cg-intro-area .cg-intro-sub {
+            color: #c8cdd2;
+            font-size: 1.05rem;
+            line-height: 1.65;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cg-intro-area .cg-intro-body {
+            color: #AAB1B7;
+            font-size: 0.98rem;
+            line-height: 1.75;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cg-intro-area .cg-intro-body strong {
+            color: #e8ecef;
+            font-weight: 600;
+        }
+
+        .cg-intro-card {
+            background: linear-gradient(145deg, #141414 0%, #0d0d0d 100%);
+            border: 1px solid #2a2a2a;
+            padding: 1.35rem 1.25rem 1.4rem;
+            height: 100%;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .cg-intro-card:hover {
+            border-color: rgba(255, 69, 51, 0.45);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+
+        .cg-intro-card .cg-num {
+            font-family: "Anton", sans-serif;
+            font-size: 2rem;
+            line-height: 1;
+            color: rgba(255, 69, 51, 0.35);
+            margin-bottom: 0.5rem;
+        }
+
+        .cg-intro-card h5 {
+            font-family: "Anton", sans-serif;
+            color: #fff;
+            font-size: 1rem;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+            line-height: 1.35;
+        }
+
+        .cg-intro-card p {
+            color: #8f969c;
+            font-size: 0.88rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        .cg-intro-area .cg-quote {
+            border-left: 3px solid #FF4533;
+            padding: 1rem 1.25rem 1rem 1.5rem;
+            background: rgba(255, 69, 51, 0.06);
+            margin-top: 0.5rem;
+        }
+
+        .cg-intro-area .cg-quote p {
+            color: #c8cdd2;
+            font-style: italic;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            margin: 0 0 0.5rem;
+        }
+
+        .cg-intro-area .cg-quote cite {
+            color: #FF8066;
+            font-size: 0.82rem;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        .cg-intro-area .cg-cta-wrap {
+            margin-top: 0.25rem;
+        }
+
+        .cg-intro-area .cg-cta-note {
+            color: #7a8086;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .cg-intro-area .cg-cta-note a {
+            color: #ff8a7a;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .cg-intro-area .cg-cta-note a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 767px) {
+            .cg-intro-area {
+                padding-top: 65px;
+                padding-bottom: 70px;
+            }
+
+            .cg-intro-card {
+                margin-bottom: 0;
+            }
         }
 
         /* Modal Ingatkan Saya - konsisten dengan tema */
@@ -463,6 +607,86 @@
         </div>
         <!-- map_area_end  -->
     @endif
+
+    <!-- cg_intro_area_start — ringkasan dari https://gms.church/id/cg (setelah peta) -->
+    <div id="cg_area_start" class="cg-intro-area black_bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <p class="cg-intro-kicker wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">Connect Group
+                        GMS</p>
+                    <div class="section_title mb-50">
+                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".25s">Rumah rohani untuk
+                            bertumbuh bersama</h3>
+                        <p class="cg-intro-sub wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                            <strong>Connect Group (CG)</strong> adalah komunitas kecil tempat Anda dimuridkan,
+                            saling menguatkan, dan bertumbuh semakin serupa dengan Kristus — dengan visi GMS untuk
+                            membangun gereja lokal yang kuat lewat penginjilan, pemuridan, dan multiplikasi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mb-50">
+                <div class="col-lg-8 text-center">
+                    <p class="cg-intro-body wow fadeInUp" data-wow-duration="1s" data-wow-delay=".35s">
+                        Biasanya terdiri dari <strong>6–15 orang</strong> yang rutin berkumpul: pujian &amp;
+                        penyembahan,
+                        diskusi Firman, doa bersama, persekutuan hangat, hingga aktivitas seru dan pelayanan sosial.
+                        <strong>Hidup iman lebih bermakna saat dijalani bersama.</strong>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
+                        <div class="cg-num">01</div>
+                        <h5>Panggilan Tuhan</h5>
+                        <p>Dimuridkan secara sengaja dan dilatih untuk memuridkan orang lain.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                        <div class="cg-num">02</div>
+                        <h5>Pertumbuhan iman</h5>
+                        <p>Iman yang matang lewat pemuridan yang konsisten dan relevan.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
+                        <div class="cg-num">03</div>
+                        <h5>Komunitas kasih</h5>
+                        <p>Lingkungan yang saling mengasihi dan selalu ada untuk satu sama lain.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="cg-intro-card wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                        <div class="cg-num">04</div>
+                        <h5>Dukungan rohani</h5>
+                        <p>Saling mendukung lewat doa, Firman, dan kebersamaan yang tulus.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="cg-quote wow fadeInUp" data-wow-duration="1s" data-wow-delay=".35s">
+                        <p>Dan marilah kita saling memperhatikan supaya kita saling mendorong dalam kasih dan dalam
+                            pekerjaan baik. Janganlah kita menjauhkan diri dari pertemuan-pertemuan ibadah kita &hellip;
+                            marilah kita saling menasihati, dan semakin giat melakukannya menjelang hari Tuhan yang
+                            mendekat.</p>
+                        <cite>— Ibrani 10:24–25</cite>
+                    </div>
+                    <div class="text-center cg-cta-wrap wow fadeInUp" data-wow-duration="1s" data-wow-delay=".45s">
+                        <a href="https://gms.church/id/cg" class="boxed-btn3" target="_blank"
+                            rel="noopener noreferrer">Pelajari CG &amp; cara bergabung</a>
+                        <p class="cg-cta-note mb-0">Informasi lengkap, kategori usia, dan formulir <strong>Connect
+                                Me</strong> ada di situs resmi GMS Church — <a href="https://gms.church/id/cg"
+                                target="_blank" rel="noopener noreferrer">gms.church/id/cg</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- cg_intro_area_end -->
 
     @if ($sponsorLogos && $sponsorLogos->isNotEmpty())
         <!-- brand_area_start  -->
