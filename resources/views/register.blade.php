@@ -122,6 +122,24 @@
             margin-bottom: 6px;
         }
 
+        /* Link penjelasan CG — kontras lebih jelas di kartu gelap */
+        .register-card .cg-connect-help {
+            color: #e8e8e8;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        .register-card .cg-connect-help a {
+            color: #ff8a7a;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .register-card .cg-connect-help a:hover {
+            color: #fff;
+        }
+
         .register-card .form-control {
             background: #1a1a1a;
             border: 1px solid #333;
@@ -507,6 +525,11 @@
                                             <input type="radio" name="pernah_ikut" value="belum" checked> Belum
                                         </label>
                                     </div>
+                                    <p class="mb-2 mt-1 cg-connect-help">
+                                        <a href="https://gms.church/id/cg" target="_blank"
+                                            rel="noopener noreferrer">Belum tahu CG itu apa? Baca penjelasan Connect
+                                            Group di sini.</a>
+                                    </p>
                                 </div>
                                 <div class="form-group" id="cglWrap">
                                     <label for="namaCglRegister">Nama CGL (Connect Group Leader)</label>

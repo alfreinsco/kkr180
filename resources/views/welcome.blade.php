@@ -122,6 +122,24 @@
             gap: 8px;
         }
 
+        /* Link penjelasan CG di modal — kontras lebih jelas */
+        #ingatkanModal .cg-connect-help {
+            color: #e8e8e8;
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        #ingatkanModal .cg-connect-help a {
+            color: #ff8a7a;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        #ingatkanModal .cg-connect-help a:hover {
+            color: #fff;
+        }
+
         #ingatkanModal .ingatkan-radio-wrap input {
             margin: 0;
             cursor: pointer;
@@ -553,8 +571,8 @@
                         </div>
                         <div class="form-group">
                             <label for="umur">Umur</label>
-                            <input type="number" class="form-control" id="umur" name="umur" min="0" max="120"
-                                step="1" placeholder="Opsional">
+                            <input type="number" class="form-control" id="umur" name="umur" min="0"
+                                max="120" step="1" placeholder="Opsional">
                         </div>
                         <div class="form-group">
                             <label>Sudah pernah mengikuti CG(Connect Group) sebelumnya?</label>
@@ -566,6 +584,10 @@
                                     <input type="radio" name="pernah_ikut" value="belum" checked> Belum
                                 </label>
                             </div>
+                            <p class="mb-2 mt-1 cg-connect-help">
+                                <a href="https://gms.church/id/cg" target="_blank" rel="noopener noreferrer">Belum
+                                    tahu CG itu apa? Baca penjelasan Connect Group di sini.</a>
+                            </p>
                             <div id="cglWrap">
                                 <label for="namaCGL">Siapa nama CGL (Connect Group Leader) Anda?</label>
                                 <input type="text" class="form-control mt-2" id="namaCGL" name="nama_cgl"
