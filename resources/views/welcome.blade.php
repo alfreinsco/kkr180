@@ -365,24 +365,19 @@
                 display: block;
             }
 
-            /* SlickNav: batalkan position absolute agar ikut alur flex & sejajar dengan logo */
+            /* Mobile nav: biarkan slicknav memakai styling bawaan
+               (hindari override position/width agar menu tidak tertutup). */
             .header-area .mobile_menu {
-                position: relative !important;
-                right: auto !important;
-                width: auto !important;
+                top: 20px;
+                z-index: 9999;
             }
 
             .header-area .slicknav_btn {
-                position: relative !important;
-                top: auto !important;
-                margin: 0 !important;
-                float: none !important;
+                z-index: 9999;
             }
 
             .header-area .slicknav_menu {
-                margin: 0;
-                padding: 0;
-                background: transparent;
+                z-index: 9999;
             }
         }
     </style>
@@ -413,7 +408,7 @@
                                 <div class="main-menu  d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="index.html">beranda</a></li>
+                                            <li><a href="{{ url('/') }}">beranda</a></li>
                                             <li><a href="#performar_area_start">Performance</a></li>
                                             <li><a href="#about_area_start">tentang</a></li>
                                             <li><a href="#contact_area_start">kontak</a></li>
