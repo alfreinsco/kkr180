@@ -5,6 +5,7 @@ namespace App\Filament\Resources\IngatkanSayas;
 use App\Filament\Resources\IngatkanSayas\Pages\CreateIngatkanSaya;
 use App\Filament\Resources\IngatkanSayas\Pages\EditIngatkanSaya;
 use App\Filament\Resources\IngatkanSayas\Pages\ListIngatkanSayas;
+use App\Filament\Resources\IngatkanSayas\Pages\ListTrashedIngatkanSayas;
 use App\Filament\Resources\IngatkanSayas\Pages\ViewIngatkanSaya;
 use App\Filament\Resources\IngatkanSayas\Schemas\IngatkanSayaForm;
 use App\Filament\Resources\IngatkanSayas\Schemas\IngatkanSayaInfolist;
@@ -15,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class IngatkanSayaResource extends Resource
 {
@@ -31,6 +33,11 @@ class IngatkanSayaResource extends Resource
     protected static string|\UnitEnum|null $navigationGroup = 'Data & Pendaftaran';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getRecordRouteBindingEloquentQuery(): Builder
+    {
+        return parent::getRecordRouteBindingEloquentQuery()->withTrashed();
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -58,6 +65,7 @@ class IngatkanSayaResource extends Resource
     {
         return [
             'index' => ListIngatkanSayas::route('/'),
+            'trashed' => ListTrashedIngatkanSayas::route('/trashed'),
             'create' => CreateIngatkanSaya::route('/create'),
             'view' => ViewIngatkanSaya::route('/{record}'),
             'edit' => EditIngatkanSaya::route('/{record}/edit'),

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\BukuTamus;
 use App\Filament\Resources\BukuTamus\Pages\CreateBukuTamu;
 use App\Filament\Resources\BukuTamus\Pages\EditBukuTamu;
 use App\Filament\Resources\BukuTamus\Pages\ListBukuTamus;
+use App\Filament\Resources\BukuTamus\Pages\ListTrashedBukuTamus;
 use App\Filament\Resources\BukuTamus\Pages\ViewBukuTamu;
 use App\Filament\Resources\BukuTamus\Schemas\BukuTamuForm;
 use App\Filament\Resources\BukuTamus\Schemas\BukuTamuInfolist;
@@ -15,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class BukuTamuResource extends Resource
 {
@@ -33,6 +35,11 @@ class BukuTamuResource extends Resource
     protected static string|\UnitEnum|null $navigationGroup = 'Data & Pendaftaran';
 
     protected static ?int $navigationSort = 1;
+
+    public static function getRecordRouteBindingEloquentQuery(): Builder
+    {
+        return parent::getRecordRouteBindingEloquentQuery()->withTrashed();
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -60,6 +67,7 @@ class BukuTamuResource extends Resource
     {
         return [
             'index' => ListBukuTamus::route('/'),
+            'trashed' => ListTrashedBukuTamus::route('/trashed'),
             'create' => CreateBukuTamu::route('/create'),
             'view' => ViewBukuTamu::route('/{record}'),
             'edit' => EditBukuTamu::route('/{record}/edit'),
