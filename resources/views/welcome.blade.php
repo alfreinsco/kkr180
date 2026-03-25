@@ -414,7 +414,7 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">beranda</a></li>
-                                            <li><a href="#performar_area_start">Performer</a></li>
+                                            <li><a href="#performar_area_start">Performance</a></li>
                                             <li><a href="#about_area_start">tentang</a></li>
                                             <li><a href="#contact_area_start">kontak</a></li>
                                         </ul>
@@ -475,7 +475,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section_title mb-80">
-                            <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Performer</h3>
+                            <h3 class="wow fadeInRight" data-wow-duration="1s" data-wow-delay=".3s">Performance</h3>
                         </div>
                     </div>
                 </div>
