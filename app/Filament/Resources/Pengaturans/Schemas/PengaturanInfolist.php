@@ -47,6 +47,10 @@ class PengaturanInfolist
                     ->placeholder('-')
                     ->url(fn (?string $state): ?string => filled($state) ? $state : null)
                     ->openUrlInNewTab(),
+                TextEntry::make('whatsapp_send_delay_seconds')
+                    ->label('Jeda antar pesan WA (detik)')
+                    ->placeholder('Default dari konfigurasi')
+                    ->formatStateUsing(fn (?int $state): string => $state !== null ? (string) $state : '— (default)'),
                 TextEntry::make('created_at')
                     ->label('Dibuat')
                     ->dateTime('d/m/Y H:i'),

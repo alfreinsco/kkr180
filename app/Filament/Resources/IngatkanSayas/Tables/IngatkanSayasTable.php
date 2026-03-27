@@ -196,13 +196,23 @@ class IngatkanSayasTable
                                 return;
                             }
 
-                            foreach ($ids as $id) {
-                                SendUndanganWhatsAppJob::dispatch($id);
+                            $jedaDetik = $pengaturan->whatsappSendDelaySeconds();
+
+                            foreach ($ids as $index => $id) {
+                                $dispatch = SendUndanganWhatsAppJob::dispatch($id);
+                                if ($jedaDetik > 0) {
+                                    $dispatch->delay(now()->addSeconds($index * $jedaDetik));
+                                }
+                            }
+
+                            $body = count($ids).' pesan masuk ke antrean pengiriman.';
+                            if ($jedaDetik > 0 && count($ids) > 1) {
+                                $body .= ' Jeda antar pesan: '.$jedaDetik.' detik.';
                             }
 
                             Notification::make()
                                 ->title('Pengiriman WhatsApp diproses.')
-                                ->body(count($ids).' pesan masuk ke antrean pengiriman.')
+                                ->body($body)
                                 ->success()
                                 ->send();
                         }),

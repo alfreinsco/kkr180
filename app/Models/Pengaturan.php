@@ -23,6 +23,7 @@ class Pengaturan extends Model
         'peta_embed_url',
         'whatsapp_session_id',
         'whatsapp_api_url',
+        'whatsapp_send_delay_seconds',
     ];
 
     /**
@@ -42,5 +43,17 @@ class Pengaturan extends Model
     public static function aktif(): ?self
     {
         return static::first();
+    }
+
+    /**
+     * Jeda antar pengiriman WhatsApp (detik). Mengurangi risiko pemblokiran saat broadcast.
+     */
+    public function whatsappSendDelaySeconds(): int
+    {
+        if ($this->whatsapp_send_delay_seconds !== null) {
+            return max(0, min(65535, (int) $this->whatsapp_send_delay_seconds));
+        }
+
+        return max(0, (int) config('whatsapp.send_delay_seconds', 20));
     }
 }

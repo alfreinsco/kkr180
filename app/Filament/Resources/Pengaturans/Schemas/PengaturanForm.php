@@ -75,6 +75,13 @@ class PengaturanForm
                     ->placeholder('Contoh: https://api.whatsapp.example.com/send-message')
                     ->rows(3)
                     ->helperText('URL endpoint API WhatsApp yang digunakan sistem.'),
+                TextInput::make('whatsapp_send_delay_seconds')
+                    ->label('Jeda antar pesan WA (detik)')
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(65535)
+                    ->placeholder('Kosongkan untuk pakai default (.env / config)')
+                    ->helperText('Antar tiap pengiriman broadcast dijadwalkan bergantian (0 detik, lalu jeda, 2× jeda, …). Mengurangi risiko nomor diblokir. Kosong = pakai WHATSAPP_SEND_DELAY_SECONDS (default 20).'),
             ]);
     }
 }

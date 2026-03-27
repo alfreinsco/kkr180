@@ -175,13 +175,23 @@ class KirimPesanWhatsApp extends Page implements HasForms
             return;
         }
 
-        foreach ($ids as $id) {
-            SendPesanWhatsAppJob::dispatch($id, $pesan, $sumber);
+        $jedaDetik = $pengaturan->whatsappSendDelaySeconds();
+
+        foreach ($ids as $index => $id) {
+            $dispatch = SendPesanWhatsAppJob::dispatch($id, $pesan, $sumber);
+            if ($jedaDetik > 0) {
+                $dispatch->delay(now()->addSeconds($index * $jedaDetik));
+            }
+        }
+
+        $body = count($ids).' pengiriman akan diproses lewat job.';
+        if ($jedaDetik > 0 && count($ids) > 1) {
+            $body .= ' Jeda antar pesan: '.$jedaDetik.' detik (mengurangi risiko pemblokiran).';
         }
 
         Notification::make()
             ->title('Pesan dimasukkan ke antrean')
-            ->body(count($ids).' pengiriman akan diproses lewat job.')
+            ->body($body)
             ->success()
             ->send();
     }
