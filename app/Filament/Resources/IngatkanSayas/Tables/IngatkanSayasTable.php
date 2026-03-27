@@ -4,6 +4,7 @@ namespace App\Filament\Resources\IngatkanSayas\Tables;
 
 use App\Filament\Exports\IngatkanSayaExporter;
 use App\Jobs\SendUndanganWhatsAppJob;
+use App\Models\BukuTamu;
 use App\Models\IngatkanSaya;
 use App\Models\Pengaturan;
 use Filament\Actions\Action;
@@ -136,6 +137,54 @@ class IngatkanSayasTable
                         'encryptedId' => Crypt::encryptString((string) $record->id),
                     ]))
                     ->openUrlInNewTab(),
+                Action::make('tambah_ke_buku_tamu')
+                    ->label('Tambah ke Buku Tamu')
+                    ->icon('heroicon-o-user-plus')
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->modalHeading('Tambah ke Buku Tamu')
+                    ->modalDescription(function (IngatkanSaya $record): string {
+                        return 'Data pendaftar atas nama '.$record->nama_lengkap.' akan ditambahkan ke Buku Tamu. Jika sudah ada, data akan diperbarui agar tidak duplikat.';
+                    })
+                    ->action(function (IngatkanSaya $record): void {
+                        $payload = [
+                            'nama_lengkap' => $record->nama_lengkap,
+                            'no_telp' => $record->no_telp,
+                            'alamat' => $record->alamat,
+                            'asal_kampus' => $record->asal_kampus,
+                            'umur' => $record->umur,
+                            'pernah_ikut' => $record->pernah_ikut,
+                            'nama_cgl' => $record->nama_cgl,
+                        ];
+
+                        $match = filled($record->no_telp)
+                            ? ['no_telp' => $record->no_telp]
+                            : [
+                                'nama_lengkap' => $record->nama_lengkap,
+                                'alamat' => $record->alamat,
+                            ];
+
+                        $bukuTamu = BukuTamu::withTrashed()->updateOrCreate($match, $payload);
+
+                        if ($bukuTamu->trashed()) {
+                            $bukuTamu->restore();
+                        }
+
+                        if ($bukuTamu->wasRecentlyCreated) {
+                            Notification::make()
+                                ->title('Berhasil ditambahkan ke Buku Tamu')
+                                ->success()
+                                ->send();
+
+                            return;
+                        }
+
+                        Notification::make()
+                            ->title('Buku Tamu diperbarui')
+                            ->body('Data sudah ada sebelumnya, lalu diperbarui tanpa membuat duplikat.')
+                            ->success()
+                            ->send();
+                    }),
                 ViewAction::make(),
                 EditAction::make(),
             ])
