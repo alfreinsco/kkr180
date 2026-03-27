@@ -16,6 +16,7 @@ class PengaturanSeeder extends Seeder
 
         if (Pengaturan::exists()) {
             Pengaturan::whereNull('peta_embed_url')->update(['peta_embed_url' => $defaultEmbedUrl]);
+            Pengaturan::whereNull('countdown_at')->update(['countdown_at' => '2026-03-27 18:30:00']);
             return;
         }
 
@@ -24,6 +25,7 @@ class PengaturanSeeder extends Seeder
             'lebar_logo' => 150,
             'tinggi_logo' => 150,
             'tanggal_kegiatan' => '2026-03-27',
+            'countdown_at' => '2026-03-27 18:30:00',
             'judul_kegiatan' => 'KKR 180°',
             'sub_judul_kegiatan' => 'FREEDOM',
             'lokasi_kegiatan' => 'Aula Lantai 2 Universitas Pattimura',

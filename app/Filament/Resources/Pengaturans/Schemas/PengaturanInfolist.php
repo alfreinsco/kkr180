@@ -24,6 +24,9 @@ class PengaturanInfolist
                 TextEntry::make('tanggal_kegiatan')
                     ->label('Tanggal Kegiatan')
                     ->date('d F Y'),
+                TextEntry::make('countdown_at')
+                    ->label('Countdown Acara')
+                    ->dateTime('d F Y H:i'),
                 TextEntry::make('judul_kegiatan')
                     ->label('Judul Kegiatan'),
                 TextEntry::make('sub_judul_kegiatan')

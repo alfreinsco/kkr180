@@ -16,6 +16,7 @@ class Pengaturan extends Model
         'lebar_logo',
         'tinggi_logo',
         'tanggal_kegiatan',
+        'countdown_at',
         'judul_kegiatan',
         'sub_judul_kegiatan',
         'lokasi_kegiatan',
@@ -31,6 +32,7 @@ class Pengaturan extends Model
     {
         return [
             'tanggal_kegiatan' => 'date',
+            'countdown_at' => 'datetime',
         ];
     }
 

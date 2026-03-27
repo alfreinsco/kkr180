@@ -38,6 +38,54 @@
             scroll-margin-top: 100px;
         }
 
+        /* Countdown landing page */
+        .kkr-countdown-wrap {
+            margin-top: 14px;
+        }
+
+        .kkr-countdown-title {
+            color: #AAB1B7;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .kkr-countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .kkr-countdown-item {
+            background: rgba(255, 69, 51, 0.06);
+            border: 1px solid rgba(255, 69, 51, 0.25);
+            padding: 10px 14px;
+            min-width: 92px;
+        }
+
+        .kkr-countdown-num {
+            display: block;
+            font-family: "Anton", sans-serif;
+            color: #fff;
+            font-size: 28px;
+            line-height: 1.05;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .kkr-countdown-unit {
+            color: #FF8066;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .kkr-countdown-status {
+            margin-top: 10px;
+            color: #c8cdd2;
+            font-size: 0.95rem;
+        }
+
         /* Connect Group — pengenalan singkat, konsisten tema */
         .cg-intro-area {
             position: relative;
@@ -450,7 +498,31 @@
                                 <img src="img/shape/shape_2.svg" alt="">
                             </div>
                             <span class="wow fadeInLeft" data-wow-duration="1s"
-                                data-wow-delay=".3s">{{ $pengaturan?->tanggal_kegiatan?->translatedFormat('d F, Y') ?? '27 Maret, 2026' }}</span>
+                                data-wow-delay=".3s">{{ $pengaturan?->countdown_at?->translatedFormat('d F, Y') ?? ($pengaturan?->tanggal_kegiatan?->translatedFormat('d F, Y') ?? '27 Maret, 2026') }}</span>
+
+                            <div class="kkr-countdown-wrap wow fadeInUp" data-wow-duration="1s" data-wow-delay=".35s"
+                                id="kkrCountdown" aria-live="polite">
+                                <div class="kkr-countdown-title">Countdown menuju acara</div>
+                                <div class="kkr-countdown-timer">
+                                    <div class="kkr-countdown-item">
+                                        <span id="cdDays" class="kkr-countdown-num">0</span>
+                                        <span class="kkr-countdown-unit">Hari</span>
+                                    </div>
+                                    <div class="kkr-countdown-item">
+                                        <span id="cdHours" class="kkr-countdown-num">0</span>
+                                        <span class="kkr-countdown-unit">Jam</span>
+                                    </div>
+                                    <div class="kkr-countdown-item">
+                                        <span id="cdMinutes" class="kkr-countdown-num">0</span>
+                                        <span class="kkr-countdown-unit">Menit</span>
+                                    </div>
+                                    <div class="kkr-countdown-item">
+                                        <span id="cdSeconds" class="kkr-countdown-num">0</span>
+                                        <span class="kkr-countdown-unit">Detik</span>
+                                    </div>
+                                </div>
+                                <div id="cdStatus" class="kkr-countdown-status"></div>
+                            </div>
                             <h3 class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".4s">
                                 {{ $pengaturan?->judul_kegiatan ?? 'KKR 180°' }}</h3>
                             <p class="wow fadeInLeft" data-wow-duration="1s" data-wow-delay=".5s">
@@ -964,6 +1036,67 @@
                         });
                 });
             }
+        })();
+    </script>
+
+    <script>
+        (function() {
+            var el = document.getElementById('kkrCountdown');
+            if (!el) return;
+
+            var targetIso = @json(
+                $pengaturan?->countdown_at?->format('c') ??
+                    \Carbon\Carbon::parse('2026-03-27 18:30:00', config('app.timezone'))->format('c'));
+            var target = new Date(targetIso);
+            if (isNaN(target.getTime())) return;
+
+            var cdDays = document.getElementById('cdDays');
+            var cdHours = document.getElementById('cdHours');
+            var cdMinutes = document.getElementById('cdMinutes');
+            var cdSeconds = document.getElementById('cdSeconds');
+            var cdStatus = document.getElementById('cdStatus');
+
+            function pad(n) {
+                return String(n).padStart(2, '0');
+            }
+
+            function render() {
+                var now = new Date();
+                var diffMs = target.getTime() - now.getTime();
+
+                if (diffMs <= 0) {
+                    if (cdStatus) cdStatus.textContent = 'Acara dimulai!';
+                    if (cdDays) cdDays.textContent = '0';
+                    if (cdHours) cdHours.textContent = '0';
+                    if (cdMinutes) cdMinutes.textContent = '0';
+                    if (cdSeconds) cdSeconds.textContent = '0';
+                    return false;
+                }
+
+                var totalSeconds = Math.floor(diffMs / 1000);
+                var days = Math.floor(totalSeconds / 86400);
+                var hours = Math.floor((totalSeconds % 86400) / 3600);
+                var minutes = Math.floor((totalSeconds % 3600) / 60);
+                var seconds = totalSeconds % 60;
+
+                if (cdDays) cdDays.textContent = String(days);
+                if (cdHours) cdHours.textContent = pad(hours);
+                if (cdMinutes) cdMinutes.textContent = pad(minutes);
+                if (cdSeconds) cdSeconds.textContent = pad(seconds);
+                if (cdStatus) cdStatus.textContent = 'Sampai waktu acara.';
+
+                return true;
+            }
+
+            var timer = null;
+            render();
+            timer = window.setInterval(function() {
+                var stillRunning = render();
+                if (!stillRunning && timer) {
+                    window.clearInterval(timer);
+                    timer = null;
+                }
+            }, 1000);
         })();
     </script>
 </body>

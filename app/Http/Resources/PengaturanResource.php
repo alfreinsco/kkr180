@@ -21,6 +21,8 @@ class PengaturanResource extends JsonResource
             'tinggi_logo' => $this->tinggi_logo,
             'tanggal_kegiatan' => $this->tanggal_kegiatan?->format('Y-m-d'),
             'tanggal_kegiatan_formatted' => $this->tanggal_kegiatan?->translatedFormat('d F Y'),
+            'countdown_at' => $this->countdown_at?->format('Y-m-d H:i:s'),
+            'countdown_at_formatted' => $this->countdown_at?->translatedFormat('d F Y H:i'),
             'judul_kegiatan' => $this->judul_kegiatan,
             'sub_judul_kegiatan' => $this->sub_judul_kegiatan,
             'lokasi_kegiatan' => $this->lokasi_kegiatan,

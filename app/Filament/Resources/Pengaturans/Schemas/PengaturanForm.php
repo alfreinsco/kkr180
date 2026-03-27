@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Pengaturans\Schemas;
 
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -40,6 +42,11 @@ class PengaturanForm
                     ->label('Tanggal Kegiatan')
                     ->displayFormat('d/m/Y')
                     ->native(false),
+                DateTimePicker::make('countdown_at')
+                    ->label('Countdown Acara (Tanggal & Jam)')
+                    ->displayFormat('d/m/Y H:i')
+                    ->native(false)
+                    ->default(fn (): Carbon => Carbon::parse('2026-03-27 18:30:00', config('app.timezone'))),
                 TextInput::make('judul_kegiatan')
                     ->label('Judul Kegiatan')
                     ->placeholder('Contoh: KKR 180°')
